@@ -1,4 +1,4 @@
-package smart.parking.security.Connectedob;
+package smart.parking.cot.Connectedobject;
 
 import jakarta.nosql.mapping.Column;
 import jakarta.nosql.mapping.Entity;

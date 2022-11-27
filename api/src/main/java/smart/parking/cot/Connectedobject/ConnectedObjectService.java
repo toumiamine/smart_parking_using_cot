@@ -1,9 +1,8 @@
-package smart.parking.security.Connectedob;
+package smart.parking.cot.Connectedobject;
 
 
 import jakarta.nosql.mapping.Database;
 import jakarta.nosql.mapping.DatabaseType;
-import smart.parking.security.*;
 
 
 import javax.enterprise.context.ApplicationScoped;

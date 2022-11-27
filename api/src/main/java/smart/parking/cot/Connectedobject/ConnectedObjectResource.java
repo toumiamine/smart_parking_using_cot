@@ -1,7 +1,7 @@
-package smart.parking.security.Connectedob;
+package smart.parking.cot.Connectedobject;
 
 
-import smart.parking.security.UserDTO;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 public class ConnectedObjectResource {
 
     @Inject
-    private ConnectedObjectService service;
+    private smart.parking.cot.Connectedobject.ConnectedObjectService service;
     @POST
     public void create(ConnectedObject connectedObject) {
         service.create(connectedObject);
