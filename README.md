@@ -1,2 +1,2 @@
-# smart_parking_using_cot
+# Smart Parking Using COT
 Contributors : Mohamed Amine Toumi & Imen Azzouz
