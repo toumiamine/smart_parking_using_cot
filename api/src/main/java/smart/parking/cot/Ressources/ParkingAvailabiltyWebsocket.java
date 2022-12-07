@@ -4,7 +4,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import smart.parking.cot.Entity.ParkingDecoder;
 import smart.parking.cot.Entity.ParkingEncoder;
 import smart.parking.cot.Entity.ParkingSlot;
-import smart.parking.cot.services.MQTTService;
 
 import java.io.*;
 import java.text.ParseException;
