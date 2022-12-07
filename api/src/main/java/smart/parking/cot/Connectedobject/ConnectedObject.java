@@ -8,7 +8,6 @@ import jakarta.nosql.mapping.Id;
 
 @Entity
 public class ConnectedObject {
-
     @Id
     private  String id;
     @Column

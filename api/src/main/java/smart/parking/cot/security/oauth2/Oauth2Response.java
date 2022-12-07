@@ -2,8 +2,8 @@ package smart.parking.cot.security.oauth2;
 
 import smart.parking.cot.security.infra.FieldPropertyVisibilityStrategy;
 
-import javax.json.bind.annotation.JsonbProperty;
-import javax.json.bind.annotation.JsonbVisibility;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbVisibility;
 
 @JsonbVisibility(FieldPropertyVisibilityStrategy.class)
 public class Oauth2Response {

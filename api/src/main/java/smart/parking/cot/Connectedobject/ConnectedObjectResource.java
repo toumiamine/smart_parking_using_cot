@@ -15,14 +15,12 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class ConnectedObjectResource {
-
     @Inject
     private smart.parking.cot.Connectedobject.ConnectedObjectService service;
     @POST
     public void create(ConnectedObject connectedObject) {
         service.create(connectedObject);
     }
-
 
     @DELETE
     @Path("/{id}")

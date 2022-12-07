@@ -7,13 +7,21 @@ import smart.parking.cot.Entity.RoleDTO;
 import smart.parking.cot.Entity.User;
 import smart.parking.cot.Entity.UserDTO;
 import smart.parking.cot.Repository.UserRepository;
+import smart.parking.cot.Repository.UserTokenRepository;
+import smart.parking.cot.security.oauth2.Oauth2Request;
+import smart.parking.cot.security.oauth2.UserToken;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
-import javax.security.enterprise.SecurityContext;
-import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -27,13 +35,20 @@ public class SecurityService {
     private UserRepository repository;
 
     @Inject
+    private UserTokenRepository token_repository;
+
+    @Inject
     private Pbkdf2PasswordHash passwordHash;
+
+    @Inject
+    private Validator validator;
 
     @Inject
     private SecurityContext securityContext;
 
     @Inject
     private Event<RemoveUser> removeUserEvent;
+
 
     @Inject
     private Event<RemoveToken> removeTokenEvent;
@@ -42,7 +57,12 @@ public class SecurityService {
         if (repository.existsById(userDTO.getEmail())) {
             throw new UserAlreadyExistException("There is an user with this id: " + userDTO.getEmail());
         } else {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
             User user = User.builder()
+                    .withFullname(userDTO.getFull_name())
+                    .withRegistration_date(dtf.format(now))
+                    .withLast_active(dtf.format(now))
                     .withPasswordHash(passwordHash)
                     .withPassword(userDTO.getPassword())
                     .withEmail(userDTO.getEmail())
@@ -149,6 +169,10 @@ public class SecurityService {
     private UserDTO toDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setEmail(user.getEmail());
+        dto.setPhonenumber(user.getPhonenumber());
+        dto.setLast_active(user.getLast_active());
+        dto.setFull_name(user.getFull_name());
+        dto.setRegistration_date(user.getRegistration_date());
         dto.setRoles(user.getRoles());
         return dto;
     }

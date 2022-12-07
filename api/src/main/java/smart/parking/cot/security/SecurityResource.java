@@ -2,18 +2,21 @@ package smart.parking.cot.security;
 
 import smart.parking.cot.Entity.RoleDTO;
 import smart.parking.cot.Entity.UserDTO;
-import smart.parking.cot.security.SecurityService;
+import smart.parking.cot.Entity.User;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import smart.parking.cot.security.SecurityService;
+import smart.parking.cot.security.oauth2.Oauth2Request;
+
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("signup")
+@Path("security")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped

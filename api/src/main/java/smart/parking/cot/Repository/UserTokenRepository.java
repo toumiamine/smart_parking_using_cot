@@ -5,7 +5,7 @@ import jakarta.nosql.mapping.Query;
 import jakarta.nosql.mapping.Repository;
 import smart.parking.cot.security.oauth2.UserToken;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Optional;
 
 @ApplicationScoped

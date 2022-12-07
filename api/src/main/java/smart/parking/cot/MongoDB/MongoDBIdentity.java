@@ -5,15 +5,15 @@ import jakarta.nosql.mapping.DatabaseType;
 import smart.parking.cot.Entity.User;
 import smart.parking.cot.Repository.UserRepository;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.security.enterprise.credential.CallerOnlyCredential;
-import javax.security.enterprise.credential.Credential;
-import javax.security.enterprise.identitystore.CredentialValidationResult;
-import javax.security.enterprise.identitystore.IdentityStore;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.credential.CallerOnlyCredential;
+import jakarta.security.enterprise.credential.Credential;
+import jakarta.security.enterprise.identitystore.CredentialValidationResult;
+import jakarta.security.enterprise.identitystore.IdentityStore;
 import java.util.Optional;
 
-import static javax.security.enterprise.identitystore.CredentialValidationResult.INVALID_RESULT;
+import static jakarta.security.enterprise.identitystore.CredentialValidationResult.INVALID_RESULT;
 
 @ApplicationScoped
 public class MongoDBIdentity implements IdentityStore {

@@ -2,22 +2,27 @@ package smart.parking.cot.security.oauth2;
 
 import smart.parking.cot.security.infra.FieldPropertyVisibilityStrategy;
 
-import javax.json.bind.annotation.JsonbVisibility;
-import javax.validation.constraints.NotBlank;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbVisibility;
+import jakarta.validation.constraints.NotBlank;
 import javax.ws.rs.FormParam;
 
 @JsonbVisibility(FieldPropertyVisibilityStrategy.class)
 public class Oauth2Request {
-    @FormParam("grand_type")
+    //@FormParam("grand_type")
+    @JsonbProperty("grand_type")
     @NotBlank
     public String grandType;
-    @FormParam("username")
+   // @FormParam("email")
+   @JsonbProperty("email")
     @NotBlank(groups = {GenerateToken.class})
-    private String username;
-    @FormParam("password")
+    private String email;
+   // @FormParam("password")
+   @JsonbProperty("password")
     @NotBlank(groups = {GenerateToken.class})
     private String password;
-    @FormParam("refresh_token")
+   // @FormParam("refresh_token")
+   @JsonbProperty("refreshToken")
     @NotBlank(groups = {RefreshToken.class})
     private String refreshToken;
 
@@ -27,8 +32,8 @@ public class Oauth2Request {
         }
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -46,8 +51,8 @@ public class Oauth2Request {
         return null;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {

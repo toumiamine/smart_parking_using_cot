@@ -3,10 +3,10 @@ package smart.parking.cot.security.infra;
 import jakarta.nosql.document.DocumentCollectionManager;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Disposes;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Disposes;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class DocumentProducer {

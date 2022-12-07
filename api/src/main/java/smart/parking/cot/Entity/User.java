@@ -4,7 +4,7 @@ import jakarta.nosql.mapping.Column;
 import jakarta.nosql.mapping.Entity;
 import jakarta.nosql.mapping.Id;
 
-import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,15 +25,43 @@ public class User {
     @Column
     private Set<Role> roles;
 
+    @Column
+    private String registration_date;
+
+    @Column
+    private String last_active;
+
+    @Column
+    private String full_name;
+
+
+
     User() {
     }
 
     public String getEmail() {
         return email;
     }
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+    public String getFull_name() {
+        return full_name;
+    }
+    public String getRegistration_date() {
+        return registration_date;
+    }
+
+    public String getLast_active() {
+        return last_active;
+    }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setLast_active(String last_active) {
+        this.last_active = last_active;
     }
 
     public Set<String> getRoles() {
@@ -82,7 +110,11 @@ public class User {
 
 
     public static class UserBuilder {
+        private String registration_date;
 
+        private String last_active;
+
+        private String full_name;
         private String email;
 
         private String password;
@@ -92,6 +124,21 @@ public class User {
         private Pbkdf2PasswordHash passwordHash;
 
         private UserBuilder() {
+        }
+
+        public UserBuilder withFullname(String full_name) {
+            this.full_name = full_name;
+            return this;
+        }
+
+        public UserBuilder withRegistration_date(String registration_date) {
+            this.registration_date = registration_date;
+            return this;
+        }
+
+        public UserBuilder withLast_active(String last_active) {
+            this.last_active = last_active;
+            return this;
         }
 
         public UserBuilder withEmail(String email) {
@@ -120,7 +167,7 @@ public class User {
         }
 
         public User build() {
-            requireNonNull(phonenumber);
+            requireNonNull(phonenumber , "Phone number is required");
             requireNonNull(email, "email is required");
             requireNonNull(password, "password is required");
             requireNonNull(roles, "roles is required");
@@ -128,6 +175,9 @@ public class User {
 
             User user = new User();
             user.roles = roles;
+            user.full_name = full_name;
+            user.registration_date = registration_date;
+            user.last_active = last_active;
             user.email = email;
             user.phonenumber = phonenumber;
             user.password = passwordHash.generate(password.toCharArray());

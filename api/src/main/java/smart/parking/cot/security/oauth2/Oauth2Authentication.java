@@ -2,13 +2,13 @@ package smart.parking.cot.security.oauth2;
 
 import smart.parking.cot.Repository.UserTokenRepository;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
-import javax.security.enterprise.authentication.mechanism.http.HttpMessageContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.AuthenticationStatus;
+import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
+import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,17 +1,22 @@
 package smart.parking.cot.Ressources;
 
-import javax.annotation.security.DenyAll;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import jakarta.annotation.security.DenyAll;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 
 @Path("")
 @RequestScoped
 public class HelloWorldResource {
 
+    public static void main(String[] args){
+
+        System.out.println("Hello, World!");
+
+    }
     @GET
     @PermitAll
     @Produces("text/plain")

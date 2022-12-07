@@ -5,9 +5,9 @@ import smart.parking.cot.security.RemoveToken;
 import smart.parking.cot.security.RemoveUser;
 import smart.parking.cot.Entity.User;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 class Oauth2Observes {
