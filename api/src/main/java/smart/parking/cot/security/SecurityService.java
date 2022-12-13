@@ -46,8 +46,6 @@ public class SecurityService {
     @Inject
     private SecurityContext securityContext;
 
-    @Inject
-    private Event<RemoveUser> removeUserEvent;
 
 
     @Inject
@@ -136,18 +134,9 @@ public class SecurityService {
                 .orElseThrow(() -> new UserNotAuthorizedException());
     }
 
-    public void removeUser() {
-        final User user = getLoggedUser();
-        RemoveUser removeUser = new RemoveUser(user);
-        removeUserEvent.fire(removeUser);
-        repository.deleteById(user.getEmail());
-    }
-
     public void removeUser(String userId) {
         final User user = repository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
-        RemoveUser removeUser = new RemoveUser(user);
-        removeUserEvent.fire(removeUser);
         repository.deleteById(user.getEmail());
     }
 

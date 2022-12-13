@@ -73,18 +73,12 @@ public class SecurityResource {
     }
 
     @DELETE
-    @PermitAll
-    @Path("me")
-    public void removeUser() {
-        service.removeUser();
-    }
-
-    @DELETE
     @RolesAllowed("ADMIN")
-    @Path("{id}")
+    @Path("delete/{id}")
     public void removeUser(@PathParam("id") String id) {
         service.removeUser(id);
     }
+
 
     @DELETE
     @PermitAll
