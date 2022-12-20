@@ -6,10 +6,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import org.json.JSONException;
 import org.json.JSONObject;
-import smart.parking.cot.Entity.ParkingSlot;
-import smart.parking.cot.Ressources.ParkingAvailabiltyWebsocket;
+import smart.parking.cot.Connectedobject.ConnectedObject;
+import smart.parking.cot.Ressources.ParkingWebsocket;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -18,6 +17,13 @@ import javax.net.ssl.SSLSocketFactory;
 public class MqttConnection {
     @Inject
     private ReservationService service;
+
+
+    public void sendmsg(MqttClient client,String msg,String topic) throws MqttException {
+        MqttMessage message = new MqttMessage(msg.getBytes());
+        client.publish(topic,message);
+    }
+
     @PostConstruct
     public void start() {
         try {
@@ -55,12 +61,20 @@ if (topic.equals("IRSensor")) {
         //System.out.println(topic + "::::: " + new String(message.getPayload()));
         System.out.println(new String(message.getPayload()));
         JSONObject obj = new JSONObject(new String(message.getPayload()));
-        int avai =   obj.getInt("isAvailable");
+
+
+        ConnectedObject connectedObject = new ConnectedObject();
         String id = obj.getString("id");
-        ParkingSlot parkingSlot = new ParkingSlot();
-        parkingSlot.setId(id);
-        parkingSlot.setAvailable(avai);
-        ParkingAvailabiltyWebsocket.broadcastMessage(parkingSlot);
+        int pin = obj.getInt("pin");
+        String state = obj.getString("state");
+        String type = obj.getString("type");
+        int value = obj.getInt("value");
+        connectedObject.setId(id);
+        connectedObject.setPin(pin);
+        connectedObject.setState(state);
+        connectedObject.setType(type);
+        connectedObject.setValue(value);
+        ParkingWebsocket.broadcastMessage(connectedObject);
     }
     catch (Exception e ) {
         System.out.println(e);
@@ -72,11 +86,12 @@ if (topic.equals("IRSensor")) {
                             JSONObject obj_1 = new JSONObject(new String(message.getPayload()));
                             String code = obj_1.getString("code");
                             System.out.println(code);
-                         boolean result = service.check_reservation(code);
-                        System.out.println(result);
+                      boolean result = service.check_reservation(code);
+                      System.out.println("------------------------");
+                     System.out.println(result);
                         }
                         catch (Exception e ) {
-                            System.out.println(e);
+                           // System.out.println(e);
                         }
                     }
                 }

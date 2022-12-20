@@ -29,18 +29,15 @@ public class ReservationService {
             throw new UserAlreadyExistException("There is an reservation with this id: " + reservation.getId());
         } else {
             java.util.Date date = new java.util.Date();
-           // String uniqueID = UUID.randomUUID().toString();
             Reservation reservation1 = Reservation.builder()
                     .WithUserId(reservation.getUser_id())
                     .WithStartDate(reservation.getStart_date())
                     .WithEndDate(reservation.getEnd_date())
+                    .WithId(reservation.getId())
                     .WithReservationDate(date)
                     .build();
             repository.save(reservation1);
-
-          //  String masterPath = request.getServletContext().getRealPath( "/WEB-INF/template.pdf" );
-    /*      //  response.setContentType( "application/pdf" );
-Optional<User> user_class = repository_user.findById(reservation.getUser_id());
+            Optional<User> user_class = repository_user.findById(reservation.getUser_id());
             try (PdfReader reader = new PdfReader( "C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf" );
                  PdfWriter writer = new PdfWriter( "C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
                  PdfDocument document = new PdfDocument( reader, writer ) ) {
@@ -54,7 +51,7 @@ Optional<User> user_class = repository_user.findById(reservation.getUser_id());
                 canvas.beginText();
 
                 canvas.setTextMatrix(492F, 701.5F);
-                canvas.showText("WX123GAX" );
+                canvas.showText(reservation.getId());
 
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
@@ -97,11 +94,10 @@ Optional<User> user_class = repository_user.findById(reservation.getUser_id());
                 throw new RuntimeException(e);
             }
 
-            String to=reservation.getUser_id();//change accordingly
-            final String user="contact@smart-parking.me";//change accordingly
-            final String password="MedMed123@";//change accordingly
+            String to=reservation.getUser_id();
+            final String user="contact@smart-parking.me";
+            final String password="MedMed123@";
 
-            //1) get the session object
             Properties properties = System.getProperties();
             properties.put("mail.smtp.auth", "true");
             properties.put("mail.smtp.starttls.enable", "true");
@@ -114,14 +110,12 @@ Optional<User> user_class = repository_user.findById(reservation.getUser_id());
                         protected PasswordAuthentication getPasswordAuthentication() {
                             return new PasswordAuthentication(user,password);    }   });
 
-            //2) compose message
             try{
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(user));
                 message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
                 message.setSubject("Invoice -- Smart Parking");
 
-                //3) create MimeBodyPart object and set your message text
                 BodyPart messageBodyPart1 = new MimeBodyPart();
                 messageBodyPart1.setText("Thank you for your order");
 
@@ -132,21 +126,17 @@ Optional<User> user_class = repository_user.findById(reservation.getUser_id());
                 MimeBodyPart attachmentPart = new MimeBodyPart();
                 attachmentPart.attachFile(new File("C:/Users/Lenovo/Desktop/INDP3/P2/Projet Kaaniche/smart_parking_using_cot/api/src/main/webapp/WEB-INF/Invoice.pdf"));
                 attachmentPart.setFileName("Invoice.pdf");
-                //  messageBodyPart2.setDataHandler(handler);
 
-                //5) create Multipart object and add MimeBodyPart objects to this object
                 Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(messageBodyPart1);
                 multipart.addBodyPart(attachmentPart);
 
-                //6) set the multiplart object to the message object
                 message.setContent(multipart );
 
-                //7) send message
                 Transport.send(message);
                 System.out.println("message sent....");
 
-            }catch (MessagingException | IOException ex) {ex.printStackTrace();}*/
+            }catch (MessagingException | IOException ex) {ex.printStackTrace();}
         }
     }
 
@@ -221,15 +211,19 @@ Optional<User> user_class = repository_user.findById(reservation.getUser_id());
     }
 
 
-
+    public List<Reservation> getUserReservation(String id) {
+        return repository.findByUser_id(id);
+    }
 
   public boolean check_reservation(String id){
+      System.out.println("hello");
         if (repository.existsById(id)) {
-
             Optional<Reservation> res = repository.findById(id);
+            System.out.println("hello");
             Date now = new Date(); // This object contains the current date value
             Date end_date = res.get().getEnd_date();
             Date start_date = res.get().getStart_date();
+            System.out.println("hello");
             if (now.compareTo(end_date)<0 & now.compareTo(start_date)>0) {
                 return true;
             }

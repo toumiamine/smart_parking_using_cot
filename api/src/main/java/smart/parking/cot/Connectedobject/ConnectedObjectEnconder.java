@@ -1,4 +1,4 @@
-package smart.parking.cot.Entity;
+package smart.parking.cot.Connectedobject;
 
 import jakarta.websocket.Encoder;
 
@@ -10,16 +10,20 @@ import javax.json.spi.JsonProvider;
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Encoder;
 import jakarta.websocket.EndpointConfig;
+import smart.parking.cot.Connectedobject.ConnectedObject;
 
-public class ParkingEncoder implements Encoder.TextStream<ParkingSlot> {
+public class ConnectedObjectEnconder implements Encoder.TextStream<ConnectedObject> {
 
     @Override
-    public void encode(ParkingSlot parkingSlot, Writer writer) throws EncodeException, IOException {
+    public void encode(ConnectedObject connectedObject, Writer writer) throws EncodeException, IOException {
         JsonProvider provider = JsonProvider.provider();
         JsonObject jsonParkingSlot = provider.createObjectBuilder()
                 .add("action", "add")
-                .add("id", parkingSlot.getId())
-                .add("isAvailable", parkingSlot.getIsAvailable())
+                .add("id", connectedObject.getId())
+                .add("pin", connectedObject.getPin())
+                .add("value", connectedObject.getValue())
+                .add("state",connectedObject.getState())
+                .add("type",connectedObject.getType())
                 .build();
         try (JsonWriter jsonWriter = provider.createWriter(writer)) {
             jsonWriter.write(jsonParkingSlot);

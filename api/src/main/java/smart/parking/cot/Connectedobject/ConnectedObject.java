@@ -11,11 +11,11 @@ public class ConnectedObject {
     @Id
     private  String id;
     @Column
-    private  String name;
+    private  String type;
     @Column
     private  int pin ;
     @Column
-    private  float value ;
+    private  int value ;
     @Column
     private  String state ;
 
@@ -24,21 +24,20 @@ public class ConnectedObject {
     public ConnectedObject(){
 
     }
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
     public String getId() { return  id ;}
     public int getPin() {return  pin ;}
     public String getState(){return  state ;}
-    public float getValue(){return  value ;}
+    public int getValue(){return  value ;}
 
+    public void setId(String id){this.id = id;}
+    public void setValue(int value){this.value = value;}
+    public void setType(String type){this.type = type;}
+    public void setPin(int pin){this.pin = pin;}
 
-
-
-
-
-
-
+    public void setState(String state){this.state = state;}
     public static ConnectedObjectBuilder builder() {
         return new ConnectedObjectBuilder();}
 
@@ -49,9 +48,9 @@ public class ConnectedObject {
 
     public static class ConnectedObjectBuilder {
 
-        private String name;
+        private  String type;
         private int pin;
-        private float value;
+        private int value;
         private String state ;
         private String id;
 
@@ -65,12 +64,12 @@ public class ConnectedObject {
             this.pin = pin;
             return this;
         }
-        public ConnectedObjectBuilder withName (String name) {
-            this.name=name;
+        public ConnectedObjectBuilder withType (String type) {
+            this.type=type;
             return this;
         }
 
-        public ConnectedObjectBuilder withValue(float value) {
+        public ConnectedObjectBuilder withValue(int value) {
             this.value=value;
             return this;
 
@@ -95,7 +94,7 @@ public class ConnectedObject {
 
             ConnectedObject connectedObject= new ConnectedObject();
             connectedObject.id=id;
-            connectedObject.name=name;
+            connectedObject.type=type;
             connectedObject.pin=pin;
             connectedObject.state=state;
             connectedObject.value=value;

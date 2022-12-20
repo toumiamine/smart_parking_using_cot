@@ -54,7 +54,11 @@ public class ReservationRessource {
         return service.weeklyReservation();
     }
 
-
+    @Path("user/{id}")
+    @GET
+    public List<Reservation> getUserReservation(@PathParam("id")  String id) {
+        return service.getUserReservation(id);
+    }
 
 
 
