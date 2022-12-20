@@ -36,7 +36,11 @@ public class ReservationRessource {
         return service.getReservation();
     }
 
-
+    @Path("user/{id}")
+    @GET
+    public List<Reservation> getUserReservation(@PathParam("id")  String id) {
+        return service.getUserReservation(id);
+    }
 
 
 

@@ -1,6 +1,5 @@
 package smart.parking.cot.Entity;
 
-
 import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.nosql.mapping.Column;
 import jakarta.nosql.mapping.Entity;
@@ -17,9 +16,7 @@ import static java.util.Objects.requireNonNull;
 @Entity
 public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-
     @JsonbDateFormat("dd-MM-yyyy'T'HH:mm:ss")
     @Column
     private Date reservation_date;
@@ -35,6 +32,9 @@ public class Reservation {
     private String user_id;
 
     @Column
+    private String pass_code;
+
+    @Column
     private float price;
 
 
@@ -43,6 +43,11 @@ public class Reservation {
 
     public String getId() {
         return id;
+    }
+
+
+    public String getPass_code() {
+        return pass_code;
     }
 
     public Date getReservation_date() {

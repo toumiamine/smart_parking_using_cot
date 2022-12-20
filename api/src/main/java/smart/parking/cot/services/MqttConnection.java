@@ -84,11 +84,12 @@ if (topic.equals("IRSensor")) {
                             JSONObject obj_1 = new JSONObject(new String(message.getPayload()));
                             String code = obj_1.getString("code");
                             System.out.println(code);
-                         boolean result = service.check_reservation(code);
-                        System.out.println(result);
+                      boolean result = service.check_reservation(code);
+                      System.out.println("------------------------");
+                     System.out.println(result);
                         }
                         catch (Exception e ) {
-                            System.out.println(e);
+                           // System.out.println(e);
                         }
                     }
                 }

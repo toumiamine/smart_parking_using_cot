@@ -58,6 +58,7 @@ public class Oauth2Service {
         map.put("accessToken", accessToken.getToken());
         map.put("refreshToken", refreshToken.getToken());
         map.put("phone_number", user.getPhonenumber());
+        map.put("email", user.getEmail());
         map.put("role", user.getRoles());
         map.put("fullname", user.getFull_name());
         map.put("registration_date", user.getRegistration_date());
