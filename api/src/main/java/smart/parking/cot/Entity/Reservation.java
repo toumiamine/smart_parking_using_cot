@@ -107,7 +107,12 @@ public class Reservation {
 
         private float price;
 
+
         private ReservationBuilder() {
+        }
+
+        public String getUser_id() {
+            return user_id;
         }
 
         public ReservationBuilder WithId(String id) {

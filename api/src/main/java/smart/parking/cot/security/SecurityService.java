@@ -144,6 +144,7 @@ public class SecurityService {
         final User user = repository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
         repository.deleteById(user.getEmail());
+
     }
 
     public void removeToken(String token) {

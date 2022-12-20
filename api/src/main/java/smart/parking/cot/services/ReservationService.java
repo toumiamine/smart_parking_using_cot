@@ -1,16 +1,35 @@
 package smart.parking.cot.services;
 
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import jakarta.nosql.mapping.Database;
 import jakarta.nosql.mapping.DatabaseType;
 import smart.parking.cot.Entity.Reservation;
+import smart.parking.cot.Entity.User;
 import smart.parking.cot.Repository.ReservationRepository;
 import smart.parking.cot.Repository.UserRepository;
 import smart.parking.cot.security.UserAlreadyExistException;
 
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 @ApplicationScoped
 public class ReservationService {
 
@@ -230,6 +249,14 @@ public class ReservationService {
             return false;
         }
       return false;
+
+    }
+
+
+    public void delete(String id) {
+
+        //Optional<Reservation> res = repository.findById(id);
+        repository.deleteById(id);
 
     }
 

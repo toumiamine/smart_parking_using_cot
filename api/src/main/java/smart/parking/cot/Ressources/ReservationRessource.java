@@ -60,7 +60,12 @@ public class ReservationRessource {
         return service.getUserReservation(id);
     }
 
-
+    @Path("delt/{id}")
+    @DELETE
+    @RolesAllowed("ADMIN")
+    public void delete(@PathParam("id") String id) {
+        service.delete(id);
+    }
 
 }
 
