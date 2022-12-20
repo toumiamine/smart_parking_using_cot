@@ -22,7 +22,6 @@ import smart.parking.cot.Entity.User;
 import smart.parking.cot.Repository.ReservationRepository;
 import smart.parking.cot.Repository.UserRepository;
 import smart.parking.cot.security.UserAlreadyExistException;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
