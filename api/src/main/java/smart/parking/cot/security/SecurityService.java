@@ -51,6 +51,7 @@ public class SecurityService {
     @Inject
     private Event<RemoveToken> removeTokenEvent;
 
+
     public void create(UserDTO userDTO) {
         if (repository.existsById(userDTO.getEmail())) {
             throw new UserAlreadyExistException("There is an user with this id: " + userDTO.getEmail());
@@ -117,6 +118,11 @@ public class SecurityService {
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
+    public int numberUsers(){
+        return getUsers().size();
+    }
+
+
 
     public User findBy(String username, String password) {
         final User user = repository.findById(username)
@@ -138,6 +144,7 @@ public class SecurityService {
         final User user = repository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
         repository.deleteById(user.getEmail());
+
     }
 
     public void removeToken(String token) {

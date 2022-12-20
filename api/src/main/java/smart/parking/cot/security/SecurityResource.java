@@ -2,10 +2,6 @@ package smart.parking.cot.security;
 
 import smart.parking.cot.Entity.RoleDTO;
 import smart.parking.cot.Entity.UserDTO;
-import smart.parking.cot.Entity.User;
-
-import smart.parking.cot.security.SecurityService;
-import smart.parking.cot.security.oauth2.Oauth2Request;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
@@ -70,6 +66,13 @@ public class SecurityResource {
     @RolesAllowed("ADMIN")
     public List<UserDTO> getUsers() {
         return service.getUsers();
+    }
+
+    @Path("Number/users")
+    @GET
+    @RolesAllowed("ADMIN")
+    public int Number() {
+        return service.numberUsers();
     }
 
     @DELETE

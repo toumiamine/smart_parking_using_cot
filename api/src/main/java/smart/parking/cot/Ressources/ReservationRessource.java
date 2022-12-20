@@ -7,12 +7,10 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import smart.parking.cot.Entity.Reservation;
-import smart.parking.cot.Entity.UserDTO;
-import smart.parking.cot.security.SecurityService;
 import smart.parking.cot.services.ReservationService;
 
-import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Path("reservation")
@@ -35,6 +33,26 @@ public class ReservationRessource {
     public List<Reservation> getReservations() {
         return service.getReservation();
     }
+    @Path("total")
+    @GET
+    @RolesAllowed("ADMIN")
+    public int TotalReservations() {
+        return service.TotalReservations();
+    }
+
+    @Path("totals/{month}")
+    @GET
+    @RolesAllowed("ADMIN")
+    public int monthlyReservation(@PathParam("month")int month) {
+        return service.monthlyReservation(month);
+    }
+
+    @Path("totals/week")
+    @GET
+    @RolesAllowed("ADMIN")
+    public int weeklyReservation() {
+        return service.weeklyReservation();
+    }
 
     @Path("user/{id}")
     @GET
@@ -42,7 +60,12 @@ public class ReservationRessource {
         return service.getUserReservation(id);
     }
 
-
+    @Path("delt/{id}")
+    @DELETE
+    @RolesAllowed("ADMIN")
+    public void delete(@PathParam("id") String id) {
+        service.delete(id);
+    }
 
 }
 

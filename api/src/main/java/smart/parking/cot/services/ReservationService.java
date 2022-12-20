@@ -24,13 +24,11 @@ import smart.parking.cot.Repository.UserRepository;
 import smart.parking.cot.security.UserAlreadyExistException;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 @ApplicationScoped
 public class ReservationService {
 
@@ -164,6 +162,72 @@ public class ReservationService {
     public List<Reservation> getReservation() {
         return repository.findAll();
     }
+    public int  TotalReservations() {
+        return repository.findAll().size();
+    }
+
+
+    public int monthlyReservation(int month) {
+        List <Reservation> lista = repository.findAll();
+        List<Reservation> lista1 = new ArrayList<>();
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println( lista.get(i));
+            Reservation reser = lista.get(i);
+
+
+
+            Date end_date = lista.get(i).getEnd_date();
+            Date start_date = lista.get(i).getStart_date();
+            Calendar s = Calendar.getInstance();
+            Calendar e = Calendar.getInstance();
+             s.setTime(start_date);
+            System.out.println(start_date + "startdate"+s +"clendar");
+            System.out.println("month");
+            System.out.println( s.get(Calendar.MONTH)+1);
+            System.out.println(s.get(Calendar.MONTH) == month-1);
+            if (s.get(Calendar.MONTH) == month-1 )
+            {
+                System.out.println( "if is ok");
+                lista1.add(reser);
+
+
+            }
+        }   System.out.println(lista1);
+        System.out.println(lista1.size());
+            return lista1.size();
+
+        }
+
+    public int weeklyReservation() {
+        List<Reservation> lista = repository.findAll();
+        List<Reservation> lis = new ArrayList<>();
+        for (int i = 0; i < lista.size(); i++) {
+            Reservation reser = lista.get(i);
+            Date date = lista.get(i).getStart_date();
+            Calendar c1 = Calendar.getInstance();
+            Integer year1 = c1.get(c1.YEAR);
+            Integer week1 = c1.get(c1.WEEK_OF_YEAR);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            Integer year2 = c.get(c.YEAR);
+            Integer week2 = c.get(c.WEEK_OF_YEAR);
+            System.out.println(year1+ " year1");
+            System.out.println(year2 + " year2");
+            System.out.println(week1+ " week1");
+            System.out.println(week2 + " week2");
+
+            if ( week1 == week2) {
+                    System.out.println("if is ok");
+                    lis.add(reser);
+
+            }
+
+
+        }    System.out.println(lis);
+        System.out.println(lis.size());
+        return lis.size();
+    }
+
 
     public List<Reservation> getUserReservation(String id) {
         return repository.findByUser_id(id);
@@ -184,6 +248,14 @@ public class ReservationService {
             return false;
         }
       return false;
+
+    }
+
+
+    public void delete(String id) {
+
+        //Optional<Reservation> res = repository.findById(id);
+        repository.deleteById(id);
 
     }
 

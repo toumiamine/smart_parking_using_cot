@@ -38,7 +38,9 @@ public class MqttConnection {
             MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
             mqttConnectOptions.setUserName("broker");
             mqttConnectOptions.setPassword("broker".toCharArray());
-            mqttConnectOptions.setSocketFactory(SSLSocketFactory.getDefault()); // using the default socket factory
+            mqttConnectOptions.setSocketFactory(SSLSocketFactory.getDefault());
+            // using the default socket factory
+            //mqttConnectOptions.setConnectionTimeout(1000);
             client.connect(mqttConnectOptions);
 
 
