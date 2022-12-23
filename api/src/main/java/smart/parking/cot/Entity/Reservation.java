@@ -32,8 +32,7 @@ public class Reservation {
     private String user_id;
 
     @Column
-    private String pass_code;
-
+    private String selectedSpot;
     @Column
     private float price;
 
@@ -45,10 +44,6 @@ public class Reservation {
         return id;
     }
 
-
-    public String getPass_code() {
-        return pass_code;
-    }
 
     public Date getReservation_date() {
         return reservation_date;
@@ -65,6 +60,10 @@ public class Reservation {
     public String getUser_id() {
         return user_id;
     }
+
+    public String getSelectedSpot() {
+        return selectedSpot;
+    }
     public float getPrice() {
         return price;
     }
@@ -74,7 +73,9 @@ public class Reservation {
     public void setId(String id) {
         this.id = id;
     }
-
+    public void setSelectedSpot(String selectedSpot) {
+        this.selectedSpot = selectedSpot;
+    }
     public void setPrice(float price) {
         this.price = price;
     }
@@ -104,7 +105,7 @@ public class Reservation {
         private Date end_date;
 
         private String user_id;
-
+        private String selectedSpot;
         private float price;
 
 
@@ -120,7 +121,10 @@ public class Reservation {
             return this;
         }
 
-
+        public ReservationBuilder WithSelectedSpot(String selectedSpot) {
+            this.selectedSpot = selectedSpot;
+            return this;
+        }
         public ReservationBuilder WithPrice(float price) {
             this.price = price;
             return this;
@@ -155,6 +159,7 @@ public class Reservation {
             Reservation reservation = new Reservation();
             reservation.id = id;
             reservation.price = price;
+            reservation.selectedSpot = selectedSpot;
             reservation.user_id = user_id;
             reservation.start_date = start_date;
             reservation.end_date = end_date;

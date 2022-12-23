@@ -51,6 +51,8 @@ public class ReservationService {
                     .WithUserId(reservation.getUser_id())
                     .WithStartDate(reservation.getStart_date())
                     .WithEndDate(reservation.getEnd_date())
+                    .WithSelectedSpot(reservation.getSelectedSpot())
+                    .WithPrice(reservation.getPrice())
                     .WithId(reservation.getId())
                     .WithReservationDate(date)
                     .build();
