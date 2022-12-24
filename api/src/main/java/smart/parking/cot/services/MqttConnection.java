@@ -31,7 +31,7 @@ public class MqttConnection {
 
             //CLIENT CONNECTION OPTIONS
             MqttClient client = new MqttClient(
-                    "wss://mqtt.smart-parking.me:8083", // serverURI in format: "protocol://name:port"
+                    "wss://mqsmart-partt.king.me:8083", // serverURI in format: "protocol://name:port"
                     MqttClient.generateClientId(), // ClientId
                     new MemoryPersistence()); // Persistence
 
@@ -56,8 +56,8 @@ public class MqttConnection {
                 public void messageArrived(String topic, MqttMessage message) {
                    // System.out.println(new String(message.getPayload()));
                    System.out.println(topic + "hello");
-if (topic.equals("IRSensor")) {
-    try {
+            if (topic.equals("IRSensor")) {
+         try {
         //System.out.println(topic + "::::: " + new String(message.getPayload()));
         System.out.println(new String(message.getPayload()));
         JSONObject obj = new JSONObject(new String(message.getPayload()));
