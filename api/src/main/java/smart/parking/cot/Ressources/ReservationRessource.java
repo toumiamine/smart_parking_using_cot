@@ -9,8 +9,9 @@ import jakarta.ws.rs.core.MediaType;
 import smart.parking.cot.Entity.Reservation;
 import smart.parking.cot.services.ReservationService;
 
+import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 
 @Path("reservation")
@@ -65,6 +66,20 @@ public class ReservationRessource {
     @RolesAllowed("ADMIN")
     public void delete(@PathParam("id") String id) {
         service.delete(id);
+    }
+
+    @Path("range/{start_date}/{end_date}")
+    @GET
+    @RolesAllowed("ADMIN")
+    public int range_reservation(@PathParam("start_date") String start_date , @PathParam("end_date") String end_date) throws ParseException {
+        return service.range_reservation(start_date,end_date);
+    }
+
+    @Path("range77/{start_date}/{end_date}")
+    @GET
+    @RolesAllowed("ADMIN")
+    public Map<String, String> range(@PathParam("start_date") String start_date , @PathParam("end_date") String end_date) throws ParseException {
+        return service.range77(start_date,end_date);
     }
 
 }

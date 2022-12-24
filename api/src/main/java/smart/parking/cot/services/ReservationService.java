@@ -26,6 +26,8 @@ import smart.parking.cot.security.UserAlreadyExistException;
 import java.io.File;
 import java.io.IOException;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -57,16 +59,16 @@ public class ReservationService {
                     .build();
             repository.save(reservation1);
             Optional<User> user_class = repository_user.findById(reservation.getUser_id());
-            try (PdfReader reader = new PdfReader( "C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf" );
-                 PdfWriter writer = new PdfWriter( "C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
-                 PdfDocument document = new PdfDocument( reader, writer ) ) {
+            try (PdfReader reader = new PdfReader("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf");
+                 PdfWriter writer = new PdfWriter("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
+                 PdfDocument document = new PdfDocument(reader, writer)) {
 
-                PdfPage page = document.getPage( 1 );
-                PdfCanvas canvas = new PdfCanvas( page );
+                PdfPage page = document.getPage(1);
+                PdfCanvas canvas = new PdfCanvas(page);
                 PdfFont helveticaFont = PdfFontFactory.createFont(StandardFonts.HELVETICA);
                 PdfFont helveticaBoldFont = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
 
-                canvas.setFontAndSize( helveticaFont, 8 );
+                canvas.setFontAndSize(helveticaFont, 8);
                 canvas.beginText();
 
                 canvas.setTextMatrix(492F, 701.5F);
@@ -77,45 +79,42 @@ public class ReservationService {
                 canvas.setTextMatrix(462F, 682F);
                 canvas.showText(dtf.format(now));
 
-                canvas.setFontAndSize( helveticaBoldFont, 12 );
+                canvas.setFontAndSize(helveticaBoldFont, 12);
                 canvas.setTextMatrix(72.5F, 597F);
                 canvas.showText(user_class.get().getFull_name());
 
-                canvas.setFontAndSize( helveticaFont, 9 );
-                canvas.setTextMatrix( 79, 533 );
+                canvas.setFontAndSize(helveticaFont, 9);
+                canvas.setTextMatrix(79, 533);
                 canvas.showText("Reservation");
 
-                canvas.setTextMatrix( 160, 533 );
+                canvas.setTextMatrix(160, 533);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
                 String start_date = sdf.format(reservation.getStart_date());
                 canvas.showText(start_date);
 
-                canvas.setTextMatrix( 300, 533 );
+                canvas.setTextMatrix(300, 533);
                 String end_date = sdf.format(reservation.getEnd_date());
                 canvas.showText(end_date);
 
-                canvas.setTextMatrix( 398, 533 );
-                canvas.showText(reservation.getPrice()+ " TND");
+                canvas.setTextMatrix(398, 533);
+                canvas.showText(reservation.getPrice() + " TND");
 
-                canvas.setTextMatrix( 490, 498 );
-                canvas.showText(reservation.getPrice()*0.19 + " TND");
+                canvas.setTextMatrix(490, 498);
+                canvas.showText(reservation.getPrice() * 0.19 + " TND");
 
-                canvas.setFontAndSize( helveticaBoldFont, 9 );
-                canvas.setTextMatrix( 490, 462 );
-                canvas.showText(reservation.getPrice()*1.19 + " TND");
+                canvas.setFontAndSize(helveticaBoldFont, 9);
+                canvas.setTextMatrix(490, 462);
+                canvas.showText(reservation.getPrice() * 1.19 + " TND");
                 canvas.endText();
-
-
-
 
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            String to=reservation.getUser_id();
-            final String user="contact@smart-parking.me";
-            final String password="MedMed123@";
+            String to = reservation.getUser_id();
+            final String user = "contact@smart-parking.me";
+            final String password = "MedMed123@";
 
             Properties properties = System.getProperties();
             properties.put("mail.smtp.auth", "true");
@@ -127,17 +126,18 @@ public class ReservationService {
             Session session = Session.getInstance(properties,
                     new jakarta.mail.Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(user,password);    }   });
+                            return new PasswordAuthentication(user, password);
+                        }
+                    });
 
-            try{
+            try {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(user));
-                message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
                 message.setSubject("Invoice -- Smart Parking");
 
                 BodyPart messageBodyPart1 = new MimeBodyPart();
                 messageBodyPart1.setText("Thank you for your order");
-
 
 
                 String filename = "Invoice.pdf";//change accordingly
@@ -150,12 +150,14 @@ public class ReservationService {
                 multipart.addBodyPart(messageBodyPart1);
                 multipart.addBodyPart(attachmentPart);
 
-                message.setContent(multipart );
+                message.setContent(multipart);
 
                 Transport.send(message);
                 System.out.println("message sent....");
 
-            }catch (MessagingException | IOException ex) {ex.printStackTrace();}
+            } catch (MessagingException | IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -163,41 +165,40 @@ public class ReservationService {
     public List<Reservation> getReservation() {
         return repository.findAll();
     }
-    public int  TotalReservations() {
+
+    public int TotalReservations() {
         return repository.findAll().size();
     }
 
 
     public int monthlyReservation(int month) {
-        List <Reservation> lista = repository.findAll();
+        List<Reservation> lista = repository.findAll();
         List<Reservation> lista1 = new ArrayList<>();
         for (int i = 0; i < lista.size(); i++) {
-            System.out.println( lista.get(i));
+            System.out.println(lista.get(i));
             Reservation reser = lista.get(i);
 
 
-
-            Date end_date = lista.get(i).getEnd_date();
             Date start_date = lista.get(i).getStart_date();
             Calendar s = Calendar.getInstance();
-            Calendar e = Calendar.getInstance();
-             s.setTime(start_date);
-            System.out.println(start_date + "startdate"+s +"clendar");
+
+            s.setTime(start_date);
+            System.out.println(start_date + "startdate" + s + "clendar");
             System.out.println("month");
-            System.out.println( s.get(Calendar.MONTH)+1);
-            System.out.println(s.get(Calendar.MONTH) == month-1);
-            if (s.get(Calendar.MONTH) == month-1 )
-            {
-                System.out.println( "if is ok");
+            System.out.println(s.get(Calendar.MONTH) + 1);
+            System.out.println(s.get(Calendar.MONTH) == month - 1);
+            if (s.get(Calendar.MONTH) == month - 1) {
+                System.out.println("if is ok");
                 lista1.add(reser);
 
 
             }
-        }   System.out.println(lista1);
-        System.out.println(lista1.size());
-            return lista1.size();
-
         }
+        System.out.println(lista1);
+        System.out.println(lista1.size());
+        return lista1.size();
+
+    }
 
     public int weeklyReservation() {
         List<Reservation> lista = repository.findAll();
@@ -212,19 +213,20 @@ public class ReservationService {
             c.setTime(date);
             Integer year2 = c.get(c.YEAR);
             Integer week2 = c.get(c.WEEK_OF_YEAR);
-            System.out.println(year1+ " year1");
+            System.out.println(year1 + " year1");
             System.out.println(year2 + " year2");
-            System.out.println(week1+ " week1");
+            System.out.println(week1 + " week1");
             System.out.println(week2 + " week2");
 
-            if ( week1 == week2) {
-                    System.out.println("if is ok");
-                    lis.add(reser);
+            if (week1 == week2) {
+                System.out.println("if is ok");
+                lis.add(reser);
 
             }
 
 
-        }    System.out.println(lis);
+        }
+        System.out.println(lis);
         System.out.println(lis.size());
         return lis.size();
     }
@@ -234,8 +236,8 @@ public class ReservationService {
         return repository.findByUser_id(id);
     }
 
-  public boolean check_reservation(String id){
-      System.out.println("hello");
+    public boolean check_reservation(String id) {
+        System.out.println("hello");
         if (repository.existsById(id)) {
             Optional<Reservation> res = repository.findById(id);
             System.out.println("hello");
@@ -243,14 +245,157 @@ public class ReservationService {
             Date end_date = res.get().getEnd_date();
             Date start_date = res.get().getStart_date();
             System.out.println("hello");
-            if (now.compareTo(end_date)<0 & now.compareTo(start_date)>0) {
+            if (now.compareTo(end_date) < 0 & now.compareTo(start_date) > 0) {
                 return true;
             }
             return false;
         }
-      return false;
+        return false;
 
     }
+
+
+    public List<Integer> get_list_monthes(String startDate, String endDate) {
+        List<Integer> listMonth = new ArrayList<Integer>();
+
+        String date1 = "2022-01-01";
+        String date2 = "2022-11-30";
+
+        DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar beginCalendar = Calendar.getInstance();
+        Calendar finishCalendar = Calendar.getInstance();
+
+        try {
+            beginCalendar.setTime(formater.parse(date1));
+            finishCalendar.setTime(formater.parse(date2));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        while (beginCalendar.before(finishCalendar)) {
+
+            Date date = beginCalendar.getTime();
+            Calendar cal4 = Calendar.getInstance();
+            cal4.setTime(date);
+            System.out.println(  cal4.get(Calendar.MONTH));
+            // Add One Month to get next Month
+            beginCalendar.add(Calendar.MONTH, 1);
+        }
+        return listMonth;
+    }
+
+
+
+
+
+    public int range_reservation(String date1_comp, String date2_comp) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String oeStartDateStr = date1_comp;
+        //System.out.println("1 ==  "+ oeStartDateStr);
+        //String oeEndDateStr = date2_comp;
+        //Calendar cal = Calendar.getInstance();
+        //Integer year = cal.get(Calendar.YEAR);
+        //oeStartDateStr = oeStartDateStr.concat(year.toString());
+        //oeEndDateStr = oeEndDateStr.concat(year.toString());
+
+        Date startDate = sdf.parse(date1_comp);
+        Date endDate = sdf.parse(date2_comp);
+        System.out.println("startDate input =  "+ startDate);
+        System.out.println("endDate input =  "+ endDate);
+
+
+        System.out.println("boucle for ");
+        List<Reservation> liste1 = new ArrayList<>();
+        List<Reservation> liste = new ArrayList<>();;
+        List<Reservation> listRes = repository.findAll();
+        for (int i = 0; i < listRes.size(); i++) {
+            Reservation reservation = listRes.get(i);
+            Date date = reservation.getStart_date();
+            //System.out.print("date from DB"+date);
+
+
+            String currDt = sdf.format(date);
+            System.out.println("date li fost  baed mawlet string"+ date);
+
+            if (date.after(startDate) && date.before(endDate)) {
+                System.out.println("ok if 1");
+
+                liste.add(reservation);
+            }
+
+             if (date.compareTo(endDate) < 0 & date.compareTo(startDate) > 0){
+                System.out.println("ok if 2");
+                liste1.add(reservation);
+            }
+
+
+            //liste.add(reservation);
+
+            }
+
+
+
+            return liste.size();
+
+            }
+
+    public Map<String, String> range77(String date1, String date2) throws ParseException {
+        Map<String, String> map= new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = sdf.parse(date1);
+        Date endDate = sdf.parse(date2);
+
+        Calendar a = Calendar.getInstance();
+        a.setTime(startDate);
+        System.out.println(a);
+        Calendar b = Calendar.getInstance();
+        b.setTime(endDate);
+       int begin_month= a.get(Calendar.MONTH);
+       System.out.println("begin month =  "+ begin_month);
+        int end_month= b.get(Calendar.MONTH);
+        System.out.println(" end month  "+  end_month);
+
+        List<Reservation> listRes = repository.findAll();
+        for (int j = 0; j < 12; j++) {
+            System.out.println("c' est  la valeur de j = " +j );
+            if (j >= begin_month  && j <= end_month) {
+            List<Reservation> liste3 = new ArrayList<>();
+            for (int i = 0; i < listRes.size(); i++) {
+                Reservation reservation = listRes.get(i);
+                Date date = reservation.getStart_date();
+                if (date.after(startDate) && date.before(endDate)) {
+                    //liste.add(reservation);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    int month = cal.get(Calendar.MONTH);
+
+                    if (j == month) {
+                        System.out.println("j et month equi");
+
+                        liste3.add(reservation);}}
+                        if (liste3.size()!=0) {
+                            //map. put(String.valueOf(j), String.valueOf(liste3.size()));
+                            map. put(String.valueOf(j+1), String.valueOf(liste3.size()));
+                        }
+
+            } }
+
+        }
+        return map;
+
+        }
+
+
+
+
+
+
+
+
+
+
 
 
     public void delete(String id) {
