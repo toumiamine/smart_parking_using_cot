@@ -29,7 +29,7 @@ class ChooseParkingSlotScreen extends StatefulWidget {
 
 class _ChooseParkingSlotScreen extends State<ChooseParkingSlotScreen> {
   List<String> getFloorList = DataFile.getAllFloorList();
-  var channel_availability = WebSocketChannel.connect(Uri.parse('ws://10.0.2.2:8080/microprofile/websocket_channel'));
+  var channel_availability = WebSocketChannel.connect(Uri.parse('wss://api.smart-parking.me:8443/microprofile/websocket_channel'));
 
   finish() {
     Constant.backToFinish(context);

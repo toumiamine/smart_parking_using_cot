@@ -16,7 +16,7 @@ class APIService {
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.loginAPI);
+    var url = Uri.https(Config.appURL, Config.loginAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 
     if (response.statusCode ==200) {
@@ -43,7 +43,7 @@ class APIService {
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.DeleteReservationAPI + id);
+    var url = Uri.https(Config.appURL, Config.DeleteReservationAPI + id);
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode ==204) {
@@ -59,7 +59,7 @@ class APIService {
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.ListUserAPI);
+    var url = Uri.https(Config.appURL, Config.ListUserAPI);
     print(url);
     var response = await client.get(url, headers: requestHeaders);
 print(response);
@@ -85,7 +85,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.deleteAPI + id);
+    var url = Uri.https(Config.appURL, Config.deleteAPI + id);
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode ==204) {
@@ -103,7 +103,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.ListReservationAPI);
+    var url = Uri.https(Config.appURL, Config.ListReservationAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -134,7 +134,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.TotalReservationAPI);
+    var url = Uri.https(Config.appURL, Config.TotalReservationAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -154,7 +154,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.TotalSubsAPI);
+    var url = Uri.https(Config.appURL, Config.TotalSubsAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -174,7 +174,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.MonthlyResAPI);
+    var url = Uri.https(Config.appURL, Config.MonthlyResAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -195,7 +195,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.WeeklyResAPI);
+    var url = Uri.https(Config.appURL, Config.WeeklyResAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -216,7 +216,7 @@ print(response);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.ListUserReservationAPI + id);
+    var url = Uri.https(Config.appURL, Config.ListUserReservationAPI + id);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -247,7 +247,7 @@ print(response);
       'Content-Type': 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
+    var url = Uri.https(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -267,7 +267,7 @@ print(response);
       'Content-Type': 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
+    var url = Uri.https(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {

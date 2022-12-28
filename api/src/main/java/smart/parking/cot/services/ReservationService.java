@@ -60,8 +60,8 @@ public class ReservationService {
                     .build();
             repository.save(reservation1);
             Optional<User> user_class = repository_user.findById(reservation.getUser_id());
-            try (PdfReader reader = new PdfReader("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf");
-                 PdfWriter writer = new PdfWriter("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
+            try (PdfReader reader = new PdfReader("/home/mohamedamine_toumi/Template.pdf");
+                 PdfWriter writer = new PdfWriter("/opt/pdf/Invoice.pdf");
                  PdfDocument document = new PdfDocument(reader, writer)) {
 
                 PdfPage page = document.getPage(1);

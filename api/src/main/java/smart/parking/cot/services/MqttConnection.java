@@ -31,7 +31,7 @@ public class MqttConnection {
 
             //CLIENT CONNECTION OPTIONS
             MqttClient client = new MqttClient(
-                    "wss://mqsmart-partt.king.me:8083", // serverURI in format: "protocol://name:port"
+                    "wss://mqtt.smart-parking.me:8083", // serverURI in format: "protocol://name:port"
                     MqttClient.generateClientId(), // ClientId
                     new MemoryPersistence()); // Persistence
 

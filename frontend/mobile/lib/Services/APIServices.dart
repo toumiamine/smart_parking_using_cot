@@ -17,7 +17,7 @@ class APIService {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
     };
-    var url = Uri.http(Config.appURL, Config.registerAPI);
+    var url = Uri.https(Config.appURL, Config.registerAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 
     if (response.statusCode ==204) {
@@ -35,7 +35,7 @@ class APIService {
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.loginAPI);
+    var url = Uri.https(Config.appURL, Config.loginAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 
     if (response.statusCode ==200) {
@@ -53,7 +53,7 @@ class APIService {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
     };
-    var url = Uri.http(Config.appURL, Config.CreateReservationrAPI);
+    var url = Uri.https(Config.appURL, Config.CreateReservationrAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 print(response.body);
     if (response.statusCode ==204) {
@@ -71,7 +71,7 @@ print(response.body);
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.GetUserReservations+email);
+    var url = Uri.https(Config.appURL, Config.GetUserReservations+email);
     var response = await client.get(url, headers: requestHeaders);
 //print(response.body);
     if (response.statusCode ==200) {
