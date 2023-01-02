@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("")
 @ApplicationScoped
-@DeclareRoles({"ADMIN", "MANAGER", "USER"})  // You need to indicate all roles that are used by the app
+@DeclareRoles({"ADMIN", "USER"})  // all roles that are used by the app
 public class ApplicationConfig extends Application {
 
 

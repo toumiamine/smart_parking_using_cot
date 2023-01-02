@@ -3,7 +3,6 @@ package smart.parking.cot.security;
 import smart.parking.cot.Entity.User;
 
 public class RemoveToken {
-
     private final User user;
 
     private final String token;

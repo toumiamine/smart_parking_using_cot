@@ -20,6 +20,8 @@ public class SecurityResource {
 
     @Inject
     private SecurityService service;
+    @Path("signup")
+    @PermitAll
     @POST
     public void create(@Valid UserDTO userDTO) {
         service.create(userDTO);
@@ -55,11 +57,6 @@ public class SecurityResource {
         service.removeRole(id, dto);
     }
 
-    @Path("me")
-    @GET
-    public UserDTO getMe() {
-        return service.getUser();
-    }
 
     @Path("users")
     @GET

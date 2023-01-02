@@ -34,8 +34,8 @@ public class MqttConnection {
                     "wss://mqtt.smart-parking.me:8083", // serverURI in format: "protocol://name:port"
                     MqttClient.generateClientId(), // ClientId
                     new MemoryPersistence()); // Persistence
-
             MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+            mqttConnectOptions.setConnectionTimeout(0);
             mqttConnectOptions.setUserName("broker");
             mqttConnectOptions.setPassword("broker".toCharArray());
             mqttConnectOptions.setSocketFactory(SSLSocketFactory.getDefault());

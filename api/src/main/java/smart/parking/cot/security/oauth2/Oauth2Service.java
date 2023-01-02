@@ -25,6 +25,7 @@ public class Oauth2Service {
     @Inject
     private SecurityService securityService;
     @Inject
+
     private UserTokenRepository repository;
 
     @Inject

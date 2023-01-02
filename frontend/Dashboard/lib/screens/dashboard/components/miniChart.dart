@@ -4,10 +4,13 @@ import 'dart:collection';
 
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import '../../../Services/APIServices.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+import '../../../base/pref_data.dart';
 class Minichart extends StatefulWidget {
 
 
@@ -50,7 +53,9 @@ class _Minichart extends State<Minichart> {
 
 
     Future<Map> _fetch4() async {
-      await APIService.ChartMonth(dateInput.text, dateInput1.text).then((value) =>  {
+      SharedPreferences prefs = await PrefData.getPrefInstance();
+      String? token = prefs.getString(PrefData.accesstoken);
+      await APIService.ChartMonth(dateInput.text, dateInput1.text,token).then((value) =>  {
         data=value
 
 

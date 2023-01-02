@@ -58,7 +58,7 @@ public class UserToken {
         this.tokens.removeIf(r -> token.equals(r.getToken()));
     }
 
-    Optional<AccessToken> findAccessToken(String accessToken) {
+    public Optional<AccessToken> findAccessToken(String accessToken) {
         initiateTokens();
         return this.tokens.stream().map(RefreshToken::getAccessToken)
                 .filter(a -> a.getToken().equals(accessToken))

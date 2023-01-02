@@ -8,6 +8,7 @@ class PrefData {
   static String fullname = prefName + "fullname";
   static String email = prefName + "email";
   static String phonenumber = prefName + "phonenumber";
+  static String token = prefName + "token";
 
 
   static Future<SharedPreferences> getPrefInstance() async {
@@ -46,6 +47,10 @@ class PrefData {
     preferences.setString(phonenumber, phonenum);
   }
 
+  static setToken(String tok) async {
+    SharedPreferences preferences = await getPrefInstance();
+    preferences.setString(token, tok);
+  }
 
   static setDarkMode(bool avail) async {
     SharedPreferences preferences = await getPrefInstance();

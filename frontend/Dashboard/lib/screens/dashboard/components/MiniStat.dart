@@ -1,7 +1,9 @@
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import '../../../Services/APIServices.dart';
+import '../../../base/pref_data.dart';
 class Ministat extends StatefulWidget {
 
 
@@ -31,7 +33,9 @@ class _Ministat extends State<Ministat> {
   Widget build(BuildContext context) {
     var t =0;
     Future<int> _fetch4() async {
-      await APIService.ChartReservation(dateInput.text, dateInput1.text).then((value) =>  {
+      SharedPreferences prefs = await PrefData.getPrefInstance();
+      String? token = prefs.getString(PrefData.accesstoken);
+      await APIService.ChartReservation(dateInput.text, dateInput1.text,token).then((value) =>  {
       t=value
 
       }

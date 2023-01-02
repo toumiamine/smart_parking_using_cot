@@ -16,9 +16,7 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 public class Oauth2Authentication implements HttpAuthenticationMechanism {
 
-    private static final Pattern CHALLENGE_PATTERN
-            = Pattern.compile("^Bearer *([^ ]+) *$", Pattern.CASE_INSENSITIVE);
-
+    private static final Pattern CHALLENGE_PATTERN = Pattern.compile("^Bearer *([^ ]+) *$", Pattern.CASE_INSENSITIVE);
     @Inject
     private UserTokenRepository repository;
 
@@ -26,29 +24,35 @@ public class Oauth2Authentication implements HttpAuthenticationMechanism {
     public AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response,
                                                 HttpMessageContext httpMessageContext) {
 
+        System.out.println(request.getRequestURI());
+        if(!(request.getRequestURI().contains("oauth2") || request.getRequestURI().contains("signup") || request.getRequestURI().contains("websocket_channel"))    ) {
+            final String authorization = request.getHeader("Authorization");
+            Matcher matcher = CHALLENGE_PATTERN.matcher(Optional.ofNullable(authorization).orElse(""));
+            if (!matcher.matches()) {
+                System.out.println(matcher);
+                return httpMessageContext.responseUnauthorized();
+            }
+            final String token = matcher.group(1);
+            final Optional<AccessToken> optional = repository.findByAccessToken(token)
+                    .flatMap(u -> u.findAccessToken(token));
 
-        final String authorization = request.getHeader("Authorization");
 
-        Matcher matcher = CHALLENGE_PATTERN.matcher(Optional.ofNullable(authorization).orElse(""));
-        if (!matcher.matches()) {
-            return httpMessageContext.doNothing();
-        }
-        final String token = matcher.group(1);
+            if (!optional.isPresent()) {
+                return httpMessageContext.responseUnauthorized();
+            }
 
-        final Optional<AccessToken> optional = repository.findByAccessToken(token)
-                .flatMap(u -> u.findAccessToken(token));
+            final AccessToken accessToken = optional.get();
+            final Optional<UserJWT> optionalUserJWT = UserJWT.parse(accessToken.getToken(), accessToken.getJwtSecret());
 
-        if (!optional.isPresent()) {
-            return httpMessageContext.responseUnauthorized();
-        }
+            if (optionalUserJWT.isPresent()) {
+                final UserJWT userJWT = optionalUserJWT.get();
+                return httpMessageContext.notifyContainerAboutLogin(userJWT.getUser(), userJWT.getRoles());
+            } else {
+                return httpMessageContext.responseUnauthorized();
+            }
 
-        final AccessToken accessToken = optional.get();
-        final Optional<UserJWT> optionalUserJWT = UserJWT.parse(accessToken.getToken(), accessToken.getJwtSecret());
-        if (optionalUserJWT.isPresent()) {
-            final UserJWT userJWT = optionalUserJWT.get();
-            return httpMessageContext.notifyContainerAboutLogin(userJWT.getUser(), userJWT.getRoles());
-        } else {
-            return httpMessageContext.responseUnauthorized();
+        }else {
+            return  httpMessageContext.doNothing() ;
         }
     }
 }

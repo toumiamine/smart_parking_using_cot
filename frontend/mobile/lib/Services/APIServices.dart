@@ -49,9 +49,10 @@ class APIService {
   }
 
 
-  static Future<bool> CreateReservation (ReservationRequestModel model) async {
+  static Future<bool> CreateReservation (ReservationRequestModel model,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
     var url = Uri.https(Config.appURL, Config.CreateReservationrAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
@@ -64,11 +65,12 @@ print(response.body);
     }
   }
 
-  static Future<List<ReservationRequestModel>> GetUserReservation (String email) async {
+  static Future<List<ReservationRequestModel>> GetUserReservation (String email,String tok) async {
 
 
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.GetUserReservations+email);

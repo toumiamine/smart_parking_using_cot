@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:smart_admin_dashboard/base/pref_data.dart';
 import 'package:smart_admin_dashboard/models/ListReservationResponseModel.dart';
 import 'package:smart_admin_dashboard/models/ListUsersResponseModel.dart';
 
@@ -11,7 +12,7 @@ import '../models/RegisterModelRequest.dart';
 
 class APIService {
   static var client = http.Client();
-  static Future<String> login (LoginModelRequest model) async {
+  static Future login (LoginModelRequest model) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
     };
@@ -22,7 +23,8 @@ class APIService {
     if (response.statusCode ==200) {
       Map<String, dynamic> message = jsonDecode(response.body);
       if (message['role'][0] == 'ADMIN') {
-        return 'true';
+       await PrefData.setAcessToken(message["accessToken"]);
+        return message;
       }
       else {
         return 'USER NOT AUTHORIZED';
@@ -31,16 +33,15 @@ class APIService {
 
     }
     else {
-      Map<String, dynamic> message = jsonDecode(response.body);
-
-      return message['errors'][0];
+      return 'USER NOT AUTHORIZED';
     }
 
   }
 
-  static Future<String> deleteReservation (String id) async {
+  static Future<String> deleteReservation (String id,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.DeleteReservationAPI + id);
@@ -54,9 +55,10 @@ class APIService {
     }
 
   }
-  static Future<List<UserListResponseModel>> listUsers () async {
+  static Future<List<UserListResponseModel>> listUsers (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.ListUserAPI);
@@ -80,9 +82,10 @@ print(response);
 
   }
 
-  static Future<String> delete (String id) async {
+  static Future<String> delete (String id,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.deleteAPI + id);
@@ -98,9 +101,10 @@ print(response);
   }
 
 
-  static Future<List<ListReservationResponseModel>> listReservation () async {
+  static Future<List<ListReservationResponseModel>> listReservation (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.ListReservationAPI);
@@ -129,9 +133,10 @@ print(response);
 
   }
 
-  static Future<int> totalReservation () async {
+  static Future<int> totalReservation (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.TotalReservationAPI);
@@ -149,9 +154,10 @@ print(response);
     }
 
   }
-  static Future<int> totalSubs () async {
+  static Future<int> totalSubs (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.TotalSubsAPI);
@@ -169,9 +175,10 @@ print(response);
     }
 
   }
-  static Future<int> monthlyRes () async {
+  static Future<int> monthlyRes (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.MonthlyResAPI);
@@ -190,9 +197,10 @@ print(response);
 
   }
 
-  static Future<int> weeklyRes () async {
+  static Future<int> weeklyRes (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.WeeklyResAPI);
@@ -211,9 +219,10 @@ print(response);
 
   }
 
-  static Future<List<ListReservationResponseModel>> listReservationUser (String id) async {
+  static Future<List<ListReservationResponseModel>> listReservationUser (String id,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.ListUserReservationAPI + id);
@@ -242,9 +251,10 @@ print(response);
 
   }
 
-  static Future<int> ChartReservation (String startDate, String endDate) async {
+  static Future<int> ChartReservation (String startDate, String endDate,String tok) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
@@ -262,9 +272,10 @@ print(response);
     }
   }
 
-  static Future ChartMonth (String startDate, String endDate) async {
+  static Future ChartMonth (String startDate, String endDate,String tok) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
+      'Authorization' : 'Bearer '+ tok,
     };
 
     var url = Uri.https(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
@@ -280,7 +291,6 @@ print(response);
     }
     else {
       Map<String, dynamic> message = jsonDecode(response.body);
-
       return message['errors'][0];
     }
   }

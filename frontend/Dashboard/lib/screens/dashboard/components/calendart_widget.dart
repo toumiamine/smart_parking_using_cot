@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:smart_admin_dashboard/core/models/data.dart';
 import 'package:smart_admin_dashboard/screens/dashboard/components/calendar_list_widget.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../Services/APIServices.dart';
+import '../../../base/pref_data.dart';
 import '../../../models/ListReservationResponseModel.dart';
 import '../../../models/ReservationModel.dart';
 
@@ -44,7 +46,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   Future<List<ReservationModel>> _fetch() async {
     List<ReservationModel>   recentReservations = [];
     calendarData = [];
-    await APIService.listReservation().then((value) => {
+    SharedPreferences prefs = await PrefData.getPrefInstance();
+    String? token = prefs.getString(PrefData.accesstoken);
+    await APIService.listReservation(token).then((value) => {
 
       for (ListReservationResponseModel reservation in value) {
         calendarData.add(CalendarData(

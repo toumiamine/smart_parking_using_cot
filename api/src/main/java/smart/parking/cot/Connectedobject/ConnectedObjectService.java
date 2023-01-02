@@ -3,21 +3,13 @@ package smart.parking.cot.Connectedobject;
 
 import jakarta.nosql.mapping.Database;
 import jakarta.nosql.mapping.DatabaseType;
-import org.eclipse.paho.client.mqttv3.*;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.net.ssl.SSLSocketFactory;
-import java.security.Principal;
-import java.util.Arrays;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @ApplicationScoped
 public class ConnectedObjectService {

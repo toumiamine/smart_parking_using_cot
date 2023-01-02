@@ -19,10 +19,10 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class ReservationRessource {
-
     @Inject
     private ReservationService service;
     @Path("create")
+    @RolesAllowed({"USER","ADMIN"})
     @POST
     public void create(@Valid Reservation reservation) {
         service.create(reservation);
@@ -57,6 +57,7 @@ public class ReservationRessource {
 
     @Path("user/{id}")
     @GET
+    @RolesAllowed({"ADMIN","USER"})
     public List<Reservation> getUserReservation(@PathParam("id")  String id) {
         return service.getUserReservation(id);
     }

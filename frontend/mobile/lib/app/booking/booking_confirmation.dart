@@ -5,9 +5,11 @@ import 'package:flutter_parking_ui_new/app/booking/parking_ticket_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Services/APIServices.dart';
 import '../../base/color_data.dart';
 import '../../base/constant.dart';
+import '../../base/pref_data.dart';
 import '../../base/resizer/fetch_pixels.dart';
 import '../../base/widget_utils.dart';
 import '../data/data_file.dart';
@@ -363,7 +365,9 @@ class _BookingConfirmation extends State<BookingConfirmation> {
                     String dt_added =   widget.selected_date+"T"+formattedTime;
                     print(dt_added);
               ReservationRequestModel model = ReservationRequestModel(id : result_id, user_id: 'medaminetoumi454@gmail.com', start_date: dt,end_date: dt_added, price: widget.number_hours!*7,selectedSpot: widget.selected_spot);
- await  APIService.CreateReservation(model).then((response) => {
+                    SharedPreferences prefs = await PrefData.getPrefInstance();
+                    String? token = prefs.getString(PrefData.token);
+              await  APIService.CreateReservation(model,token!).then((response) => {
                   if (response== true) {
                     Navigator.pop(context),
 

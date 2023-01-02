@@ -4,9 +4,9 @@ import jakarta.websocket.Encoder;
 
 import java.io.IOException;
 import java.io.Writer;
-import javax.json.JsonObject;
-import javax.json.JsonWriter;
-import javax.json.spi.JsonProvider;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonWriter;
+import jakarta.json.spi.JsonProvider;
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Encoder;
 import jakarta.websocket.EndpointConfig;

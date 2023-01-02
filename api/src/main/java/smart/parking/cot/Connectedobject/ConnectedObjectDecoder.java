@@ -5,9 +5,9 @@ import jakarta.websocket.EndpointConfig;
 import smart.parking.cot.Connectedobject.ConnectedObject;
 
 import java.io.Reader;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.spi.JsonProvider;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.spi.JsonProvider;
 
 
 public class ConnectedObjectDecoder implements Decoder.TextStream<ConnectedObject> {

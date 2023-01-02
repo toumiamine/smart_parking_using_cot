@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:smart_admin_dashboard/core/init/provider_list.dart';
 import 'package:smart_admin_dashboard/screens/dashboard/components/calendart_widget.dart';
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SharedPreferences.setMockInitialValues({});
+
     Map<String, WidgetBuilder> routes = {
     '/': (BuildContext context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel"),
      // '/': (BuildContext context) => HomeScreen(),

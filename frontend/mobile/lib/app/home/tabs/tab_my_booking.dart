@@ -39,7 +39,8 @@ class _TabMyBooking extends State<TabMyBooking> {
     SharedPreferences prefs = await PrefData.getPrefInstance();
     String? email = prefs.getString(PrefData.email);
    // print(email);
-    await APIService.GetUserReservation(email!).then((value) => {
+    String? token = prefs.getString(PrefData.token);
+    await APIService.GetUserReservation(email!,token!).then((value) => {
   for (ReservationRequestModel reservation in value) {
 if (DateTime.now().millisecondsSinceEpoch <int.parse(reservation.end_date!) ) {
   bookingList.add(ModelMyBooking("imgDetail.png", reservation.id!, "Parking Technopark El Ghazala", "Elgazala Technopark, 2088, Ariana", "Parking Ongoing", int.parse(reservation.start_date!),reservation.start_date!,reservation.end_date!,reservation.selectedSpot!))

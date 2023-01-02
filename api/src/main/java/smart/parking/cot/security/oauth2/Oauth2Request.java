@@ -5,7 +5,6 @@ import smart.parking.cot.security.infra.FieldPropertyVisibilityStrategy;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbVisibility;
 import jakarta.validation.constraints.NotBlank;
-import javax.ws.rs.FormParam;
 
 @JsonbVisibility(FieldPropertyVisibilityStrategy.class)
 public class Oauth2Request {

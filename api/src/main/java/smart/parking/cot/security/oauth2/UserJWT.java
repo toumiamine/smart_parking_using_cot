@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-class UserJWT {
+public class UserJWT {
 
     private static final Logger LOGGER = Logger.getLogger(UserJWT.class.getName());
     private static final String ISSUER = "jakarta";
@@ -58,7 +58,7 @@ class UserJWT {
 
     }
 
-    static Optional<UserJWT> parse(String jwtText, String token) {
+    public static Optional<UserJWT> parse(String jwtText, String token) {
         Algorithm algorithm = Algorithm.HMAC256(token);
         try {
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();

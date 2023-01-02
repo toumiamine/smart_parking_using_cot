@@ -1,4 +1,5 @@
 package smart.parking.cot.Ressources;
+import jakarta.annotation.security.PermitAll;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -19,7 +20,6 @@ import jakarta.websocket.OnOpen;
 import smart.parking.cot.services.MqttConnection;
 
 import javax.net.ssl.SSLSocketFactory;
-
 
 @ServerEndpoint(
         value = "/websocket_channel",

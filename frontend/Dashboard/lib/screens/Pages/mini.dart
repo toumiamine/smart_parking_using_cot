@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:smart_admin_dashboard/core/utils/colorful_tag.dart';
 import 'package:smart_admin_dashboard/models/ListUsersResponseModel.dart';
@@ -6,6 +7,7 @@ import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Services/APIServices.dart';
+import '../../base/pref_data.dart';
 
 class MiniRecentUsers extends StatefulWidget {
 
@@ -21,8 +23,9 @@ class _MiniRecentUsers extends State<MiniRecentUsers> {
 
     Future<List<RecentUser>> _fetch() async {
       List<RecentUser>   recentUsers = [];
-
-      await APIService.listUsers().then((value) => {
+      SharedPreferences prefs = await PrefData.getPrefInstance();
+      String? token = prefs.getString(PrefData.accesstoken);
+      await APIService.listUsers(token).then((value) => {
         // print(value);
         for (UserListResponseModel user in value) {
 

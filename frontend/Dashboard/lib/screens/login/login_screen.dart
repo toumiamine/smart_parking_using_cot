@@ -7,6 +7,7 @@ import 'package:smart_admin_dashboard/screens/login/components/slider_widget.dar
 import 'package:flutter/material.dart';
 
 import '../../Services/APIServices.dart';
+import '../../base/pref_data.dart';
 import '../../models/LoginModelRequest.dart';
 
 class Login extends StatefulWidget {
@@ -284,7 +285,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
               onPressed: () {
                 LoginModelRequest model = LoginModelRequest(email: email ,password: password, grandType: 'PASSWORD' );
                 APIService.login(model).then((response) => {
-                  if (response== 'true') {
+                  if (response!=  'USER NOT AUTHORIZED') {
+                    PrefData.setLogIn(true),
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => HomeScreen()),

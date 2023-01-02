@@ -78,6 +78,7 @@ class _ScreenLogin extends State<ScreenLogin> {
         await  APIService.login(model).then((response) => {
             if (response!= null) {
               PrefData.setLogIn(true),
+              PrefData.setToken(response["accessToken"]),
               PrefData.setEmail(response["email"]),
               PrefData.setFullName(response["fullname"]),
               PrefData.setPhoneNumber(response["phone_number"]),

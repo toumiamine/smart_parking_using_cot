@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:smart_admin_dashboard/core/utils/colorful_tag.dart';
 import 'package:smart_admin_dashboard/models/ListReservationResponseModel.dart';
@@ -10,6 +11,7 @@ import 'package:colorize_text_avatar/colorize_text_avatar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Services/APIServices.dart';
+import '../../base/pref_data.dart';
 import '../../models/ReservationModel.dart';
 import '../dashboard/components/header.dart';
 
@@ -27,8 +29,9 @@ class _ListReservationsState extends State<ListReservations> {
 
     Future<List<ReservationModel>> _fetch() async {
       List<ReservationModel>   recentReservations = [];
-
-      await APIService.listReservation().then((value) => {
+      SharedPreferences prefs = await PrefData.getPrefInstance();
+      String? token = prefs.getString(PrefData.accesstoken);
+      await APIService.listReservation(token).then((value) => {
 
         for (ListReservationResponseModel reservation in value) {
           recentReservations.add( ReservationModel(
@@ -234,8 +237,10 @@ class _ListReservationsState extends State<ListReservations> {
     ),
     style: ElevatedButton.styleFrom(
     primary: Colors.red),
-    onPressed: () {
-      APIService.deleteReservation(snapshot.data![index].id!).then((response) {
+    onPressed: () async {
+      SharedPreferences prefs = await PrefData.getPrefInstance();
+      String? token = prefs.getString(PrefData.accesstoken);
+      APIService.deleteReservation(snapshot.data![index].id!, token).then((response) {
         if (response== 'true') {
           setState(() {      Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
