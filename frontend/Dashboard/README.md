@@ -3,4 +3,4 @@
 Flutter Web Smart Admin 
 ### 👨‍💻 Author
 
-Developed by Toumi Mohamed Amine & Azzouz Imen
+Developed by Toumi Mohamed Amine & Azzouz Imen 
