@@ -83,6 +83,12 @@ public class ReservationRessource {
         return service.range77(start_date,end_date);
     }
 
+    @Path("prices")
+    @GET
+    @RolesAllowed("ADMIN")
+    public float total_prices(){
+        return service.total_reservation_prices();    }
+
 }
 
 

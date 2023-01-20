@@ -7,6 +7,7 @@ import 'package:smart_admin_dashboard/models/ListReservationResponseModel.dart';
 import 'package:smart_admin_dashboard/models/ListUsersResponseModel.dart';
 
 import '../Config/Config.dart';
+import '../models/ListParkingResponseModel.dart';
 import '../models/LoginModelRequest.dart';
 import '../models/RegisterModelRequest.dart';
 
@@ -17,7 +18,7 @@ class APIService {
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.https(Config.appURL, Config.loginAPI);
+    var url = Uri.http(Config.appURL, Config.loginAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 
     if (response.statusCode ==200) {
@@ -38,13 +39,37 @@ class APIService {
 
   }
 
+  static Future addParking (ParkingModelRequest model,String tok) async {
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.CreateParking);
+    var response = await client.post(
+        url, headers: requestHeaders, body: jsonEncode(model.toJson()));
+    print("/////////////////////");
+
+    print(response.statusCode);
+
+      if (response.statusCode == 204) {
+        return 'true';
+      }
+      else {
+        print(response.body);
+        return 'ERROR';
+      }
+    }
+
+
+
   static Future<String> deleteReservation (String id,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.DeleteReservationAPI + id);
+    var url = Uri.http(Config.appURL, Config.DeleteReservationAPI + id);
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode ==204) {
@@ -61,7 +86,7 @@ class APIService {
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.ListUserAPI);
+    var url = Uri.http(Config.appURL, Config.ListUserAPI);
     print(url);
     var response = await client.get(url, headers: requestHeaders);
 print(response);
@@ -88,7 +113,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.deleteAPI + id);
+    var url = Uri.http(Config.appURL, Config.deleteAPI + id);
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode ==204) {
@@ -107,7 +132,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.ListReservationAPI);
+    var url = Uri.http(Config.appURL, Config.ListReservationAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -139,7 +164,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.TotalReservationAPI);
+    var url = Uri.http(Config.appURL, Config.TotalReservationAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -160,7 +185,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.TotalSubsAPI);
+    var url = Uri.http(Config.appURL, Config.TotalSubsAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -181,7 +206,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.MonthlyResAPI);
+    var url = Uri.http(Config.appURL, Config.MonthlyResAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -203,7 +228,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.WeeklyResAPI);
+    var url = Uri.http(Config.appURL, Config.WeeklyResAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -225,7 +250,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.ListUserReservationAPI + id);
+    var url = Uri.http(Config.appURL, Config.ListUserReservationAPI + id);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -251,13 +276,54 @@ print(response);
 
   }
 
+
+
+
+
+
+  static Future ListAllParking (String tok) async {
+    Map<String,String> requestHeaders = {
+      'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.ListAllParking);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode ==200) {
+      Iterable l = json.decode(response.body);
+      List<ListParkingResponseModel> parkings = [];
+      print(l.last['_parking_name'].runtimeType);
+      print(l.last['_parking_id'].runtimeType);
+      print(l.last['_parking_long']);
+      print(l.last['_parking_lat']);
+
+      for (var park in l) {
+        parkings.add(ListParkingResponseModel(name: park['_parking_name'], id:park['_parking_id'], long: park['_parking_long'], lat: park['_parking_lat']));
+      }
+     print(parkings);
+      return parkings;
+    }
+    else {
+      Map<String, dynamic> message = jsonDecode(response.body);
+
+      return message['errors'][0];
+    }
+
+  }
+
+
+
+
+
+
   static Future<int> ChartReservation (String startDate, String endDate,String tok) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
+    var url = Uri.http(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -278,7 +344,7 @@ print(response);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.https(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
+    var url = Uri.http(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -296,4 +362,30 @@ print(response);
   }
 
 
+
+  static Future<double> TotalPrices (String tok) async {
+    Map<String,String> requestHeaders = {
+      'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.TotalPrices);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode ==200) {
+      String t = response.body;
+
+      print(t);
+      double  res = double.parse(t);
+      return res;
+    }
+    else {
+      return 0;
+    }
+
+  }
+
+
+
 }
+

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
 
     Map<String, WidgetBuilder> routes = {
     '/': (BuildContext context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel"),
-     // '/': (BuildContext context) => HomeScreen(),
+      // '/': (BuildContext context) => HomeScreen(),
     };
     return MaterialApp(
       initialRoute: '/',
