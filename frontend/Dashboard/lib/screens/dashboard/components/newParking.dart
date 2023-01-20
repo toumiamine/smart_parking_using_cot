@@ -18,7 +18,7 @@ class MyMap extends StatefulWidget {
 }
 
 class _MyMapState extends State<MyMap> {
-  
+
   late GoogleMapController _mapController;
   Set<Marker> _markers = {};
   Set<Marker> _oldmarkers = {};
@@ -198,6 +198,8 @@ bool index =false;
 
 
     setState(()  {
+      CameraPosition(
+          target: LatLng(position.latitude, position.longitude));
       _markers = {};
         _markers.add(Marker(
           markerId: MarkerId(position.toString()),

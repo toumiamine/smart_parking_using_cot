@@ -95,7 +95,7 @@ class _MiniRecentUsers extends State<MiniRecentUsers> {
                                   ),
 
                                   DataColumn(
-                                    label: Text("R_date"),
+                                    label: Text("Reservation Date"),
                                   ),
                                   DataColumn(
                                     label: Text("Last Active"),

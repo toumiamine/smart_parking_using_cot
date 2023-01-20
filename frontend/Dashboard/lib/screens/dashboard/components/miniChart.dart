@@ -105,7 +105,7 @@ class _Minichart extends State<Minichart> {
                 child: Column(
                   children:[
                     //Text(snapshot.data.toString()),
-                    Text("Recent Statistics", style: TextStyle(fontSize: 17),),
+                    Text("Yearly Statistics", style: TextStyle(fontSize: 17),),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
