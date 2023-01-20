@@ -13,4 +13,7 @@ class Config {
   static const String ListUserReservationAPI="/microprofile/reservation/user/";
   static const String ChartAPI="/microprofile/reservation/range/";
   static const String MonthesListAPI = "/microprofile/reservation/range77/";
+  static const String TotalPrices = "/microprofile/reservation/prices";
+  static const String CreateParking = "/microprofile/parking/create";
+  static const String ListAllParking = "/microprofile/parking/listAll";
 }

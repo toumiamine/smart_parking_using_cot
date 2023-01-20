@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/models/RefreshTokenRequestModel.dart';
 import 'package:smart_admin_dashboard/responsive.dart';
+import 'package:smart_admin_dashboard/screens/dashboard/components/newParking.dart';
 import 'package:smart_admin_dashboard/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import '../../Services/APIServices.dart';
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
   int controller = 0;
-  List list = [DashboardScreen(),RecentUsers2(),ListReservations0(), ChooseParkingSlotScreen(),CalendarWidget()];
+  List list = [DashboardScreen(),RecentUsers2(),ListReservations0(), ChooseParkingSlotScreen(),CalendarWidget(),MyMap()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,6 +131,17 @@ class _HomeScreenState extends State<HomeScreen> {
              svgSrc: "assets/icons/menu_store.svg",
              press: () {},
            ),
+           DrawerListTile(
+             selected_color: controller ==5 ? Color(0xff34d186) : Colors.black  ,
+             text_color: controller ==5 ? Colors.white : Colors.white,
+             title: "New Parking",
+             svgSrc: "assets/icons/menu_tran.svg",
+             press: () {
+               setState(() { controller=5; });
+             },
+           ),
+
+
          ],
        ),
      ),
@@ -197,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           selected_color: controller ==0 ? Color(0xff34d186) : Colors.black  ,
                           text_color: controller ==0 ? Colors.white : Colors.white,
                           title: "Dashboard",
-                          svgSrc: "assets/icons/menu_tran.svg",
+                          svgSrc: "assets/icons/dashboard.svg",
                           press: () {
                             setState(() { controller=0; });
                           },
@@ -206,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           selected_color: controller ==1 ? Color(0xff34d186) : Colors.black  ,
                           text_color: controller ==1 ? Colors.white : Colors.white,
                           title: "Users",
-                          svgSrc: "assets/icons/menu_tran.svg",
+                          svgSrc: "assets/icons/abstract-user-flat-1.svg",
                           press: () {
 
                             setState(() { controller=1; });
@@ -216,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           selected_color: controller ==2 ? Color(0xff34d186) : Colors.black  ,
                           text_color: controller ==2 ? Colors.white : Colors.white,
                           title: "Reservations",
-                          svgSrc: "assets/icons/menu_task.svg",
+                          svgSrc: "assets/icons/reservation.svg",
                           press: () {
                             setState(() { controller=2; });
                           },
@@ -225,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           selected_color: controller ==3 ? Color(0xff34d186) : Colors.black  ,
                           text_color: controller ==3 ? Colors.white : Colors.white,
                           title: "Parking Live",
-                          svgSrc: "assets/icons/menu_task.svg",
+                          svgSrc: "assets/icons/dffc80ca7bdecb12ae5e6dc093bd65a2.svg",
                           press: () {
                             setState(() { controller=3; });
 
@@ -236,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           selected_color: controller ==4 ? Color(0xff34d186) : Colors.black  ,
                           text_color: controller ==4 ? Colors.white : Colors.white,
                           title: "Calendar",
-                          svgSrc: "assets/icons/menu_doc.svg",
+                          svgSrc: "assets/icons/calendar.svg",
                           press: () {
                             setState(() { controller=4; });
 
@@ -300,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     onPressed: () {
                                                       Navigator.push(
                                                         context,
-                                                        MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+                                                        MaterialPageRoute(builder: (context) => Login(title: "Welcome to the Smart Parking Admin & Dashboard Panel")),
                                                       );
 
                                                     },
@@ -314,6 +326,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           },
                         ),
+                        DrawerListTile(
+                          selected_color: controller ==5 ? Color(0xff34d186) : Colors.black  ,
+                          text_color: controller ==5 ? Colors.white : Colors.white,
+                          title: "New Parking",
+                          svgSrc: "assets/icons/menu_tran.svg",
+                          press: () {
+                            setState(() { controller=5; });
+                          },
+                        ),
+
                       ],
                     ),
                   ),
@@ -321,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             Expanded(
               // It takes 5/6 part of the screen
-              flex: 5,
+              flex: 6,
               child: list[controller],
             ),
           ],

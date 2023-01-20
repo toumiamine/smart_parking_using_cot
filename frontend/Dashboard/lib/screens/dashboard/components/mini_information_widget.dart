@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_admin_dashboard/screens/Pages/ChooseParkingSlotScreen.dart';
 import 'package:smart_admin_dashboard/screens/Pages/MonthRes.dart';
+import 'package:smart_admin_dashboard/screens/Pages/TotalPrices.dart';
 import 'package:smart_admin_dashboard/screens/Pages/Weekly.dart';
 import 'package:smart_admin_dashboard/screens/Pages/totalReservations.dart';
 import 'package:smart_admin_dashboard/screens/Pages/totalSubs.dart';
@@ -65,12 +66,12 @@ class _MiniInformationWidgetState extends State<MiniInformationWidget> {
                   value: _value,
                   items: [
                     DropdownMenuItem(
-                      child: Text("Weekly"),
+                      child: Text("This week"),
                       value: 1,
                     ),
 
                     DropdownMenuItem(
-                      child: Text("Monthly"),
+                      child: Text("This month"),
                       value: 2,
                     ),
                     DropdownMenuItem(
@@ -122,8 +123,8 @@ class _MiniInformationWidgetState extends State<MiniInformationWidget> {
           if (widget.dailyData.title =="Total Reservations" && _value ==3 ) totalReservations(),
           if (widget.dailyData.title =="Total Reservations" && _value ==2 ) MonthlyRes(),
           if (widget.dailyData.title =="Total Reservations" && _value ==1 ) weekly(),
-          if  (widget.dailyData.title =="Total Subscribers" && _value ==3 ) totalSubs(),
-          if (widget.dailyData.title =="Available Spots"  ) Bird(),
+          if  (widget.dailyData.title =="Total Subscribers" && (_value ==3 || _value ==2 || _value ==1 ) ) totalSubs(),
+          if (widget.dailyData.title =="Total income" && (_value ==3 || _value ==2 || _value ==1 )  ) total_income(),
           if (widget.dailyData.title =="Occupied Spots"  ) Bird1(),
 
 

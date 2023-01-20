@@ -7,6 +7,7 @@ import 'package:smart_admin_dashboard/models/ListReservationResponseModel.dart';
 import 'package:smart_admin_dashboard/models/ListUsersResponseModel.dart';
 
 import '../Config/Config.dart';
+import '../models/ListParkingResponseModel.dart';
 import '../models/LoginModelRequest.dart';
 import '../models/RefreshTokenRequestModel.dart';
 import '../models/RegisterModelRequest.dart';
@@ -59,6 +60,27 @@ print(response.body);
     }
 
   }
+  static Future addParking (ParkingModelRequest model,String tok) async {
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.CreateParking);
+    var response = await client.post(
+        url, headers: requestHeaders, body: jsonEncode(model.toJson()));
+    print("/////////////////////");
+
+    print(response.statusCode);
+
+      if (response.statusCode == 204) {
+        return 'true';
+      }
+      else {
+        print(response.body);
+        return 'ERROR';
+      }
+    }
 
 
 
@@ -296,6 +318,47 @@ print(response);
 
   }
 
+
+
+
+
+
+  static Future ListAllParking (String tok) async {
+    Map<String,String> requestHeaders = {
+      'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.ListAllParking);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode ==200) {
+      Iterable l = json.decode(response.body);
+      List<ListParkingResponseModel> parkings = [];
+      print(l.last['_parking_name'].runtimeType);
+      print(l.last['_parking_id'].runtimeType);
+      print(l.last['_parking_long']);
+      print(l.last['_parking_lat']);
+
+      for (var park in l) {
+        parkings.add(ListParkingResponseModel(name: park['_parking_name'], id:park['_parking_id'], long: park['_parking_long'], lat: park['_parking_lat']));
+      }
+     print(parkings);
+      return parkings;
+    }
+    else {
+      Map<String, dynamic> message = jsonDecode(response.body);
+
+      return message['errors'][0];
+    }
+
+  }
+
+
+
+
+
+
   static Future<int> ChartReservation (String startDate, String endDate,String tok) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
@@ -347,4 +410,30 @@ print(response);
   }
 
 
+
+  static Future<double> TotalPrices (String tok) async {
+    Map<String,String> requestHeaders = {
+      'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.TotalPrices);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode ==200) {
+      String t = response.body;
+
+      print(t);
+      double  res = double.parse(t);
+      return res;
+    }
+    else {
+      return 0;
+    }
+
+  }
+
+
+
 }
+

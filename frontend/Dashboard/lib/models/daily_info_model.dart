@@ -142,7 +142,7 @@ var dailyData = [
 
 
 
-  {"title": "Available Spots",
+  {"title": "Total income",
    "volumeData": 1,
    "icon": FlutterIcons.cab_faw,
    "totalStorage": "- %5",

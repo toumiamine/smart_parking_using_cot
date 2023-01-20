@@ -22,7 +22,7 @@ import smart.parking.cot.Entity.User;
 import smart.parking.cot.Repository.ReservationRepository;
 import smart.parking.cot.Repository.UserRepository;
 import smart.parking.cot.security.UserAlreadyExistException;
-
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 
@@ -398,8 +398,8 @@ public class ReservationService {
                         "                            <td style=\"overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;\" align=\"left\">\n" +
                         "\n" +
                         "                              <div style=\"line-height: 160%; text-align: center; word-wrap: break-word;\">\n" +
-                        "                                <p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 22px; line-height: 35.2px;\">Hi "+ user_class.get().getFull_name()+", </span></p>\n" +
-                        "                                <p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 18px; line-height: 28.8px;\">I hope you’re well. Please see attached invoice number <strong>"+reservation.getId()+"</strong> for <strong>"+ reservation.getSelectedSpot()+"</strong> Spot, due on <strong>"+dtf.format(now)+"</strong>. Don’t hesitate to reach out if you have any questions.</span></p>\n" +
+                        "                                <p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 22px; line-height: 35.2px;\">Hi " + user_class.get().getFull_name() + ", </span></p>\n" +
+                        "                                <p style=\"font-size: 14px; line-height: 160%;\"><span style=\"font-size: 18px; line-height: 28.8px;\">I hope you’re well. Please see attached invoice number <strong>" + reservation.getId() + "</strong> for <strong>" + reservation.getSelectedSpot() + "</strong> Spot, due on <strong>" + dtf.format(now) + "</strong>. Don’t hesitate to reach out if you have any questions.</span></p>\n" +
                         "                              </div>\n" +
                         "\n" +
                         "                            </td>\n" +
@@ -617,11 +617,10 @@ public class ReservationService {
                 messageBodyPart.setContent(htmlText, "text/html");
 
 
-
                 Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(messageBodyPart);
                 multipart.addBodyPart(attachmentPart);
-                message.setContent(multipart );
+                message.setContent(multipart);
 
                 Transport.send(message);
                 System.out.println("message sent....");
@@ -743,41 +742,6 @@ public class ReservationService {
     }
 
 
-    public List<Integer> get_list_monthes(String startDate, String endDate) {
-        List<Integer> listMonth = new ArrayList<Integer>();
-
-        String date1 = "2022-01-01";
-        String date2 = "2022-11-30";
-
-        DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-
-        Calendar beginCalendar = Calendar.getInstance();
-        Calendar finishCalendar = Calendar.getInstance();
-
-        try {
-            beginCalendar.setTime(formater.parse(date1));
-            finishCalendar.setTime(formater.parse(date2));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
-        while (beginCalendar.before(finishCalendar)) {
-
-            Date date = beginCalendar.getTime();
-            Calendar cal4 = Calendar.getInstance();
-            cal4.setTime(date);
-            System.out.println(  cal4.get(Calendar.MONTH));
-            // Add One Month to get next Month
-            beginCalendar.add(Calendar.MONTH, 1);
-        }
-        return listMonth;
-    }
-
-
-
-
-
     public int range_reservation(String date1_comp, String date2_comp) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String oeStartDateStr = date1_comp;
@@ -787,7 +751,8 @@ public class ReservationService {
         System.out.println("endDate input =  "+ endDate);
         System.out.println("boucle for ");
         List<Reservation> liste1 = new ArrayList<>();
-        List<Reservation> liste = new ArrayList<>();;
+        List<Reservation> liste = new ArrayList<>();
+        ;
         List<Reservation> listRes = repository.findAll();
         for (int i = 0; i < listRes.size(); i++) {
             Reservation reservation = listRes.get(i);
@@ -796,7 +761,7 @@ public class ReservationService {
 
 
             String currDt = sdf.format(date);
-            System.out.println("date li fost  baed mawlet string"+ date);
+            System.out.println("date li fost  baed mawlet string" + date);
 
             if (date.after(startDate) && date.before(endDate)) {
                 System.out.println("ok if 1");
@@ -804,7 +769,7 @@ public class ReservationService {
                 liste.add(reservation);
             }
 
-             if (date.compareTo(endDate) < 0 & date.compareTo(startDate) > 0){
+            if (date.compareTo(endDate) < 0 & date.compareTo(startDate) > 0) {
                 System.out.println("ok if 2");
                 liste1.add(reservation);
             }
@@ -812,16 +777,15 @@ public class ReservationService {
 
             //liste.add(reservation);
 
-            }
+        }
 
 
+        return liste.size();
 
-            return liste.size();
-
-            }
+    }
 
     public Map<String, String> range77(String date1, String date2) throws ParseException {
-        Map<String, String> map= new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = sdf.parse(date1);
         Date endDate = sdf.parse(date2);
@@ -831,58 +795,67 @@ public class ReservationService {
         System.out.println(a);
         Calendar b = Calendar.getInstance();
         b.setTime(endDate);
-       int begin_month= a.get(Calendar.MONTH);
-       System.out.println("begin month =  "+ begin_month);
-        int end_month= b.get(Calendar.MONTH);
-        System.out.println(" end month  "+  end_month);
+        int begin_month = a.get(Calendar.MONTH);
+        System.out.println("begin month =  " + begin_month);
+        int end_month = b.get(Calendar.MONTH);
+        System.out.println(" end month  " + end_month);
 
         List<Reservation> listRes = repository.findAll();
         for (int j = 0; j < 12; j++) {
-            System.out.println("c' est  la valeur de j = " +j );
-            if (j >= begin_month  && j <= end_month) {
-            List<Reservation> liste3 = new ArrayList<>();
-            for (int i = 0; i < listRes.size(); i++) {
-                Reservation reservation = listRes.get(i);
-                Date date = reservation.getStart_date();
-                if (date.after(startDate) && date.before(endDate)) {
-                    //liste.add(reservation);
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(date);
-                    int month = cal.get(Calendar.MONTH);
+            System.out.println("c' est  la valeur de j = " + j);
+            if (j >= begin_month && j <= end_month) {
+                List<Reservation> liste3 = new ArrayList<>();
+                for (int i = 0; i < listRes.size(); i++) {
+                    Reservation reservation = listRes.get(i);
+                    Date date = reservation.getStart_date();
+                    if (date.after(startDate) && date.before(endDate)) {
+                        //liste.add(reservation);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date);
+                        int month = cal.get(Calendar.MONTH);
 
-                    if (j == month) {
-                        System.out.println("j et month equi");
+                        if (j == month) {
+                            System.out.println("j et month equi");
 
-                        liste3.add(reservation);}}
-                        if (liste3.size()!=0) {
-                            //map. put(String.valueOf(j), String.valueOf(liste3.size()));
-                            map. put(String.valueOf(j+1), String.valueOf(liste3.size()));
+                            liste3.add(reservation);
                         }
+                    }
+                    if (liste3.size() != 0) {
+                        //map. put(String.valueOf(j), String.valueOf(liste3.size()));
+                        map.put(String.valueOf(j + 1), String.valueOf(liste3.size()));
+                    }
 
-            } }
+                }
+            }
 
         }
         return map;
 
-        }
-
-
-
-
-
-
-
-
-
-
-
+    }
 
     public void delete(String id) {
-
         //Optional<Reservation> res = repository.findById(id);
         repository.deleteById(id);
-
     }
 
 
+    public float total_reservation_prices() {
+
+        float prices = 0;
+
+        List<Reservation> resrvs = repository.findAll();
+        for (int i = 0; i < resrvs.size(); i++) {
+
+            Reservation reser = resrvs.get(i);
+            System.out.println(resrvs.get(i));
+            prices += reser.getPrice();
+
+            System.out.println(prices);
+
+
+        }
+        System.out.println(prices);
+        return prices;
+
+    }
 }
