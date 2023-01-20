@@ -23,7 +23,7 @@ public class ConnectedObjectDecoder implements Decoder.TextStream<ConnectedObjec
             connectedObject.setPin(jsonConnectedObject.getInt("pin"));
             connectedObject.setState(jsonConnectedObject.getString("state"));
             connectedObject.setType(jsonConnectedObject.getString("type"));
-            connectedObject.setValue(jsonConnectedObject.getInt("value"));
+            connectedObject.setValue(jsonConnectedObject.getString("value"));
             return connectedObject;
         }
         catch (Exception e) {
@@ -31,7 +31,7 @@ public class ConnectedObjectDecoder implements Decoder.TextStream<ConnectedObjec
         }
         ConnectedObject connectedObject = new ConnectedObject();
         connectedObject.setId("");
-        connectedObject.setValue(0);
+        connectedObject.setValue("0");
         connectedObject.setType("test");
         connectedObject.setState("test");
         connectedObject.setPin(-1);

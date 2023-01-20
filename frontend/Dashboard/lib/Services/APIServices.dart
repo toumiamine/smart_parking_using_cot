@@ -9,6 +9,7 @@ import 'package:smart_admin_dashboard/models/ListUsersResponseModel.dart';
 import '../Config/Config.dart';
 import '../models/ListParkingResponseModel.dart';
 import '../models/LoginModelRequest.dart';
+import '../models/RefreshTokenRequestModel.dart';
 import '../models/RegisterModelRequest.dart';
 
 class APIService {
@@ -25,13 +26,13 @@ class APIService {
       Map<String, dynamic> message = jsonDecode(response.body);
       if (message['role'][0] == 'ADMIN') {
        await PrefData.setAcessToken(message["accessToken"]);
+       await PrefData.setRefreshToken(message["refreshToken"]);
+       await PrefData.setEmail(message["email"]);
         return message;
       }
       else {
         return 'USER NOT AUTHORIZED';
       }
-      //await SharedService.setLoginDetails(loginResponseJson(response.body));
-
     }
     else {
       return 'USER NOT AUTHORIZED';
@@ -39,6 +40,26 @@ class APIService {
 
   }
 
+
+  static Future refreshToken (RefreshTokenRequestModel model) async {
+    Map<String,String> requestHeaders = {
+      'Content-Type' : 'application/json',
+    };
+
+    var url = Uri.http(Config.appURL, Config.loginAPI);
+    var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
+print(response.body);
+    if (response.statusCode ==200) {
+      Map<String, dynamic> message = jsonDecode(response.body);
+        await PrefData.setAcessToken(message["accessToken"]);
+      await PrefData.setRefreshToken(message["refreshToken"]);
+        return message;
+    }
+    else {
+      return 'Expired';
+    }
+
+  }
   static Future addParking (ParkingModelRequest model,String tok) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
@@ -75,12 +96,15 @@ class APIService {
     if (response.statusCode ==204) {
       return 'true';
     }
+    else if (response.statusCode ==401) {
+      return "Expired";
+    }
     else {
       return 'ERROR';
     }
 
   }
-  static Future<List<UserListResponseModel>> listUsers (String tok) async {
+  static Future listUsers (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
@@ -91,13 +115,13 @@ class APIService {
     var response = await client.get(url, headers: requestHeaders);
 print(response);
     if (response.statusCode ==200) {
-
-     // final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-      //final body = json.decode(response.body);
       Iterable l = json.decode(response.body);
       print(l);
       List<UserListResponseModel> posts = List<UserListResponseModel>.from(l.map((model)=> UserListResponseModel.fromJson(model)));
       return posts;
+    }
+    else if (response.statusCode ==401) {
+      return "Expired";
     }
     else {
       Map<String, dynamic> message = jsonDecode(response.body);
@@ -119,6 +143,9 @@ print(response);
     if (response.statusCode ==204) {
       return 'true';
     }
+    else if (response.statusCode ==401) {
+      return "Expired";
+    }
     else {
       return 'ERROR';
     }
@@ -126,7 +153,7 @@ print(response);
   }
 
 
-  static Future<List<ListReservationResponseModel>> listReservation (String tok) async {
+  static Future listReservation (String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
@@ -149,6 +176,9 @@ print(response);
       print('**************');
       print(reservations);
       return reservations;
+    }
+    else if (response.statusCode ==401) {
+      return "Expired";
     }
     else {
       Map<String, dynamic> message = jsonDecode(response.body);
@@ -174,6 +204,9 @@ print(response);
      int  res = int.parse(t);
       return res;
     }
+    else if (response.statusCode ==401) {
+      return 00001;
+    }
     else {
       return 0;
     }
@@ -195,6 +228,9 @@ print(response);
       int  res = int.parse(t);
       return res;
     }
+    else if (response.statusCode ==401) {
+      return 00001;
+    }
     else {
       return 0;
     }
@@ -215,6 +251,9 @@ print(response);
       print(t);
       int  res = int.parse(t);
       return res;
+    }
+    else if (response.statusCode ==401) {
+      return 00001;
     }
     else {
       return 0;
@@ -238,13 +277,16 @@ print(response);
       int  res = int.parse(t);
       return res;
     }
+    else if (response.statusCode ==401) {
+      return 00001;
+    }
     else {
       return 0;
     }
 
   }
 
-  static Future<List<ListReservationResponseModel>> listReservationUser (String id,String tok) async {
+  static Future listReservationUser (String id,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
@@ -264,13 +306,13 @@ print(response);
       for (var rese in l) {
         reserva.add(ListReservationResponseModel(id: rese['id'], user_id: rese['user_id'], reservation_date: DateTime.fromMicrosecondsSinceEpoch(rese['reservation_date']* 1000) , start_date: DateTime.fromMicrosecondsSinceEpoch(rese['start_date']* 1000), end_date: DateTime.fromMicrosecondsSinceEpoch(rese['end_date']* 1000)));
       }
-      //print('**************');
-      //print(reservations);
       return reserva;
+    }
+    else if (response.statusCode ==401) {
+      return "Expired";
     }
     else {
       Map<String, dynamic> message = jsonDecode(response.body);
-
       return message['errors'][0];
     }
 
@@ -333,6 +375,9 @@ print(response);
       int res = int.parse(t);
       return res;
     }
+    else if (response.statusCode ==401) {
+      return 00001;
+    }
     else {
       return 0;
     }
@@ -354,6 +399,9 @@ print(response);
       final Map maps = Map.from(l);
 
       return maps;
+    }
+    else if (response.statusCode ==401) {
+      return "Expired";
     }
     else {
       Map<String, dynamic> message = jsonDecode(response.body);

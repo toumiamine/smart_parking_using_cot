@@ -27,9 +27,6 @@ public class SecurityResource {
         service.create(userDTO);
     }
 
-
-
-
     @DELETE
     @Path("user/{id}")
     @RolesAllowed("ADMIN")

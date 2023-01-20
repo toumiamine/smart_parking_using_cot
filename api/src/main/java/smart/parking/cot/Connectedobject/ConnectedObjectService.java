@@ -7,8 +7,8 @@ import jakarta.nosql.mapping.DatabaseType;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import java.util.List;
-import java.util.Map;
+import smart.parking.cot.Repository.ConnectedObjectRepository;
+
 import java.util.Optional;
 
 @ApplicationScoped
@@ -44,7 +44,7 @@ public class ConnectedObjectService {
     }
 
 
-    public Map<String, Integer> getList_spots(ConnectedObject connectedObject) {
+  /*  public Map<String, Integer> getList_spots(ConnectedObject connectedObject) {
         List<ConnectedObject> list_of_connected_object = repository.findAll();
         Map<String, Integer> map = null;
         for (int i = 0; i < list_of_connected_object.size(); i++) {
@@ -54,7 +54,7 @@ public class ConnectedObjectService {
             }
         }
         return map;
-    }
+    }*/
 
 
 

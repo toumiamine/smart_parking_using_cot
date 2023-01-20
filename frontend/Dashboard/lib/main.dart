@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SharedPreferences.setMockInitialValues({});
-
     Map<String, WidgetBuilder> routes = {
     '/': (BuildContext context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel"),
       // '/': (BuildContext context) => HomeScreen(),

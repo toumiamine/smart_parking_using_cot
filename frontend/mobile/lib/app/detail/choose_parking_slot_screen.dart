@@ -30,7 +30,7 @@ class ChooseParkingSlotScreen extends StatefulWidget {
 
 class _ChooseParkingSlotScreen extends State<ChooseParkingSlotScreen> {
   List<String> getFloorList = DataFile.getAllFloorList();
- var channel_availability = WebSocketChannel.connect(Uri.parse('wss://api.smart-parking.me:8443/microprofile/websocket_channel'));
+ var channel_availability = WebSocketChannel.connect(Uri.parse('ws://10.0.2.2:8080/microprofile/websocket_channel'));
   finish() {
     Constant.backToFinish(context);
   }
@@ -63,9 +63,9 @@ class _ChooseParkingSlotScreen extends State<ChooseParkingSlotScreen> {
             String type = ReceivedConnectedObject["type"];
             if (type == "IRSENSOR") {
               String Id = ReceivedConnectedObject["id"];
-              int value = ReceivedConnectedObject["value"];
+              String value = ReceivedConnectedObject["value"];
               int n = int.parse(Id[2]);
-              if (value==1) {
+              if (value=="1") {
                 slotList1[n-1] = ModelSlotDetail("G0"+Id[2] , DataFile.slotAvailable);
               }
               else {

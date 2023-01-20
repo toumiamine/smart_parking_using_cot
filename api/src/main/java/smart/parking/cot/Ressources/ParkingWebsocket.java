@@ -1,9 +1,11 @@
 package smart.parking.cot.Ressources;
-import jakarta.annotation.security.PermitAll;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.nosql.mapping.Database;
+import jakarta.nosql.mapping.DatabaseType;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import smart.parking.cot.Connectedobject.ConnectedObject;
 import smart.parking.cot.Connectedobject.ConnectedObjectEnconder;
@@ -18,14 +20,23 @@ import jakarta.websocket.server.ServerEndpoint;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.OnOpen;
 import smart.parking.cot.services.MqttConnection;
+import smart.parking.cot.Repository.ReservationRepository;
 
 import javax.net.ssl.SSLSocketFactory;
-
+@ApplicationScoped
 @ServerEndpoint(
         value = "/websocket_channel",
         encoders = {ConnectedObjectEnconder.class},
         decoders = {ConnectedObjectDecoder.class})
 public class ParkingWebsocket {
+
+    @Inject
+    @Database(DatabaseType.DOCUMENT)
+    ReservationRepository repository;
+
+
+
+
     MqttClient client; // Persistence
 
     {
@@ -47,19 +58,13 @@ public class ParkingWebsocket {
         }
     }
 
-
     public static final List<ConnectedObject> connectedObjects = Collections.synchronizedList(new LinkedList<ConnectedObject>());
-  //  private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
     private static Hashtable<String, Session> sessions = new Hashtable<>();
 
     @OnMessage
     public void handleMessage(ConnectedObject connectedObject, Session session) throws MqttException {
-        sendMessage( connectedObject );
-        if (connectedObject.getType().equals("Servo") & connectedObject.getId().equals("entry")) {
-            String str1 = Integer.toString(connectedObject.getValue());
-            MqttMessage message = new MqttMessage(str1.getBytes());
-            client.publish("entry_door",message);
-        }
+        sendMessage(connectedObject);
+
     }
 
 
@@ -77,18 +82,27 @@ public class ParkingWebsocket {
         }
     }*/
    public static void broadcastMessage(ConnectedObject connectedObject) {
-       for (Session session : sessions.values()) {
-           try {
-               session.getBasicRemote().sendObject(connectedObject);
-           } catch (IOException | EncodeException e) {
-               e.printStackTrace();
+       if (connectedObject.getType().equals("Servo") & connectedObject.getId().equals("entry")) {
+           System.out.println("Hani ntesti lehné");
+           //System.out.println(repository.findAll());
+           System.out.println("Printed sucess");
+           // System.out.println(service.isReservationValid(connectedObject.getValue()));
+       }
+       else {
+           for (Session session : sessions.values()) {
+               try {
+                   session.getBasicRemote().sendObject(connectedObject);
+               } catch (IOException | EncodeException e) {
+                   e.printStackTrace();
+               }
            }
        }
+
    }
 
     public void sendMessage(ConnectedObject connectedObject) {
         // Affichage sur la console du server Web.
-        System.out.println( connectedObject );
+        //System.out.println( connectedObject );
 
         // On envoie le message à tout le monde.
         for( Session session : sessions.values() ) {

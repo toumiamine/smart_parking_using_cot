@@ -4,6 +4,7 @@ import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import '../../../Services/APIServices.dart';
 import '../../../base/pref_data.dart';
+import '../../login/login_screen.dart';
 class Ministat extends StatefulWidget {
 
 
@@ -36,8 +37,21 @@ class _Ministat extends State<Ministat> {
       SharedPreferences prefs = await PrefData.getPrefInstance();
       String? token = prefs.getString(PrefData.accesstoken);
       await APIService.ChartReservation(dateInput.text, dateInput1.text,token).then((value) =>  {
-      t=value
-
+      if (value == "Expired") {
+      Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+      ),
+      ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+      , backgroundColor: Colors.red,
+      )
+      )
+      }
+      else
+        {
+          t = value
+        }
       }
       );
 

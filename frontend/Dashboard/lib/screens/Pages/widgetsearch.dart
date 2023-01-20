@@ -11,6 +11,7 @@ import '../../../Services/APIServices.dart';
 import '../../base/pref_data.dart';
 import '../../models/ReservationModel.dart';
 import '../dashboard/components/header.dart';
+import '../login/login_screen.dart';
 
 class ListReservations1 extends StatefulWidget {
 
@@ -32,11 +33,23 @@ class _ListReservations1State extends State<ListReservations1> {
     Future<List<ReservationModel>> _fetch() async {
       SharedPreferences prefs = await PrefData.getPrefInstance();
       String? token = prefs.getString(PrefData.accesstoken);
-      await APIService.listReservation(token).then((value) => {
-
+      await APIService.listReservation(token).then((value) =>
+      {
+        if (value == "Expired") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+          ),
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                , backgroundColor: Colors.red,
+              )
+          )
+        }
+        else {
         for (ListReservationResponseModel reservation in value) {
-          recentReservations.add( ReservationModel(
-            id : reservation.id,
+          recentReservations.add(ReservationModel(
+            id: reservation.id,
             icon: "assets/icons/xd_file.svg",
             reservation_date: reservation.reservation_date.toString(),
             start_date: reservation.start_date.toString(),
@@ -45,7 +58,7 @@ class _ListReservations1State extends State<ListReservations1> {
           )
           )
         }
-
+      }
       }
 
 
@@ -102,15 +115,28 @@ class _ListReservations1State extends State<ListReservations1> {
                                   SharedPreferences prefs = await PrefData.getPrefInstance();
                                   String? token = prefs.getString(PrefData.accesstoken);
                                   await APIService.listReservation(token).then((value) => {
-
-                                    for (ListReservationResponseModel reservation in value) {
-                                      Res.add( ReservationModel(
-                                        id : reservation.id,
-                                        icon: "assets/icons/xd_file.svg",
-                                        reservation_date: reservation.reservation_date.toString(),
-                                        start_date: reservation.start_date.toString(),
-                                        end_date: reservation.end_date.toString(),
-                                        user_id: reservation.user_id,))}});
+                                    if (value == "Expired") {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+                                      ),
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                                            , backgroundColor: Colors.red,
+                                          )
+                                      )
+                                    }
+                                    else {
+    for (ListReservationResponseModel reservation in value) {
+    Res.add( ReservationModel(
+    id : reservation.id,
+    icon: "assets/icons/xd_file.svg",
+    reservation_date: reservation.reservation_date.toString(),
+    start_date: reservation.start_date.toString(),
+    end_date: reservation.end_date.toString(),
+    user_id: reservation.user_id,))}
+    }
+                                  });
                                   for(var i=0;i<Res.length;i++) {
                                     if (Res[i].id == nameController.text) {
                                       // numbers.removeWhere( (item)  )
@@ -418,6 +444,17 @@ class _ListReservations1State extends State<ListReservations1> {
                                                                                                                   )
                                                                                                               );
                                                                                                             });
+                                                                                                          }
+                                                                                                          else      if (response == "Expired") {
+                                                                                                            Navigator.push(
+                                                                                                              context,
+                                                                                                              MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+                                                                                                            );
+                                                                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                                                                                                                  , backgroundColor: Colors.red,
+                                                                                                                )
+                                                                                                            );
                                                                                                           }
                                                                                                           else {
                                                                                                             ScaffoldMessenger

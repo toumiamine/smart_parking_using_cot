@@ -26,36 +26,25 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) {
         Method method = resourceInfo.getResourceMethod();
-
-        // @DenyAll on the method takes precedence over @RolesAllowed and @PermitAll
         if (method.isAnnotationPresent(DenyAll.class)) {
             refuseRequest();
         }
 
-        // @RolesAllowed on the method takes precedence over @PermitAll
         RolesAllowed rolesAllowed = method.getAnnotation(RolesAllowed.class);
         if (rolesAllowed != null) {
             performAuthorization(rolesAllowed.value(), requestContext);
             return;
         }
-
-        // @PermitAll on the method takes precedence over @RolesAllowed on the class
         if (method.isAnnotationPresent(PermitAll.class)) {
-            // Do nothing
             return;
         }
 
-        // @PermitAll must not be attached to classes
-
-        // @RolesAllowed on the class takes precedence over @PermitAll on the class
         rolesAllowed =
                 resourceInfo.getResourceClass().getAnnotation(RolesAllowed.class);
         if (rolesAllowed != null) {
             performAuthorization(rolesAllowed.value(), requestContext);
             return;
         }
-
-        // @DenyAll on the class
         if (resourceInfo.getResourceClass().isAnnotationPresent(DenyAll.class)) {
             refuseRequest();
         }
@@ -63,12 +52,6 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         // Authorization is not required for non-annotated methods
     }
 
-    /**
-     * Perform authorization based on roles.
-     *
-     * @param rolesAllowed the allowed roles
-     * @param requestContext the request context
-     */
     private void performAuthorization(String[] rolesAllowed,
                                       ContainerRequestContext requestContext) {
 

@@ -2,26 +2,42 @@ package smart.parking.cot.services;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Startup;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
+import jakarta.ejb.Singleton;
+import jakarta.nosql.mapping.Database;
+import jakarta.nosql.mapping.DatabaseType;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.json.JSONObject;
 import smart.parking.cot.Connectedobject.ConnectedObject;
+import smart.parking.cot.Repository.ReservationRepository;
 import smart.parking.cot.Ressources.ParkingWebsocket;
 
 import javax.net.ssl.SSLSocketFactory;
 
+@ApplicationScoped
 @Singleton
 @Startup
 public class MqttConnection {
     @Inject
     private ReservationService service;
 
+    @Inject
+    @Database(DatabaseType.DOCUMENT)
+    private ReservationRepository repository;
+
 
     public void sendmsg(MqttClient client,String msg,String topic) throws MqttException {
         MqttMessage message = new MqttMessage(msg.getBytes());
         client.publish(topic,message);
+    }
+
+    public boolean isAvai(String m) {
+        if (repository.existsById(m)) {
+           return true;
+        }
+        return false;
     }
 
     @PostConstruct
@@ -55,20 +71,17 @@ public class MqttConnection {
                 @Override
                 public void messageArrived(String topic, MqttMessage message) {
                    // System.out.println(new String(message.getPayload()));
-                   System.out.println(topic + "hello");
             if (topic.equals("IRSensor")) {
          try {
         //System.out.println(topic + "::::: " + new String(message.getPayload()));
         System.out.println(new String(message.getPayload()));
         JSONObject obj = new JSONObject(new String(message.getPayload()));
-
-
         ConnectedObject connectedObject = new ConnectedObject();
         String id = obj.getString("id");
         int pin = obj.getInt("pin");
         String state = obj.getString("state");
         String type = obj.getString("type");
-        int value = obj.getInt("value");
+        String value = obj.getString("value");
         connectedObject.setId(id);
         connectedObject.setPin(pin);
         connectedObject.setState(state);
@@ -77,21 +90,35 @@ public class MqttConnection {
         ParkingWebsocket.broadcastMessage(connectedObject);
     }
     catch (Exception e ) {
-        System.out.println(e);
+        System.out.println("hi"+e);
     }
 }
-                    else if (topic.equals("verification")) {
+                    else if (topic.equals("AccessManagement")) {
                         try {
-                            //System.out.println(topic + "::::: " + new String(message.getPayload()));
-                            JSONObject obj_1 = new JSONObject(new String(message.getPayload()));
-                            String code = obj_1.getString("code");
-                            System.out.println(code);
-                      boolean result = service.check_reservation(code);
-                      System.out.println("------------------------");
-                     System.out.println(result);
+                           JSONObject obj = new JSONObject(new String(message.getPayload()));
+                            ConnectedObject connectedObject = new ConnectedObject();
+                            String id = obj.getString("id");
+                            int pin = obj.getInt("pin");
+                            String state = obj.getString("state");
+                            String type = obj.getString("type");
+                            String value = obj.getString("value");
+                            connectedObject.setId(id);
+                            connectedObject.setPin(pin);
+                            connectedObject.setState(state);
+                            connectedObject.setType(type);
+                            connectedObject.setValue(value);
+boolean isavaialble = service.isReservationValid(connectedObject.getValue());
+if (isavaialble == true) {
+    String s = "openDoor";
+    client.publish("EntryDoor",new MqttMessage(s.getBytes()) );
+}
+else {
+    String s = "ReservationFailed";
+    client.publish("EntryDoor",new MqttMessage(s.getBytes()) );
+}
                         }
                         catch (Exception e ) {
-                           // System.out.println(e);
+
                         }
                     }
                 }
@@ -104,7 +131,7 @@ public class MqttConnection {
                 }
             });
 
-            client.subscribe("verification", 1);
+            client.subscribe("AccessManagement", 1);
             client.subscribe("IRSensor", 1);
            // client.subscribe("verification", 1);
         } catch (MqttException e) {

@@ -1,7 +1,13 @@
+import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_admin_dashboard/models/RefreshTokenRequestModel.dart';
 import 'package:smart_admin_dashboard/responsive.dart';
 import 'package:smart_admin_dashboard/screens/dashboard/components/newParking.dart';
 import 'package:smart_admin_dashboard/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import '../../Services/APIServices.dart';
+import '../../base/pref_data.dart';
 import '../../core/constants/color_constants.dart';
 import '../Pages/ChooseParkingSlotScreen.dart';
 import '../Pages/ReservationWithSearch.dart';
@@ -17,12 +23,38 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  @override
+  initState() {
+    Timer.periodic(Duration(minutes : 14), (timer)  async {
+     await  RefreshAcessToken();
+      print('Token Refreshed');
+    });
+  }
+
+  Future<void> RefreshAcessToken() async {
+    SharedPreferences prefs = await PrefData.getPrefInstance();
+    String? token = prefs.getString(PrefData.refreshtoken);
+
+    String? email = prefs.getString(PrefData.email);
+    RefreshTokenRequestModel model = RefreshTokenRequestModel(email: email ,refreshToken: token, grandType: 'REFRESH_TOKEN' );
+    APIService.refreshToken(model).then((response) => {
+      if (response==  'Expired') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+        ),
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+              , backgroundColor: Colors.red,
+            )
+        )
+      }
+    });
+  }
   int controller = 0;
   List list = [DashboardScreen(),RecentUsers2(),ListReservations0(), ChooseParkingSlotScreen(),CalendarWidget(),MyMap(),Text("data")];
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
    drawer: Drawer(
      child: SingleChildScrollView(
@@ -72,9 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
              svgSrc: "assets/icons/menu_task.svg",
              press: () {
                setState(() { controller=2; });
-
-               // Navigator.pushReplacementNamed(context, Routes.calendar);
-             },
+               },
            ),
            DrawerListTile(
              selected_color: controller ==3 ? Color(0xff34d186) : Colors.black  ,
@@ -83,9 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
              svgSrc: "assets/icons/menu_task.svg",
              press: () {
                setState(() { controller=3; });
-
-               // Navigator.pushReplacementNamed(context, Routes.calendar);
-             },
+               },
            ),
            DrawerListTile(
              selected_color: controller ==4 ? Color(0xff34d186)  : Colors.black  ,

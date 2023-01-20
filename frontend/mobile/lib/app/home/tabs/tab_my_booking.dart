@@ -14,6 +14,7 @@ import '../../../base/actions.dart' as slideAction;
 import '../../../base/pref_data.dart';
 import '../../../base/widget_utils.dart';
 import '../../booking/parking_ticket_screen.dart';
+import '../../login/screen_login.dart';
 import '../../model/model_my_booking.dart';
 import '../../routes/app_routes.dart';
 import 'package:empty_widget/empty_widget.dart';
@@ -40,17 +41,31 @@ class _TabMyBooking extends State<TabMyBooking> {
     String? email = prefs.getString(PrefData.email);
    // print(email);
     String? token = prefs.getString(PrefData.token);
-    await APIService.GetUserReservation(email!,token!).then((value) => {
-  for (ReservationRequestModel reservation in value) {
-if (DateTime.now().millisecondsSinceEpoch <int.parse(reservation.end_date!) ) {
-  bookingList.add(ModelMyBooking("imgDetail.png", reservation.id!, "Parking Technopark El Ghazala", "Elgazala Technopark, 2088, Ariana", "Parking Ongoing", int.parse(reservation.start_date!),reservation.start_date!,reservation.end_date!,reservation.selectedSpot!))
-}
-else {
-  bookingHistoryList.add(ModelMyBooking("imgDetail.png", reservation.id!, "Parking Technopark El Ghazala", "Elgazala Technopark, 2088, Ariana", "Parking Ongoing", int.parse(reservation.start_date!),reservation.start_date!,reservation.end_date!,reservation.selectedSpot!))
+    await APIService.GetUserReservation(email!,token!).then((value) async => {
+       if (value == "Expired") {
+         await PrefData.setLogIn(false),
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ScreenLogin()),
+      ),
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+            , backgroundColor: Colors.red,
+          )
+      )
+    }
+       else {
+    for (ReservationRequestModel reservation in value) {
+    if (DateTime.now().millisecondsSinceEpoch <int.parse(reservation.end_date!) ) {
+    bookingList.add(ModelMyBooking("imgDetail.png", reservation.id!, "Parking Technopark El Ghazala", "Elgazala Technopark, 2088, Ariana", "Parking Ongoing", int.parse(reservation.start_date!),reservation.start_date!,reservation.end_date!,reservation.selectedSpot!))
+    }
+    else {
+    bookingHistoryList.add(ModelMyBooking("imgDetail.png", reservation.id!, "Parking Technopark El Ghazala", "Elgazala Technopark, 2088, Ariana", "Parking Ongoing", int.parse(reservation.start_date!),reservation.start_date!,reservation.end_date!,reservation.selectedSpot!))
 
-}
+    }
+    }
+    }
 
-      }
 
     }
     );

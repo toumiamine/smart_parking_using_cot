@@ -1,5 +1,5 @@
 class Config {
-  static const String appURL = "127.0.0.1:8080";
+  static const String appURL = "localhost:8080";
   static const String loginAPI = "/microprofile/oauth2/login/";
   static const String deleteAPI = "/microprofile/security/delete/";
   static const String registerAPI = "/register";
@@ -16,8 +16,4 @@ class Config {
   static const String TotalPrices = "/microprofile/reservation/prices";
   static const String CreateParking = "/microprofile/parking/create";
   static const String ListAllParking = "/microprofile/parking/listAll";
-
-
-
-
 }

@@ -15,7 +15,7 @@ public class ConnectedObject {
     @Column
     private  int pin ;
     @Column
-    private  int value ;
+    private  String value ;
     @Column
     private  String state ;
 
@@ -30,10 +30,10 @@ public class ConnectedObject {
     public String getId() { return  id ;}
     public int getPin() {return  pin ;}
     public String getState(){return  state ;}
-    public int getValue(){return  value ;}
+    public String getValue(){return  value ;}
 
     public void setId(String id){this.id = id;}
-    public void setValue(int value){this.value = value;}
+    public void setValue(String value){this.value = value;}
     public void setType(String type){this.type = type;}
     public void setPin(int pin){this.pin = pin;}
 
@@ -50,7 +50,7 @@ public class ConnectedObject {
 
         private  String type;
         private int pin;
-        private int value;
+        private String value;
         private String state ;
         private String id;
 
@@ -69,7 +69,7 @@ public class ConnectedObject {
             return this;
         }
 
-        public ConnectedObjectBuilder withValue(int value) {
+        public ConnectedObjectBuilder withValue(String value) {
             this.value=value;
             return this;
 

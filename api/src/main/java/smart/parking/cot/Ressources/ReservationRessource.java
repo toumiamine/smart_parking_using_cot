@@ -1,12 +1,16 @@
 package smart.parking.cot.Ressources;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.nosql.mapping.Database;
+import jakarta.nosql.mapping.DatabaseType;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import smart.parking.cot.Entity.Reservation;
+import smart.parking.cot.Repository.ReservationRepository;
 import smart.parking.cot.services.ReservationService;
 
 import java.text.ParseException;
@@ -21,12 +25,19 @@ import java.util.Map;
 public class ReservationRessource {
     @Inject
     private ReservationService service;
+
+    @Inject
+    @Database(DatabaseType.DOCUMENT)
+    private ReservationRepository repository;
     @Path("create")
     @RolesAllowed({"USER","ADMIN"})
     @POST
     public void create(@Valid Reservation reservation) {
         service.create(reservation);
     }
+
+
+
 
     @Path("list")
     @GET
@@ -47,6 +58,16 @@ public class ReservationRessource {
     public int monthlyReservation(@PathParam("month")int month) {
         return service.monthlyReservation(month);
     }
+
+
+    @Path("id/{id}")
+    @GET
+    @PermitAll
+    public Reservation FindByID(@PathParam("id")String id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+
 
     @Path("totals/week")
     @GET

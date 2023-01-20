@@ -7,6 +7,7 @@ import 'package:smart_admin_dashboard/screens/dashboard/components/mini_informat
 import '../../../Services/APIServices.dart';
 import '../../base/pref_data.dart';
 import '../dashboard/components/mini_information_widget.dart';
+import '../login/login_screen.dart';
 
 class totalReservations extends StatefulWidget {
 
@@ -41,7 +42,19 @@ class _totalReservationsState extends State<totalReservations> {
 
       await APIService.totalReservation(token).then((value) => {
 
-        t=value
+        if (value == 00001) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+          ),
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                , backgroundColor: Colors.red,
+              )
+          )
+        }
+        else {
+          t=value}
       });
       return t ;
 
