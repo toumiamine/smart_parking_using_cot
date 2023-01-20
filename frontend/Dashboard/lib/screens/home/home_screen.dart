@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
   int controller = 0;
-  List list = [DashboardScreen(),RecentUsers2(),ListReservations0(), ChooseParkingSlotScreen(),CalendarWidget(),MyMap()];
+  List list = [DashboardScreen(),RecentUsers2(),ListReservations0(), ChooseParkingSlotScreen(),CalendarWidget(),MyMap(),Text("data")];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,13 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
              },
            ),
            DrawerListTile(
-             selected_color: controller ==5 ? Color(0xff34d186)  : Colors.black  ,
-             text_color: controller ==5 ? Colors.white : Colors.white,
-             title: "Logout",
-             svgSrc: "assets/icons/menu_store.svg",
-             press: () {},
-           ),
-           DrawerListTile(
              selected_color: controller ==5 ? Color(0xff34d186) : Colors.black  ,
              text_color: controller ==5 ? Colors.white : Colors.white,
              title: "New Parking",
@@ -140,6 +133,14 @@ class _HomeScreenState extends State<HomeScreen> {
                setState(() { controller=5; });
              },
            ),
+           DrawerListTile(
+             selected_color: controller ==6 ? Color(0xff34d186)  : Colors.black  ,
+             text_color: controller ==6 ? Colors.white : Colors.white,
+             title: "Logout",
+             svgSrc: "assets/icons/menu_store.svg",
+             press: () {},
+           ),
+
 
 
          ],
@@ -256,8 +257,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                         DrawerListTile(
-                          selected_color: controller ==5 ? Color(0xff34d186)  : Colors.black  ,
-                          text_color: controller ==5? Colors.white : Colors.white,
+                          selected_color: controller ==5 ? Color(0xff34d186) : Colors.black  ,
+                          text_color: controller ==5 ? Colors.white : Colors.white,
+                          title: "New Parking",
+                          svgSrc: "assets/icons/menu_tran.svg",
+                          press: () {
+                            setState(() { controller=5; });
+                          },
+                        ),
+
+                        DrawerListTile(
+                          selected_color: controller ==6 ? Color(0xff34d186)  : Colors.black  ,
+                          text_color: controller ==6? Colors.white : Colors.white,
                           title: "Logout",
                           svgSrc: "assets/icons/logout.svg",
                           press: () {
@@ -324,15 +335,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ));
                                 });
 
-                          },
-                        ),
-                        DrawerListTile(
-                          selected_color: controller ==5 ? Color(0xff34d186) : Colors.black  ,
-                          text_color: controller ==5 ? Colors.white : Colors.white,
-                          title: "New Parking",
-                          svgSrc: "assets/icons/menu_tran.svg",
-                          press: () {
-                            setState(() { controller=5; });
                           },
                         ),
 

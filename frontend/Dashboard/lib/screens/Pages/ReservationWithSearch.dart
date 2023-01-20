@@ -142,8 +142,8 @@ class _ListReservations0State extends State<ListReservations0> {
 
                                   });
                                   for(var i=0;i<Res.length;i++) {
-                                    if (Res[i].id == nameController.text) {
-                                     // numbers.removeWhere( (item)  )
+                                    if (Res[i].id == nameController.text || Res[i].id!.startsWith(nameController.text)) {
+                                     print(Res[i].id!.startsWith(nameController.text)==true);
                                       list1.add(Res[i]);}
                                     // you may have to check the equality operator
                                     //if(snapshot.data == myList[i]) {
@@ -348,30 +348,19 @@ class _ListReservations0State extends State<ListReservations0> {
                                                                                   width: 6,
                                                                                 ),
                                                                                 TextButton(
-                                                                                  child: Text(
-                                                                                      "Delete",
-                                                                                      style: TextStyle(
-                                                                                          color: Colors
-                                                                                              .redAccent)),
+                                                                                  child: Text("Delete", style: TextStyle(color: Colors.redAccent)),
                                                                                   onPressed: () {
                                                                                     showDialog(
                                                                                         context: context,
-                                                                                        builder: (
-                                                                                            _) {
+                                                                                        builder: (_) {
                                                                                           return AlertDialog(
                                                                                               title: Center(
                                                                                                 child: Column(
                                                                                                   children: [
-                                                                                                    Icon(
-                                                                                                        Icons
-                                                                                                            .warning_outlined,
-                                                                                                        size: 36,
-                                                                                                        color: Colors
-                                                                                                            .red),
-                                                                                                    SizedBox(
-                                                                                                        height: 20),
-                                                                                                    Text(
-                                                                                                        "Confirm Deletion"),
+                                                                                                    Icon(Icons.warning_outlined,
+                                                                                                        size: 36, color: Colors.red),
+                                                                                                    SizedBox(height: 20),
+                                                                                                    Text("Confirm Deletion"),
                                                                                                   ],
                                                                                                 ),
                                                                                               ),
@@ -381,82 +370,48 @@ class _ListReservations0State extends State<ListReservations0> {
                                                                                                 child: Column(
                                                                                                   children: [
                                                                                                     Text(
-                                                                                                        "Are you sure want to delete '${Res[index1]
-                                                                                                            .id}' reservation created by ${Res[index1]
-                                                                                                            .user_id}?"),
+                                                                                                        "Are you sure want to delete '${snapshot.data![index1].id}' reservation created by ${snapshot.data![index1].user_id}?"),
                                                                                                     SizedBox(
                                                                                                       height: 16,
                                                                                                     ),
                                                                                                     Row(
-                                                                                                      mainAxisAlignment: MainAxisAlignment
-                                                                                                          .center,
+                                                                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                                                                       children: [
-                                                                                                        ElevatedButton
-                                                                                                            .icon(
+                                                                                                        ElevatedButton.icon(
                                                                                                             icon: Icon(
-                                                                                                              Icons
-                                                                                                                  .close,
+                                                                                                              Icons.close,
                                                                                                               size: 14,
                                                                                                             ),
-                                                                                                            style: ElevatedButton
-                                                                                                                .styleFrom(
-                                                                                                                primary: Colors
-                                                                                                                    .grey),
+                                                                                                            style: ElevatedButton.styleFrom(
+                                                                                                                primary: Colors.grey),
                                                                                                             onPressed: () {
-                                                                                                              Navigator
-                                                                                                                  .of(
-                                                                                                                  context)
-                                                                                                                  .pop();
+                                                                                                              Navigator.of(context).pop();
                                                                                                             },
-                                                                                                            label: Text(
-                                                                                                                "Cancel")),
+                                                                                                            label: Text("Cancel")),
                                                                                                         SizedBox(
                                                                                                           width: 20,
                                                                                                         ),
-                                                                                                        ElevatedButton
-                                                                                                            .icon(
+                                                                                                        ElevatedButton.icon(
                                                                                                             icon: Icon(
-                                                                                                              Icons
-                                                                                                                  .delete,
+                                                                                                              Icons.delete,
                                                                                                               size: 14,
                                                                                                             ),
-                                                                                                            style: ElevatedButton
-                                                                                                                .styleFrom(
-                                                                                                                primary: Colors
-                                                                                                                    .red),
-                                                                                                            onPressed: () async {
+                                                                                                            style: ElevatedButton.styleFrom(
+                                                                                                                primary: Colors.red),
+                                                                                                            onPressed: () async{
                                                                                                               SharedPreferences prefs = await PrefData.getPrefInstance();
                                                                                                               String? token = prefs.getString(PrefData.accesstoken);
-                                                                                                              APIService
-                                                                                                                  .deleteReservation(
-                                                                                                                  snapshot
-                                                                                                                      .data![index1]
-                                                                                                                      .id!, token)
-                                                                                                                  .then((
-                                                                                                                  response) {
-                                                                                                                if (response ==
-                                                                                                                    'true') {
-                                                                                                                  setState(() {
-                                                                                                                    Navigator
-                                                                                                                        .of(
-                                                                                                                        context)
-                                                                                                                        .pop();
-                                                                                                                    ScaffoldMessenger
-                                                                                                                        .of(
-                                                                                                                        context)
-                                                                                                                        .showSnackBar(
-                                                                                                                        SnackBar(
-                                                                                                                          content: Text(
-                                                                                                                            "Reservation Canceled Successfully",
-                                                                                                                            style: TextStyle(
-                                                                                                                                color: Colors
-                                                                                                                                    .white),)
-                                                                                                                          ,
-                                                                                                                          backgroundColor: Colors
-                                                                                                                              .green,
-                                                                                                                        )
-                                                                                                                    );
-                                                                                                                  });
+
+                                                                                                              APIService.deleteReservation(snapshot.data![index1].id!,token).then((response) {
+                                                                                                                if (response== 'true') {
+                                                                                                                  setState(() {      Navigator.of(context).pop();
+                                                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                      SnackBar(content: Text("Reservation Canceled Successfully", style: TextStyle(color: Colors.white),)
+                                                                                                                        , backgroundColor: Colors.green,
+                                                                                                                      )
+                                                                                                                  ); });
+
+
                                                                                                                 }
                                                                                                                 else      if (response == "Expired") {
                                                                                                                   Navigator.push(
@@ -470,32 +425,21 @@ class _ListReservations0State extends State<ListReservations0> {
                                                                                                                   );
                                                                                                                 }
                                                                                                                 else {
-                                                                                                                  ScaffoldMessenger
-                                                                                                                      .of(
-                                                                                                                      context)
-                                                                                                                      .showSnackBar(
-                                                                                                                      SnackBar(
-                                                                                                                        content: Text(
-                                                                                                                          response,
-                                                                                                                          style: TextStyle(
-                                                                                                                              color: Colors
-                                                                                                                                  .white),)
-                                                                                                                        ,
-                                                                                                                        backgroundColor: Colors
-                                                                                                                            .red,
+                                                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                                      SnackBar(content: Text(response, style: TextStyle(color: Colors.white),)
+                                                                                                                        , backgroundColor: Colors.red,
                                                                                                                       )
                                                                                                                   );
                                                                                                                 }
+
                                                                                                               });
                                                                                                             },
-                                                                                                            label: Text(
-                                                                                                                "Delete"))
+                                                                                                            label: Text("Delete"))
                                                                                                       ],
                                                                                                     )
                                                                                                   ],
                                                                                                 ),
-                                                                                              )
-                                                                                          );
+                                                                                              ));
                                                                                         });
                                                                                   },
                                                                                   // Delete

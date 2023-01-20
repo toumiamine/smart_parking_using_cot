@@ -166,7 +166,7 @@ class _RecentUsers2State extends State<RecentUsers2> {
                                   Row(
                                     children: [
                                       TextButton(
-                                        child: Text('View', style: TextStyle(color: greenColor)),
+                                        child: Text('View Reservations ', style: TextStyle(color: greenColor)),
                                         onPressed: () async {
                                           List<ReservationModel>   recentReservation = [];
                                           print(snapshot.data![index].email);
@@ -307,7 +307,7 @@ class _RecentUsers2State extends State<RecentUsers2> {
                                                                             children: [
                                                                               TextButton(
                                                                                 child: Text(
-                                                                                    'View',
+                                                                                    'View  details',
                                                                                     style: TextStyle(
                                                                                         color: greenColor)),
                                                                                 onPressed: () {
@@ -374,6 +374,11 @@ class _RecentUsers2State extends State<RecentUsers2> {
                                                                                   );
                                                                                 },
                                                                               ),
+
+
+
+
+
                                                                               SizedBox(
                                                                                 width: 6,
                                                                               ),
@@ -532,6 +537,7 @@ class _RecentUsers2State extends State<RecentUsers2> {
                                                                                 },
                                                                                 // Delete
                                                                               ),
+
                                                                             ],
                                                                           ),
                                                                         ),
