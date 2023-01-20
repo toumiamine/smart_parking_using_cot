@@ -1,9 +1,11 @@
 smart\parking\cot\security\infra\FieldPropertyVisibilityStrategy.class
 smart\parking\cot\security\infra\mappers\UserForbiddenExceptionMapper.class
 smart\parking\cot\security\oauth2\UserToken.class
+smart\parking\cot\services\parkingService.class
 smart\parking\cot\Connectedobject\ConnectedObjectDecoder.class
 smart\parking\cot\security\UserNotAuthorizedException.class
 smart\parking\cot\security\SecurityService.class
+smart\parking\cot\Repository\ParkingRepository.class
 smart\parking\cot\Repository\UserRepository.class
 smart\parking\cot\security\infra\mappers\UserNotFoundExceptionMapper.class
 smart\parking\cot\security\oauth2\Oauth2Response.class
@@ -11,9 +13,11 @@ smart\parking\cot\Connectedobject\ConnectedObjectEnconder.class
 smart\parking\cot\security\oauth2\Oauth2Request$GenerateToken.class
 smart\parking\cot\security\oauth2\Oauth2Request$RefreshToken.class
 smart\parking\cot\Ressources\ReservationRessource.class
+smart\parking\cot\Entity\Parking$ParkingBuilder.class
 smart\parking\cot\Entity\Reservation.class
 smart\parking\cot\security\infra\mappers\ErrorMessage.class
 smart\parking\cot\Entity\UserDTO.class
+smart\parking\cot\Entity\Parking.class
 smart\parking\cot\Entity\RoleDTO.class
 smart\parking\cot\security\infra\ApplicationConfig.class
 smart\parking\cot\security\UserAlreadyExistException.class
@@ -31,6 +35,7 @@ smart\parking\cot\Ressources\ParkingWebsocket.class
 smart\parking\cot\security\oauth2\Oauth2Resource$1.class
 smart\parking\cot\services\ReservationService$1.class
 smart\parking\cot\Connectedobject\ConnectedObjectResource.class
+smart\parking\cot\Ressources\ParkingResources.class
 smart\parking\cot\services\MqttConnection.class
 smart\parking\cot\MongoDB\MongoDBIdentity.class
 smart\parking\cot\Entity\User$UserBuilder.class

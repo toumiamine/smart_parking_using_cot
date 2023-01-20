@@ -7,10 +7,18 @@ import 'package:flutter_parking_ui_new/base/color_data.dart';
 import 'package:flutter_parking_ui_new/base/constant.dart';
 import 'package:flutter_parking_ui_new/base/resizer/fetch_pixels.dart';
 import 'package:flutter_parking_ui_new/base/widget_utils.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Models/ListParkingResponseModel.dart';
+import '../../../Services/APIServices.dart';
+import '../../../base/pref_data.dart';
+import '../../model/ParkingModel.dart';
 import '../../routes/app_routes.dart';
-
+import '../../routes/app_routes.dart';
+import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 class TabLocation extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -20,46 +28,101 @@ class TabLocation extends StatefulWidget {
 
 class _TabLocation extends State<TabLocation> {
   Set<Marker> _markers = {};
-  late BitmapDescriptor mapMarker;
+  bool showWidget = false;
+  String destination_string = "";
   String Parking_name = 'Parking Technopark El Ghazala';
   String Parking_adress = 'Elgazala Technopark, 2088, Ariana';
+  Location _location = Location();
 @override
 void initState() {
+  LatLng destination = LatLng(36.894717, 10.187631);
+  //getPolyPoints(destination);
   super.initState();
-  getBytesFromAsset('assets/images/Marker.png', 64).then((onValue) {
-    mapMarker =BitmapDescriptor.fromBytes(onValue);
 
-  });
 }
+  List<ParkingModel>   all_parks = [];
+
   static Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
     return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
   }
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    SharedPreferences prefs = await PrefData.getPrefInstance();
+    String? token = prefs.getString(PrefData.token);
+    await APIService.ListAllParking(token!).then((value) => {
+      for (ListParkingResponseModel parking in value) {
 
-  void _onMapCreated(GoogleMapController controller) {
+        all_parks.add( ParkingModel(
+
+          name: parking.name,
+          id: parking.id,
+          long: parking.long,
+          lat: parking.lat,
+
+
+        ))
+      }
+
+    }   );
     setState(() {
-      _markers.add(Marker(markerId: MarkerId('id1'),
-      icon: mapMarker,
-      position: LatLng(36.894717, 10.187631),
-        infoWindow: InfoWindow(
-          title: 'Parking Technopark Gazella',
+for (int i=0 ; i<all_parks.length;i++) {
+  _markers.add(Marker(markerId: MarkerId('id'+(i+1).toString()),
+      onTap : (){
+        getPolyPoints(LatLng(all_parks[i].lat!, all_parks[i].long!));
+        destination_string = all_parks[i].name!;
+        if (all_parks[i].name! == 'Parking Technopark Ghazella') {
+          setState(() {
+            showWidget = true;
+          });
+        }
+        else {
+          setState(() {
+            showWidget = false;
+          });
+        }
+      } ,
+      position: LatLng(all_parks[i].lat!, all_parks[i].long!),
+      infoWindow: InfoWindow(
+          title: all_parks[i].name,
           snippet: 'Parking'
-        )
-      ));
+      )
+  ));
+}
+     /*   _markers.add(Marker(markerId: MarkerId('id0'),
+      position: LatLng( 36.892232, 10.187356),
+      infoWindow: InfoWindow(
+      title: 'Supcom',
+      snippet: 'University'
+      )
+      ));*/
+
     });
   }
-  static const _kGooglePlex = CameraPosition(target: LatLng(36.866537,10.164723),
-  zoom: 8,
+  LatLng sourceLocation = LatLng(36.892232, 10.187356);
+  LatLng destination = LatLng(36.894717, 10.187631);
+  List<LatLng> polyCooredinates = [];
+
+  void getPolyPoints(LatLng dest) async {
+    polyCooredinates = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates("AIzaSyBHfuZuktKntFghBUi8KFduL6GpC9odo64", PointLatLng(sourceLocation.latitude, sourceLocation.longitude), PointLatLng(dest.latitude, dest.longitude));
+ if (result.points.isNotEmpty) {
+   result.points.forEach((PointLatLng point)=>polyCooredinates.add(LatLng(point.latitude, point.longitude)) );
+
+   setState(() {
+
+   });
+
+ }
+
+  }
+  
+  
+  static const _kGooglePlex = CameraPosition(target: LatLng(36.892232, 10.187356),
+  zoom: 15,
   );
-  List<String> locationDis = [
-    "30 min",
-    "1 hour",
-    "2 hour",
-    "6 hour",
-    "12 hour"
-  ];
   TextEditingController searchController = TextEditingController(text: "");
   TextEditingController searchToController = TextEditingController(text: "");
   int selectedPos = 0;
@@ -75,7 +138,7 @@ void initState() {
         children: [
           Container(
             color: "#FFF2D3".toColor(),
-            height: 240.h,
+            height: 200.h,
             width: double.infinity,
             child: Column(
               children: [
@@ -126,7 +189,7 @@ void initState() {
                               flex: 1,
                             ),
                             getSearchMapFigmaWidget(context, searchToController,
-                                (value) {}, "Parking Technopark Gazella"),
+                                (value) {}, destination_string),
                           ],
                         ),
                       ),
@@ -137,43 +200,11 @@ void initState() {
                     ],
                   ),
                 ),
-                getVerSpace(12.h),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: FetchPixels.getDefaultHorSpaceFigma(context)),
-                  height: 35.h,
-                  child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              selectedPos = index;
-                            });
-                          },
-                          child: Container(
-                            width: 69.w,
-                            height: double.infinity,
-                            decoration: (selectedPos == index)
-                                ? getButtonDecoration(getAccentColor(context),
-                                    withCorners: true, corner: 18.h)
-                                : BoxDecoration(),
-                            child: Center(
-                              child: getCustomFont(locationDis[index], 12,
-                                  getFontColor(context), 1,
-                                  textAlign: TextAlign.center,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        );
-                      },
-                      scrollDirection: Axis.horizontal,
-                      itemCount: locationDis.length),
-                ),
-                getVerSpace(12.h),
+                getVerSpace(25.h),
               ],
             ),
           ),
+
           Expanded(
             child: Container(
               width: double.infinity,
@@ -181,17 +212,24 @@ void initState() {
               child: Stack(
                 children: [
                   GoogleMap(
+
                     onMapCreated: _onMapCreated,
                     markers: _markers,
                     zoomControlsEnabled: false,
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: true,
+                   myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
                     mapType: MapType.normal,
                     initialCameraPosition: _kGooglePlex,
+                    padding: EdgeInsets.only(top: 40.0,),
+                    polylines: {
+                      Polyline(
+                        polylineId: PolylineId('route'),
+                        points: polyCooredinates,
+                        color: Color(0xff34d186),
+                      )
+                    },
                   ),
-                /*  getAssetImage(
-                      context, "Map.png", double.infinity, double.infinity,
-                      boxFit: BoxFit.cover),*/
+                  showWidget?
              Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
@@ -267,7 +305,7 @@ void initState() {
                         ],
                       ),
                     ),
-                  ),
+                  ) : Container(),
                 ],
               ),
             ),
@@ -277,4 +315,8 @@ void initState() {
       ),
     );
   }
+}
+class LineString {
+  LineString(this.lineString);
+  List<dynamic> lineString;
 }

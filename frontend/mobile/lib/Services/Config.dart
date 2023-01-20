@@ -8,4 +8,5 @@ class Config {
   static const String ListReservationAPI = "/microprofile/reservation/list/";
   static const String CreateReservationrAPI = "/microprofile/reservation/create/";
   static const String GetUserReservations = "/microprofile/reservation/user/";
+  static const String ListAllParking = "/microprofile/parking/listAll";
 }

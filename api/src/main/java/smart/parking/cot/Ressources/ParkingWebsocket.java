@@ -1,4 +1,5 @@
 package smart.parking.cot.Ressources;
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.nosql.mapping.Database;
@@ -34,7 +35,8 @@ public class ParkingWebsocket {
     @Database(DatabaseType.DOCUMENT)
     ReservationRepository repository;
 
-
+    @EJB
+    private MqttConnection mqttlistener;
 
 
     MqttClient client; // Persistence
@@ -117,9 +119,8 @@ public class ParkingWebsocket {
 
     @OnOpen
     public void open(Session session) {
-        MqttConnection Cnx = new MqttConnection();
-        Cnx.start();
-
+       // MqttConnection Cnx = new MqttConnection();
+        mqttlistener.start();
         sessions.put( session.getId(), session );
     }
 

@@ -6,6 +6,7 @@ import 'package:flutter_parking_ui_new/Models/ReservationRequestModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Models/ListParkingResponseModel.dart';
 import '../Models/RegisterModelRequest.dart';
 import '../app/model/RefreshTokenRequestModel.dart';
 import '../base/pref_data.dart';
@@ -65,6 +66,43 @@ print(response.body);
       return false;
     }
   }
+
+
+  static Future ListAllParking (String tok) async {
+    Map<String,String> requestHeaders = {
+      'Content-Type' : 'application/json',
+      'Authorization' : 'Bearer '+ tok,
+    };
+
+    var url = Uri.http(Config.appURL, Config.ListAllParking);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode ==200) {
+      Iterable l = json.decode(response.body);
+      List<ListParkingResponseModel> parkings = [];
+      print(l.last['_parking_name'].runtimeType);
+      print(l.last['_parking_id'].runtimeType);
+      print(l.last['_parking_long']);
+      print(l.last['_parking_lat']);
+
+      for (var park in l) {
+        parkings.add(ListParkingResponseModel(name: park['_parking_name'], id:park['_parking_id'], long: park['_parking_long'], lat: park['_parking_lat']));
+      }
+      print(parkings);
+      return parkings;
+    }
+    else if (response.statusCode ==401) {
+      return "Expired";
+    }
+    else {
+      Map<String, dynamic> message = jsonDecode(response.body);
+
+      return message['errors'][0];
+    }
+
+  }
+
+
 
   static Future refreshToken (RefreshTokenRequestModel model) async {
     Map<String,String> requestHeaders = {
