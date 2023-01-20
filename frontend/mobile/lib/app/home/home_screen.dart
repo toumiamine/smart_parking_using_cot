@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_parking_ui_new/app/home/tabs/tab_location.dart';
 import 'package:flutter_parking_ui_new/app/home/tabs/tab_my_booking.dart';
@@ -6,6 +8,12 @@ import 'package:flutter_parking_ui_new/base/color_data.dart';
 import 'package:flutter_parking_ui_new/base/constant.dart';
 import 'package:flutter_parking_ui_new/base/widget_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Services/APIServices.dart';
+import '../../base/pref_data.dart';
+import '../login/screen_login.dart';
+import '../model/RefreshTokenRequestModel.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,6 +23,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  initState() {
+    Timer.periodic(Duration(minutes : 14), (timer)  async {
+      await  RefreshAcessToken();
+      print('Token Refreshed');
+    });
+  }
+
+  Future<void> RefreshAcessToken() async {
+    SharedPreferences prefs = await PrefData.getPrefInstance();
+    String? token = prefs.getString(PrefData.refreshtoken);
+
+    String? email = prefs.getString(PrefData.email);
+    RefreshTokenRequestModel model = RefreshTokenRequestModel(email: email ,refreshToken: token, grandType: 'REFRESH_TOKEN' );
+    APIService.refreshToken(model).then((response) => {
+      if (response==  'Expired') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ScreenLogin()),
+        ),
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+              , backgroundColor: Colors.red,
+            )
+        )
+      }
+    });
+  }
+
   List<String> imgList = ["ticket", "", "user"];
 
   List<Widget> tabList = [

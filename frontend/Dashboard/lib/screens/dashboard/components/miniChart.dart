@@ -11,6 +11,7 @@ import '../../../Services/APIServices.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../../../base/pref_data.dart';
+import '../../login/login_screen.dart';
 class Minichart extends StatefulWidget {
 
 
@@ -56,17 +57,24 @@ class _Minichart extends State<Minichart> {
       SharedPreferences prefs = await PrefData.getPrefInstance();
       String? token = prefs.getString(PrefData.accesstoken);
       await APIService.ChartMonth(dateInput.text, dateInput1.text,token).then((value) =>  {
-        data=value
+        if (value == "Expired") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+          ),
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                , backgroundColor: Colors.red,
+              )
+          )
+        }
+        else {
+          data=value
+        }
 
 
       }
       );
-
-
-
-
-
-
       Map theParsedOne = data;
      List<String> L =["January", "February"," March", "April", "May", "June", "July", "August"," September", "October", "November",  "December"];
      L.elementAt(5);

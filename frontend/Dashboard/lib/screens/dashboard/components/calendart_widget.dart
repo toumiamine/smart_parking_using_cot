@@ -12,6 +12,7 @@ import '../../../Services/APIServices.dart';
 import '../../../base/pref_data.dart';
 import '../../../models/ListReservationResponseModel.dart';
 import '../../../models/ReservationModel.dart';
+import '../../login/login_screen.dart';
 
 class CalendarWidget extends StatefulWidget {
 
@@ -49,14 +50,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     SharedPreferences prefs = await PrefData.getPrefInstance();
     String? token = prefs.getString(PrefData.accesstoken);
     await APIService.listReservation(token).then((value) => {
-
+      if (value == "Expired") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+        ),
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+              , backgroundColor: Colors.red,
+            )
+        )
+      }
+      else {
       for (ListReservationResponseModel reservation in value) {
         calendarData.add(CalendarData(
           name: reservation.user_id!,
           date: reservation.start_date!,
           position: reservation.start_date!.toString()+"->" + reservation.end_date!.toString() ,
         ))
-      }
+      } }
     }
 
 

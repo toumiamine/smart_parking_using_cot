@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../Services/APIServices.dart';
 import '../../base/pref_data.dart';
+import '../login/login_screen.dart';
 
 class MiniRecentUsers extends StatefulWidget {
 
@@ -25,11 +26,24 @@ class _MiniRecentUsers extends State<MiniRecentUsers> {
       List<RecentUser>   recentUsers = [];
       SharedPreferences prefs = await PrefData.getPrefInstance();
       String? token = prefs.getString(PrefData.accesstoken);
-      await APIService.listUsers(token).then((value) => {
+      await APIService.listUsers(token).then((value) =>
+      {
         // print(value);
+        if (value == "Expired") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+          ),
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                , backgroundColor: Colors.red,
+              )
+          )
+        }
+        else {
         for (UserListResponseModel user in value) {
 
-          recentUsers.add( RecentUser(
+          recentUsers.add(RecentUser(
             icon: "assets/icons/xd_file.svg",
             name: user.full_name,
             role: user.roles[0],
@@ -39,7 +53,7 @@ class _MiniRecentUsers extends State<MiniRecentUsers> {
 
           ))
         }
-
+      }
       }
 
 

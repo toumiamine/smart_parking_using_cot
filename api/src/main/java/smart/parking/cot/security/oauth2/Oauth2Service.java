@@ -15,12 +15,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 @ApplicationScoped
 public class Oauth2Service {
-    static final int EXPIRE_IN = 3600;
+    static final int EXPIRE_IN = 900;
     static final Duration EXPIRES = Duration.ofSeconds(EXPIRE_IN);
     @Inject
     private SecurityService securityService;
@@ -39,20 +40,17 @@ public class Oauth2Service {
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
-
         final User user = securityService.findBy(request.getEmail(), request.getPassword());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         user.setLast_active(dtf.format(now));
         user_repository.save(user);
         final UserToken userToken = repository.findById(request.getEmail()).orElse(new UserToken(user.getEmail()));
-
         final Token token = Token.generate();
-
         final String jwt = UserJWT.createToken(user, token, EXPIRES);
-
         AccessToken accessToken = new AccessToken(jwt, token.get(), EXPIRES);
         RefreshToken refreshToken = new RefreshToken(Token.generate(), accessToken);
+        userToken.setTokens(new HashSet<>());
         userToken.add(refreshToken);
         repository.save(userToken);
         HashMap<String, Object> map = new HashMap<>();
@@ -65,10 +63,37 @@ public class Oauth2Service {
         map.put("registration_date", user.getRegistration_date());
         map.put("last_active", user.getLast_active());
         return map;
-       // return Oauth2Response.of(accessToken, refreshToken, EXPIRE_IN);
     }
 
-    public Map<String, Object> refreshToken(Oauth2Request request) {
+
+    public Map<String, Object>  refreshToken(Oauth2Request request) {
+        System.out.println("refresh methode is activated");
+        final Set<ConstraintViolation<Oauth2Request>> violations = validator.validate(request, Oauth2Request
+                .RefreshToken.class);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+
+        System.out.println(repository.findByRefreshToken(request.getRefreshToken()));
+        final UserToken userToken = repository.findByRefreshToken(request.getRefreshToken())
+                .orElseThrow(() -> new UserNotAuthorizedException());
+        final User user = securityService.findBy(userToken.getEmail());
+        final Token token = Token.generate();
+        final String jwt = UserJWT.createToken(user, token, EXPIRES);
+        AccessToken accessToken = new AccessToken(jwt, token.get(), EXPIRES);
+        RefreshToken refreshToken = userToken.update(accessToken, request.getRefreshToken(), repository);
+        userToken.setTokens(new HashSet<>());
+        userToken.add(refreshToken);
+        repository.save(userToken);
+        final Oauth2Response response = Oauth2Response.of(accessToken, refreshToken, EXPIRE_IN);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("accessToken", response.getAccessToken());
+        map.put("refreshToken", response.getRefreshToken());
+        map.put("Expires", response.getExpiresIn());
+        return map;
+    }
+
+   /* public Map<String, Object> refreshToken(Oauth2Request request) {
         final Set<ConstraintViolation<Oauth2Request>> violations = validator.validate(request, Oauth2Request
                 .RefreshToken.class);
 
@@ -86,6 +111,14 @@ public class Oauth2Service {
         map.put("accessToken", accessToken.getToken());
         map.put("refreshToken", refreshToken.getToken());
         return map;
-    }
+    }*/
+
+
+  /*  public Map<String, Object> refreshAcessToken(String refreshtoken, String accesstoken) {
+        final UserToken userToken = repository.findByRefreshToken(refreshtoken)
+                .orElseThrow(() -> new UserNotAuthorizedException("Invalid Token"));
+
+
+    }*/
 
 }

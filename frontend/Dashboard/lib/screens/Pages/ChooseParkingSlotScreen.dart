@@ -22,7 +22,7 @@ class _ChooseParkingSlotScreen extends State<ChooseParkingSlotScreen> {
   List<String> getFloorList = DataFile.getAllFloorList();
 
   late final int count;
-  var channel_availability = WebSocketChannel.connect(Uri.parse('wss://api.smart-parking.me:8443/microprofile/websocket_channel'));
+  var channel_availability = WebSocketChannel.connect(Uri.parse('ws://localhost:8080/microprofile/websocket_channel'));
 
   finish() {
     Constant.backToFinish(context);

@@ -22,6 +22,7 @@ import smart.parking.cot.Entity.User;
 import smart.parking.cot.Repository.ReservationRepository;
 import smart.parking.cot.Repository.UserRepository;
 import smart.parking.cot.security.UserAlreadyExistException;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -60,8 +61,8 @@ public class ReservationService {
                     .build();
             repository.save(reservation1);
             Optional<User> user_class = repository_user.findById(reservation.getUser_id());
-            try (PdfReader reader = new PdfReader("/opt/pdf/template.pdf");
-                 PdfWriter writer = new PdfWriter("/opt/pdf/Invoice.pdf");
+            try (PdfReader reader = new PdfReader("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf");
+                 PdfWriter writer = new PdfWriter("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
                  PdfDocument document = new PdfDocument(reader, writer)) {
 
                 PdfPage page = document.getPage(1);
@@ -141,7 +142,7 @@ public class ReservationService {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
                 MimeBodyPart attachmentPart = new MimeBodyPart();
-                attachmentPart.attachFile(new File("/opt/pdf/Invoice.pdf"));
+                attachmentPart.attachFile(new File("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf"));
                 attachmentPart.setFileName("Invoice.pdf");
                 BodyPart messageBodyPart = new MimeBodyPart();
                 String htmlText = "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
@@ -701,25 +702,42 @@ public class ReservationService {
         return lis.size();
     }
 
+    public boolean isReservationValid(String Acesscode) {
+        System.out.println(Acesscode);
+        if (repository.existsById(Acesscode)) {
+            Reservation reservation = repository.findById(Acesscode).orElseThrow();
+            Date now = new Date(); // This object contains the current date value
+            Date end_date = reservation.getEnd_date();
+            Date start_date = reservation.getStart_date();
+            if (now.compareTo(end_date) < 0 & now.compareTo(start_date) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public List<Reservation> getUserReservation(String id) {
         return repository.findByUser_id(id);
     }
 
     public boolean check_reservation(String id) {
-        System.out.println("hello");
-        if (repository.existsById(id)) {
-            Optional<Reservation> res = repository.findById(id);
-            System.out.println("hello");
-            Date now = new Date(); // This object contains the current date value
+
+        Optional<Reservation> res = repository.findById(id);
+        System.out.println(res.get());
+     /*   if (repository.existsById(id)) {
+
+
+            System.out.println(res.get());
+           Date now = new Date(); // This object contains the current date value
             Date end_date = res.get().getEnd_date();
             Date start_date = res.get().getStart_date();
             System.out.println("hello");
-            if (now.compareTo(end_date) < 0 & now.compareTo(start_date) > 0) {
+         if (now.compareTo(end_date) < 0 & now.compareTo(start_date) > 0) {
                 return true;
             }
             return false;
-        }
+        }*/
         return false;
 
     }
@@ -763,19 +781,10 @@ public class ReservationService {
     public int range_reservation(String date1_comp, String date2_comp) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String oeStartDateStr = date1_comp;
-        //System.out.println("1 ==  "+ oeStartDateStr);
-        //String oeEndDateStr = date2_comp;
-        //Calendar cal = Calendar.getInstance();
-        //Integer year = cal.get(Calendar.YEAR);
-        //oeStartDateStr = oeStartDateStr.concat(year.toString());
-        //oeEndDateStr = oeEndDateStr.concat(year.toString());
-
         Date startDate = sdf.parse(date1_comp);
         Date endDate = sdf.parse(date2_comp);
         System.out.println("startDate input =  "+ startDate);
         System.out.println("endDate input =  "+ endDate);
-
-
         System.out.println("boucle for ");
         List<Reservation> liste1 = new ArrayList<>();
         List<Reservation> liste = new ArrayList<>();;

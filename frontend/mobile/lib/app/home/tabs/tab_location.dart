@@ -9,7 +9,6 @@ import 'package:flutter_parking_ui_new/base/resizer/fetch_pixels.dart';
 import 'package:flutter_parking_ui_new/base/widget_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geocoding/geocoding.dart';
 import '../../routes/app_routes.dart';
 
 class TabLocation extends StatefulWidget {

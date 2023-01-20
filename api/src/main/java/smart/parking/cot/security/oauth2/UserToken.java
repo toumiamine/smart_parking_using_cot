@@ -28,6 +28,10 @@ public class UserToken {
     UserToken() {
     }
 
+    public void setTokens(Set<RefreshToken> tokens) {
+        this.tokens = tokens;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -80,6 +80,7 @@ class _ScreenLogin extends State<ScreenLogin> {
               PrefData.setLogIn(true),
               PrefData.setToken(response["accessToken"]),
               PrefData.setEmail(response["email"]),
+              PrefData.setRefreshToken(response["refreshToken"]),
               PrefData.setFullName(response["fullname"]),
               PrefData.setPhoneNumber(response["phone_number"]),
           Constant.sendToNext(context, Routes.homeScreenRoute)

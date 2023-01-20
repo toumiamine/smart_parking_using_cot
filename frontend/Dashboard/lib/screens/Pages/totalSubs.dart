@@ -7,6 +7,7 @@ import 'package:smart_admin_dashboard/screens/dashboard/components/mini_informat
 import '../../../Services/APIServices.dart';
 import '../../base/pref_data.dart';
 import '../dashboard/components/mini_information_widget.dart';
+import '../login/login_screen.dart';
 
 class totalSubs extends StatefulWidget {
 
@@ -34,20 +35,25 @@ class _totalSubsState extends State<totalSubs> {
   @override
   Widget build(BuildContext context) {
     var t =0;
-
     Future<int> _fetchall() async {
-
       SharedPreferences prefs = await PrefData.getPrefInstance();
       String? token = prefs.getString(PrefData.accesstoken);
       await APIService.totalSubs(token).then((value) => {
-
-        t=value
+        if (value == 00001) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login(title: "Wellcome to the Smart Parking Admin & Dashboard Panel")),
+          ),
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Session Expired", style: TextStyle(color: Colors.white),)
+                , backgroundColor: Colors.red,
+              )
+          )
+        }
+        else {
+          t=value}
       });
-      return t ;
-
-
-
-
+      return t;
     }
     return FutureBuilder(future: _fetchall(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -56,8 +62,6 @@ class _totalSubsState extends State<totalSubs> {
                 backgroundColor: Colors.blue);
           }
           else {
-
-
             return Text(snapshot.data!.toString());
 
 

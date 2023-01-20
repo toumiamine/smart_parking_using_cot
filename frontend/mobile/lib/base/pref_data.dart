@@ -9,6 +9,7 @@ class PrefData {
   static String email = prefName + "email";
   static String phonenumber = prefName + "phonenumber";
   static String token = prefName + "token";
+  static String refreshtoken = prefName + "refreshtoken";
 
 
   static Future<SharedPreferences> getPrefInstance() async {
@@ -25,6 +26,11 @@ class PrefData {
   static setIntroAvailable(bool avail) async {
     SharedPreferences preferences = await getPrefInstance();
     preferences.setBool(introAvailable, avail);
+  }
+
+  static setRefreshToken(String token) async {
+    SharedPreferences preferences = await getPrefInstance();
+    preferences.setString(refreshtoken, token);
   }
 
   static setLogIn(bool avail) async {

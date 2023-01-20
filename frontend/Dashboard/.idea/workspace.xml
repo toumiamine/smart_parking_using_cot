@@ -5,34 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b69a156-fe89-4d52-aeeb-a0e788edad94" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectEnconder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectEnconder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Repository/ConnectedObjectRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Connectedobject/ConnectedObjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Repository/UserTokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Repository/UserTokenRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Ressources/ParkingWebsocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Ressources/ParkingWebsocket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Ressources/ReservationRessource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/Ressources/ReservationRessource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/CORSFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/RemoveToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/RemoveToken.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/SecurityResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/SecurityResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/UserAlreadyExistException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/UserAlreadyExistException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/ApplicationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/DocumentProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/DocumentProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/mappers/UserAlreadyExistExceptionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/mappers/UserNotAuthorizedExceptionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/infra/mappers/UserNotFoundExceptionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Authentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Authentication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/filters/AuthorizationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/filters/AuthorizationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Resource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/Oauth2Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/UserJWT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/UserJWT.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/UserToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/security/oauth2/UserToken.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/services/MqttConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/services/MqttConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/services/PDFExport.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../api/src/main/resources/META-INF/microprofile-config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/resources/META-INF/microprofile-config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Dashboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Dashboard.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/java/smart/parking/cot/services/SendEmail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../api/src/main/webapp/WEB-INF/Invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../api/src/main/webapp/WEB-INF/Invoice.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Config/Config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Config/Config.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Services/APIServices.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Services/APIServices.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/pref_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/pref_data.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/Pages/ChooseParkingSlotScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/Pages/ChooseParkingSlotScreen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/Pages/ListReservations.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/Pages/ListReservations.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/Pages/MonthRes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/Pages/MonthRes.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/Pages/ReservationWithSearch.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/Pages/ReservationWithSearch.dart" afterDir="false" />
@@ -46,11 +42,12 @@
       <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/components/calendart_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/components/calendart_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/components/miniChart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/components/miniChart.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/components/recent_users.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/components/recent_users.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/login/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/home_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/Services/APIServices.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/Services/APIServices.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/Services/Config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/Services/Config.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mobile/lib/app/booking/booking_confirmation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/app/booking/booking_confirmation.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/app/detail/choose_parking_slot_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/app/detail/choose_parking_slot_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/app/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/app/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/lib/app/home/tabs/tab_location.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/app/home/tabs/tab_location.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/app/home/tabs/tab_my_booking.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/app/home/tabs/tab_my_booking.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/app/login/screen_login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/app/login/screen_login.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mobile/lib/base/pref_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/lib/base/pref_data.dart" afterDir="false" />
@@ -59,6 +56,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -101,5 +105,17 @@
       <updated>1671895160952</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

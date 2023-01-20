@@ -1,5 +1,5 @@
 class Config {
-  static const String appURL = "api.smart-parking.me:8443";
+  static const String appURL = "localhost:8080";
   static const String loginAPI = "/microprofile/oauth2/login/";
   static const String deleteAPI = "/microprofile/security/delete/";
   static const String registerAPI = "/register";
@@ -13,6 +13,4 @@ class Config {
   static const String ListUserReservationAPI="/microprofile/reservation/user/";
   static const String ChartAPI="/microprofile/reservation/range/";
   static const String MonthesListAPI = "/microprofile/reservation/range77/";
-
-
 }

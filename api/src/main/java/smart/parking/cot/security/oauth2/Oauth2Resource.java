@@ -1,5 +1,8 @@
 package smart.parking.cot.security.oauth2;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.HttpHeaders;
+import smart.parking.cot.Entity.User;
 import smart.parking.cot.security.oauth2.Oauth2Request;
 import smart.parking.cot.security.oauth2.Oauth2Response;
 import smart.parking.cot.security.oauth2.Oauth2Service;
@@ -7,13 +10,12 @@ import smart.parking.cot.security.oauth2.Oauth2Service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.BeanParam;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import java.text.ParseException;
+import java.util.Base64;
 import java.util.Map;
+import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
 @Path("oauth2")
@@ -32,7 +34,10 @@ public class Oauth2Resource {
             case REFRESH_TOKEN:
                 return service.refreshToken(request);
             default:
-                throw new UnsupportedOperationException("There is not support to another type");
+                throw new UnsupportedOperationException("There is no support to another type");
         }
     }
+
+
+
 }
