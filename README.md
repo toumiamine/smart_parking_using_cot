@@ -53,7 +53,7 @@ add new sensors and new smart things to the IoT network should be easy.
 
 ## Technologies
 - Backend:
-- 
+
 MongoDB mongodb-org-4.4
 
 wildfly-preview-26.1.2.Final
@@ -85,3 +85,6 @@ Google maps api
 
 ## Certification and Grading
 
+
+## Demo 
+you can test the application by downloading the .apk file from the releases. Also, you can test the application directly from your browser at https://admin.smart-parking.me/#/
