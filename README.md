@@ -101,7 +101,7 @@ This will open a new "Chrome" window where you can work easily.
 Dashboard 
 ![certif](./Assets_readme/dash_snap.png)
 Mobile Application
-![mobile](./Assets_readme/dash_sap.png)
+![mobile](./Assets_readme/mobile.jpg)
 
 Mockup
 ![mockup](./Assets_readme/mock.jpg)
