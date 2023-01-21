@@ -106,4 +106,6 @@ Mobile Application
 Mockup
 ![mockup](./Assets_readme/mock.jpg)
 
-
+## Contributors
+Azzouz Imen
+Toumi Mohamed Amine
