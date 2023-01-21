@@ -61,8 +61,8 @@ public class ReservationService {
                     .build();
             repository.save(reservation1);
             Optional<User> user_class = repository_user.findById(reservation.getUser_id());
-            try (PdfReader reader = new PdfReader("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf");
-                 PdfWriter writer = new PdfWriter("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
+            try (PdfReader reader = new PdfReader("/opt/pdf/template.pdf");
+                 PdfWriter writer = new PdfWriter("/opt/pdf/Invoice.pdf");
                  PdfDocument document = new PdfDocument(reader, writer)) {
 
                 PdfPage page = document.getPage(1);
@@ -142,7 +142,7 @@ public class ReservationService {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
                 MimeBodyPart attachmentPart = new MimeBodyPart();
-                attachmentPart.attachFile(new File("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf"));
+                attachmentPart.attachFile(new File("/opt/pdf/Invoice.pdf"));
                 attachmentPart.setFileName("Invoice.pdf");
                 BodyPart messageBodyPart = new MimeBodyPart();
                 String htmlText = "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
@@ -720,27 +720,6 @@ public class ReservationService {
         return repository.findByUser_id(id);
     }
 
-    public boolean check_reservation(String id) {
-
-        Optional<Reservation> res = repository.findById(id);
-        System.out.println(res.get());
-     /*   if (repository.existsById(id)) {
-
-
-            System.out.println(res.get());
-           Date now = new Date(); // This object contains the current date value
-            Date end_date = res.get().getEnd_date();
-            Date start_date = res.get().getStart_date();
-            System.out.println("hello");
-         if (now.compareTo(end_date) < 0 & now.compareTo(start_date) > 0) {
-                return true;
-            }
-            return false;
-        }*/
-        return false;
-
-    }
-
 
     public int range_reservation(String date1_comp, String date2_comp) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -757,29 +736,14 @@ public class ReservationService {
         for (int i = 0; i < listRes.size(); i++) {
             Reservation reservation = listRes.get(i);
             Date date = reservation.getStart_date();
-            //System.out.print("date from DB"+date);
-
-
-            String currDt = sdf.format(date);
-            System.out.println("date li fost  baed mawlet string" + date);
-
             if (date.after(startDate) && date.before(endDate)) {
-                System.out.println("ok if 1");
-
                 liste.add(reservation);
             }
 
             if (date.compareTo(endDate) < 0 & date.compareTo(startDate) > 0) {
-                System.out.println("ok if 2");
                 liste1.add(reservation);
             }
-
-
-            //liste.add(reservation);
-
         }
-
-
         return liste.size();
 
     }
@@ -821,7 +785,6 @@ public class ReservationService {
                         }
                     }
                     if (liste3.size() != 0) {
-                        //map. put(String.valueOf(j), String.valueOf(liste3.size()));
                         map.put(String.valueOf(j + 1), String.valueOf(liste3.size()));
                     }
 

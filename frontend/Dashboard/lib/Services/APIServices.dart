@@ -13,13 +13,16 @@ import '../models/RefreshTokenRequestModel.dart';
 import '../models/RegisterModelRequest.dart';
 
 class APIService {
+
+
   static var client = http.Client();
+
   static Future login (LoginModelRequest model) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
     };
 
-    var url = Uri.http(Config.appURL, Config.loginAPI);
+    var url = Uri.https(Config.appURL, Config.loginAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 
     if (response.statusCode ==200) {
@@ -44,9 +47,10 @@ class APIService {
   static Future refreshToken (RefreshTokenRequestModel model) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.loginAPI);
+    var url = Uri.https(Config.appURL, Config.loginAPI);
     var response = await client.post(url, headers: requestHeaders , body: jsonEncode(model.toJson()));
 print(response.body);
     if (response.statusCode ==200) {
@@ -64,9 +68,10 @@ print(response.body);
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.CreateParking);
+    var url = Uri.https(Config.appURL, Config.CreateParking);
     var response = await client.post(
         url, headers: requestHeaders, body: jsonEncode(model.toJson()));
     print("/////////////////////");
@@ -90,7 +95,7 @@ print(response.body);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.http(Config.appURL, Config.DeleteReservationAPI + id);
+    var url = Uri.https(Config.appURL, Config.DeleteReservationAPI + id);
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode ==204) {
@@ -110,7 +115,7 @@ print(response.body);
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.http(Config.appURL, Config.ListUserAPI);
+    var url = Uri.https(Config.appURL, Config.ListUserAPI);
     print(url);
     var response = await client.get(url, headers: requestHeaders);
 print(response);
@@ -130,14 +135,13 @@ print(response);
     }
 
   }
-
   static Future<String> delete (String id,String tok) async {
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
     };
 
-    var url = Uri.http(Config.appURL, Config.deleteAPI + id);
+    var url = Uri.https(Config.appURL, Config.deleteAPI + id);
     var response = await client.delete(url, headers: requestHeaders);
 
     if (response.statusCode ==204) {
@@ -157,24 +161,18 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.ListReservationAPI);
+    var url = Uri.https(Config.appURL, Config.ListReservationAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
       Iterable l = json.decode(response.body);
       List<ListReservationResponseModel> reservations = [];
-      print(l.last['reservation_date'].runtimeType);
-      print(l.last['id'].runtimeType);
-      print(l.last['start_date']);
-      print(l.last['end_date']);
-      print(l.last['user_id']);
       for (var rese in l) {
         reservations.add(ListReservationResponseModel(id: rese['id'], user_id: rese['user_id'], reservation_date: DateTime.fromMicrosecondsSinceEpoch(rese['reservation_date']* 1000) , start_date: DateTime.fromMicrosecondsSinceEpoch(rese['start_date']* 1000), end_date: DateTime.fromMicrosecondsSinceEpoch(rese['end_date']* 1000)));
       }
-      print('**************');
-      print(reservations);
       return reservations;
     }
     else if (response.statusCode ==401) {
@@ -192,9 +190,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.TotalReservationAPI);
+    var url = Uri.https(Config.appURL, Config.TotalReservationAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -216,9 +215,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.TotalSubsAPI);
+    var url = Uri.https(Config.appURL, Config.TotalSubsAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -240,9 +240,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.MonthlyResAPI);
+    var url = Uri.https(Config.appURL, Config.MonthlyResAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -265,9 +266,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.WeeklyResAPI);
+    var url = Uri.https(Config.appURL, Config.WeeklyResAPI);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -290,9 +292,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.ListUserReservationAPI + id);
+    var url = Uri.https(Config.appURL, Config.ListUserReservationAPI + id);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -327,9 +330,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.ListAllParking);
+    var url = Uri.https(Config.appURL, Config.ListAllParking);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -363,9 +367,10 @@ print(response);
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
+    var url = Uri.https(Config.appURL, Config.ChartAPI+startDate+"/"+endDate);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -387,9 +392,10 @@ print(response);
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
+    var url = Uri.https(Config.appURL, Config.MonthesListAPI + startDate+"/"+endDate);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {
@@ -397,7 +403,6 @@ print(response);
 
       var l = json.decode(response.body);
       final Map maps = Map.from(l);
-
       return maps;
     }
     else if (response.statusCode ==401) {
@@ -415,9 +420,10 @@ print(response);
     Map<String,String> requestHeaders = {
       'Content-Type' : 'application/json',
       'Authorization' : 'Bearer '+ tok,
+      'Access-Control-Allow-Origin' : '*'
     };
 
-    var url = Uri.http(Config.appURL, Config.TotalPrices);
+    var url = Uri.https(Config.appURL, Config.TotalPrices);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode ==200) {

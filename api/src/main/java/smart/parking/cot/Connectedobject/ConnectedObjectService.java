@@ -44,21 +44,6 @@ public class ConnectedObjectService {
     }
 
 
-  /*  public Map<String, Integer> getList_spots(ConnectedObject connectedObject) {
-        List<ConnectedObject> list_of_connected_object = repository.findAll();
-        Map<String, Integer> map = null;
-        for (int i = 0; i < list_of_connected_object.size(); i++) {
-            ConnectedObject object = list_of_connected_object.get(i);
-            if (object.getType() == "Slot") {
-                map.put(object.getId(),object.getValue());
-            }
-        }
-        return map;
-    }*/
-
-
-
-
 
 }
 

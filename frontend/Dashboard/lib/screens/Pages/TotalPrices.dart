@@ -53,9 +53,7 @@ class _total_incomeState extends State<total_income> {
                 backgroundColor: Colors.blue);
           }
           else {
-
-
-            return Text(snapshot.data!.toString());
+            return Text(snapshot.data!.toString()+ " TND");
 
 
 

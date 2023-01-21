@@ -48,6 +48,7 @@ class _ListReservations0State extends State<ListReservations0> {
           )
         }
         else {
+          recentReservations = [],
         for (ListReservationResponseModel reservation in value) {
           recentReservations.add(ReservationModel(
             id: reservation.id,

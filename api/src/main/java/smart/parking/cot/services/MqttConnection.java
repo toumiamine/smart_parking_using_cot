@@ -70,10 +70,9 @@ public class MqttConnection {
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) {
-                   // System.out.println(new String(message.getPayload()));
-            if (topic.equals("IRSensor")) {
+//check if the topic is IRSensor
+if (topic.equals("IRSensor")) {
          try {
-        //System.out.println(topic + "::::: " + new String(message.getPayload()));
         System.out.println(new String(message.getPayload()));
         JSONObject obj = new JSONObject(new String(message.getPayload()));
         ConnectedObject connectedObject = new ConnectedObject();
@@ -87,12 +86,14 @@ public class MqttConnection {
         connectedObject.setState(state);
         connectedObject.setType(type);
         connectedObject.setValue(value);
+        //Broadcast the message to all users using websockets
         ParkingWebsocket.broadcastMessage(connectedObject);
     }
     catch (Exception e ) {
         System.out.println("hi"+e);
     }
 }
+//check if the topic is AccessManagement
                     else if (topic.equals("AccessManagement")) {
                         try {
                            JSONObject obj = new JSONObject(new String(message.getPayload()));
@@ -107,15 +108,18 @@ public class MqttConnection {
                             connectedObject.setState(state);
                             connectedObject.setType(type);
                             connectedObject.setValue(value);
-boolean isavaialble = service.isReservationValid(connectedObject.getValue());
-if (isavaialble == true) {
-    String s = "openDoor";
-    client.publish("EntryDoor",new MqttMessage(s.getBytes()) );
-}
-else {
-    String s = "ReservationFailed";
-    client.publish("EntryDoor",new MqttMessage(s.getBytes()) );
-}
+
+                            if (connectedObject.getValue() != null) {
+                                boolean isavaialble = service.isReservationValid(connectedObject.getValue().replace("\n", ""));
+                                if (isavaialble == true) {
+                                    String s = "openDoor";
+                                    client.publish("EntryDoor",new MqttMessage(s.getBytes()) );
+                                }
+                                else {
+                                    String s = "ReservationFailed";
+                                    client.publish("EntryDoor",new MqttMessage(s.getBytes()) );
+                                }
+                            }
                         }
                         catch (Exception e ) {
 

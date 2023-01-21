@@ -95,11 +95,6 @@ class _ParkingTimeScreen extends State<ParkingTimeScreen> {
                   ),
                   flex: 1),
               getVerSpace(25.h),
-              getButtonFigma(context, getAccentColor(context), true,
-                  "Extend Parking Time", Colors.black, () {
-                Constant.sendToNext(context, Routes.extendTimeScreen);
-              }, edgeInsets),
-              getVerSpace(25.h)
             ],
           ),
         ),

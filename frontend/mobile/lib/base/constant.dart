@@ -7,25 +7,9 @@ import 'package:get/get.dart';
 class Constant {
   static String assetImagePath = "assets/images/";
   static String assetImagePathNight = "assets/imagesNight/";
-  static bool isDriverApp = false;
   static const String fontsFamily = "Montserrat";
   static const String fontsFamilySansita = "Sansita-Regular";
   static const String digitalFontsFamily = "digitalmono";
-  static const String fromLogin = "getFromLoginClick";
-  static const String homePos = "getTabPos";
-  static const String nameSend = "name";
-  static const String imageSend = "image";
-  static const String bgColor = "bgColor";
-  static const String heroKey = "sendHeroKey";
-  static const String sendVal = "sendVal";
-  static const int stepStatusNone = 0;
-  static const int stepStatusActive = 1;
-  static const int stepStatusDone = 2;
-  static const int stepStatusWrong = 3;
-
-  static double getPercentSize(double total, double percent) {
-    return (percent * total) / 100;
-  }
 
   static void setupSize(BuildContext context,
       {double width = 414, double height = 896}) {
@@ -38,47 +22,15 @@ class Constant {
     Get.back();
   }
 
-  // static sendToDetail(
-  //     BuildContext context, String name, String img, String? colors,{String heroKey1=""}) {
-  //   sendToNext(context, Routes.detailScreenPath,
-  //       arguments: {nameSend: name, imageSend: img, bgColor: colors,heroKey:heroKey1});
-  // }
-
-  static getCurrency(BuildContext context) {
-    return "ETH";
-  }
 
   static sendToNext(BuildContext context, String route, {Object? arguments}) {
     if (arguments != null) {
       Get.toNamed(route, arguments: arguments);
-      // Navigator.pushNamed(context, route, arguments: arguments);
     } else {
       Get.toNamed(route);
-      // Navigator.pushNamed(context, route);
     }
   }
 
-  static sendToNextWithBackResult(
-      BuildContext context, String route, ValueChanged<dynamic> fun,
-      {Object? arguments}) {
-    if (arguments != null) {
-      Get.toNamed(route, arguments: arguments)!.then((value) {
-        fun(value);
-      });
-      // Navigator.pushNamed(context, route, arguments: arguments).then((value) {
-      //   fun(value);
-      // });
-    } else {
-      Get.toNamed(route)!.then((value) {
-        fun(value);
-      });
-      // Navigator.pushNamed(context, route).then(
-      //   (value) {
-      //     fun(value);
-      //   },
-      // );
-    }
-  }
 
   static double getWidthPercentSize(double percent) {
     double screenWidth = SizeConfig.safeBlockHorizontal! * 100;
@@ -90,19 +42,8 @@ class Constant {
     return (percent * screenHeight) / 100;
   }
 
-  static double getToolbarHeight(BuildContext context) {
-    return MediaQuery.of(context).padding.top + kToolbarHeight;
-  }
-
   static double getToolbarTopHeight(BuildContext context) {
     return MediaQuery.of(context).padding.top;
-  }
-
-  static sendToScreen(Widget widget, BuildContext context) {
-    Get.to(widget);
-    // Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (context) => widget,
-    // ));
   }
 
   static backToFinish(BuildContext context) {

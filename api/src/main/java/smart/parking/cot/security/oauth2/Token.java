@@ -55,7 +55,6 @@ public final class Token implements Supplier<String> {
 
     public static Token generate() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
-
         String token = random.ints(LEFT_LIMIT, RIGHT_LIMIT + 1)
                 .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                 .limit(SIZE)
