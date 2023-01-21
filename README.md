@@ -12,10 +12,8 @@
     <a href="#Context">Context</a> |
     <a href="#Installation-Guide">Installation Guide</a> |
     <a href="#Technologies">Technologies</a> |
-    <a href="#Deployment-Server">Deployment Server</a> |
     <a href="#Certification-and-Grading">Certification and Grading</a> |
    <a href="#Screenshots">Screenshots</a> |
-    <a href="#Further-Readings">Further Readings</a> |
     <a href="#Contribution">Contribution</a>
   </h4>
 </div>
@@ -49,7 +47,7 @@ privacy of the data, sensors and mobile application.
 • Scalability: The network needs to be scalable, which means that the possibility to
 add new sensors and new smart things to the IoT network should be easy.
 
-## Installation Guide
+
 
 ## Technologies
 - Backend:
@@ -85,6 +83,27 @@ Google maps api
 
 ## Certification and Grading
 
+![certif](./Assets_readme/A.png)
+
+![certif](./Assets_readme/dashbord.png)
+
 
 ## Demo 
 you can test the application by downloading the .apk file from the releases. Also, you can test the application directly from your browser at https://admin.smart-parking.me/#/
+
+If you got Cors error try this :
+
+Click on window -> type run and hit enter -> in the command window copy:
+chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
+This will open a new "Chrome" window where you can work easily.
+
+## Screenshots
+Dashboard 
+![certif](./Assets_readme/dash_snap.png)
+Mobile Application
+![mobile](./Assets_readme/dash_sap.png)
+
+Mockup
+![mockup](./Assets_readme/mock.jpg)
+
+

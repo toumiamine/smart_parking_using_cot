@@ -58,7 +58,7 @@ class _IntroView extends State<IntroView> {
             // getVerSpace(FetchPixels.getPixelHeight(80)),
             buildIndicator(),
             getVerSpace(30.h),
-            getPaddingWidget(edgeInsets, buildNextButton(context)),
+          //  getPaddingWidget(edgeInsets, buildNextButton(context)),
             getVerSpace(35.h)
           ]),
         ),
@@ -75,7 +75,7 @@ class _IntroView extends State<IntroView> {
     );
   }
 
-  ValueListenableBuilder buildNextButton(BuildContext context) {
+  /*ValueListenableBuilder buildNextButton(BuildContext context) {
     return ValueListenableBuilder(
       builder: (context, value, child) {
         return (selectedPage.value != DataFile.introList.length - 1)
@@ -92,7 +92,7 @@ class _IntroView extends State<IntroView> {
       },
       valueListenable: selectedPage,
     );
-  }
+  }*/
 
   Widget buildIndicator() {
     return ValueListenableBuilder(

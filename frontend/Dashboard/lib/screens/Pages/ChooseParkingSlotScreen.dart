@@ -22,7 +22,7 @@ class _ChooseParkingSlotScreen extends State<ChooseParkingSlotScreen> {
   List<String> getFloorList = DataFile.getAllFloorList();
 
   late final int count;
-  var channel_availability = WebSocketChannel.connect(Uri.parse('ws://localhost:8080/microprofile/websocket_channel'));
+var channel_availability = WebSocketChannel.connect(Uri.parse('wss://api.smart-parking.me:8443/microprofile/websocket_channel'));
 
   finish() {
     Constant.backToFinish(context);
@@ -65,9 +65,9 @@ return StreamBuilder(
         String type = ReceivedConnectedObject["type"];
         if (type == "IRSENSOR") {
           String Id = ReceivedConnectedObject["id"];
-          int value = ReceivedConnectedObject["value"];
+          String value = ReceivedConnectedObject["value"];
           int n = int.parse(Id[2]);
-          if (value==1) {
+          if (value=="1") {
             slotList1[n-1] = ModelSlotDetail("G0"+Id[2] , DataFile.slotAvailable);
           }
           else {
@@ -155,6 +155,10 @@ return StreamBuilder(
                               "Exit", 18, Colors.white, 1,
                               fontWeight: FontWeight.w500),
                         ),
+                      TextButton(onPressed: (){
+                        String SentConnectedObject = '{"id" : "exit" ,"type" : "Servo","value" : "openDoor","state" : "Woorking","pin" : 21 }';
+                        channel_availability.sink.add(SentConnectedObject);
+                      }, child: Text('Open Exit Door')),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,7 +249,9 @@ return StreamBuilder(
           });
     }
     else {
-      channel_availability.sink.add('{"id" : "G03","isAvailable" : 0}');
+      String SentConnectedObject = '{"id" : "exit" ,"type" : "Servo","value" : "closeDoor","state" : "Woorking","pin" : 21 }';
+
+      channel_availability.sink.add(SentConnectedObject);
       return Center(
         child: Row(
           children: <Widget>[
