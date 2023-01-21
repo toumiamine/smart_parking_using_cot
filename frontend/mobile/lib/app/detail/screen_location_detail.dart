@@ -243,7 +243,6 @@ class _ScreenLocationDetail extends State<ScreenLocationDetail> {
                     children: [
                       Expanded(
                         child: getButtonFigma(
-
                             context,
                             getAccentColor(context),
                             true,
@@ -256,13 +255,6 @@ class _ScreenLocationDetail extends State<ScreenLocationDetail> {
                             EdgeInsets.zero),
                         flex: 1,
                       ),
-                      getHorSpace(12.w),
-                      InkWell(
-                          onTap: () {
-                            Constant.sendToNext(context, Routes.chatScreen);
-                          },
-                          child: getSvgImageWithSize(
-                              context, "Chat.svg", 60.h, 60.h))
                     ],
                   )),
               getVerSpace(20.h),

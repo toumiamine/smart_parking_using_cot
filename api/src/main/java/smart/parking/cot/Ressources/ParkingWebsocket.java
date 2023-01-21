@@ -68,27 +68,9 @@ public class ParkingWebsocket {
         sendMessage(connectedObject);
 
     }
-
-
-   /* @OnMessage
-    public void onMessage(Session session, ParkingSlot parkingSlot) throws ParseException {
-        System.out.println(parkingSlot.getId());
-        System.out.println(parkingSlot.getIsAvailable());
-        parkingSlots.add(parkingSlot);
-        for (Session openSession : sessions) {
-            try {
-                openSession.getBasicRemote().sendObject(parkingSlot);
-            } catch (IOException | EncodeException ex) {
-                sessions.remove(openSession);
-            }
-        }
-    }*/
    public static void broadcastMessage(ConnectedObject connectedObject) {
        if (connectedObject.getType().equals("Servo") & connectedObject.getId().equals("entry")) {
-           System.out.println("Hani ntesti lehné");
-           //System.out.println(repository.findAll());
-           System.out.println("Printed sucess");
-           // System.out.println(service.isReservationValid(connectedObject.getValue()));
+
        }
        else {
            for (Session session : sessions.values()) {

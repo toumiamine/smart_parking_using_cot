@@ -12,16 +12,6 @@ import 'color_data.dart';
 import 'constant.dart';
 import 'country_code_picker.dart';
 
-void showCustomToast(String texts, BuildContext context) {
-  Fluttertoast.showToast(
-      msg: texts,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 12.0.sp);
-}
 
 Widget buildPaymentContainer(
     EdgeInsets edgeInsets,
@@ -142,30 +132,6 @@ TextStyle buildTextStyle(BuildContext context, Color fontColor,
     fontWeight: fontWeight,
     fontFamily: Constant.fontsFamily,
     fontSize: fontSize.sp,
-  );
-}
-
-DecorationImage getDecorationAssetImage(BuildContext buildContext, String image,
-    {BoxFit fit = BoxFit.contain}) {
-  var darkThemeProvider = Provider.of<DarkMode>(buildContext);
-
-  return DecorationImage(
-    image: AssetImage(((darkThemeProvider.darkMode &&
-                darkThemeProvider.assetList.contains(image))
-            ? Constant.assetImagePathNight
-            : Constant.assetImagePath) +
-        image),
-    fit: fit,
-    // scale: FetchPixels.getScale()
-  );
-}
-
-Widget getCloseButton(BuildContext context, Function function) {
-  return InkWell(
-    onTap: () {
-      function();
-    },
-    child: getSvgImageWithSize(context, "Close.svg", 24.h, 24.h),
   );
 }
 

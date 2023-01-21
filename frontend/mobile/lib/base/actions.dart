@@ -91,7 +91,7 @@ class CustomSlidableAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveForegroundColor = foregroundColor ??
         (ThemeData.estimateBrightnessForColor(backgroundColor) ==
-                Brightness.light
+            Brightness.light
             ? Colors.black
             : Colors.white);
 
@@ -214,17 +214,17 @@ class SlidableAction extends StatelessWidget {
     final child = children.length == 1
         ? children.first
         : Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ...children.map(
-                (child) => Flexible(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      child: child),
-                ),
-              )
-            ],
-          );
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ...children.map(
+              (child) => Flexible(
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: child),
+          ),
+        )
+      ],
+    );
 
     return CustomSlidableAction(
       borderRadius: borderRadius,

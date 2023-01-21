@@ -3,6 +3,7 @@
 import 'dart:collection';
 
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_admin_dashboard/core/constants/color_constants.dart';
@@ -200,7 +201,6 @@ class _Minichart extends State<Minichart> {
                                                     pickedDate1); //pickedDate output format => 2021-03-10 00:00:00.000
                                                 String formattedDate =
                                                 DateFormat('yyyy-MM-dd').format(pickedDate1);
-                                                print(snapshot.data);
                                                 print(
                                                     formattedDate); //formatted date output using intl package =>  2021-03-16
                                                 setState(() {
@@ -232,8 +232,7 @@ class _Minichart extends State<Minichart> {
 
 
                                     SizedBox(height: 40,),
-                                    isSwitched
-
+                                    data.length!= 0
                                         ?PieChart(
                                       dataMap: snapshot.data,
                                       animationDuration: Duration(milliseconds: 1000),
@@ -262,7 +261,7 @@ class _Minichart extends State<Minichart> {
                                       ),
                                       // gradientList: ---To add gradient colors---
                                       // emptyColorGradient: ---Empty Color gradient---
-                                    ): Container(),
+                                    ): Text("No statistics for the selected period"),
                                               SizedBox(height: 40,),
 
 

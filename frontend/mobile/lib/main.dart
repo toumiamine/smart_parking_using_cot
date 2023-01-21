@@ -8,7 +8,6 @@ import 'base/color_data.dart';
 import 'base/my_custom_scroll_behavior.dart';
 import 'app/notifier/dark_mode.dart';
 import 'base/restart_controller.dart';
-import 'generated/l10n.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,11 +31,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        S.delegate,
-      ],
       title: 'Grocery',
       initialRoute:AppPages.initialRoute,
       theme: getLightThemeData(),

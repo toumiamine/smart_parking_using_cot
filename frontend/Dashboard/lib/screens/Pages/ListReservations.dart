@@ -47,6 +47,7 @@ class _ListReservationsState extends State<ListReservations> {
         }
         else {
         for (ListReservationResponseModel reservation in value) {
+          recentReservations = [],
           recentReservations.add(ReservationModel(
               id: reservation.id,
               icon: "assets/icons/xd_file.svg",

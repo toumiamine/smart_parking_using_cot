@@ -6,7 +6,6 @@ import '../../base/dots_indicator.dart';
 import '../../base/pref_data.dart';
 import '../../base/resizer/fetch_pixels.dart';
 import '../../base/widget_utils.dart';
-import '../../generated/l10n.dart';
 import '../data/data_file.dart';
 import '../model/model_intro.dart';
 import '../routes/app_routes.dart';

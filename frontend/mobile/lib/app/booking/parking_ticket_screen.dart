@@ -118,15 +118,12 @@ class _ParkingTicketScreen extends State<ParkingTicketScreen> {
                             ),
                           ),
                           flex: 1),
-                      getButtonFigma(context, getAccentColor(context), true,
-                          "Get Direction", Colors.black, () {}, edgeInsets),
-                      getVerSpace(15.h),
                       getButtonFigma(
                         context,
                         Colors.transparent,
                         true,
                         "Home screen",
-                        getFontColor(context),
+                        Colors.black,
                             () {
                           Constant.sendToNext(context, Routes.homeScreenRoute);
                         },

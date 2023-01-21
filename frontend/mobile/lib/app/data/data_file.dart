@@ -1,8 +1,6 @@
 import 'package:flutter_parking_ui_new/app/model/model_category.dart';
-import 'package:flutter_parking_ui_new/app/model/model_chat.dart';
 import 'package:flutter_parking_ui_new/app/model/model_my_booking.dart';
 import 'package:flutter_parking_ui_new/app/model/model_my_card.dart';
-import 'package:flutter_parking_ui_new/app/model/model_notification.dart';
 import 'package:flutter_parking_ui_new/app/model/model_payment_list.dart';
 import 'package:flutter_parking_ui_new/app/model/model_slot_detail.dart';
 
@@ -43,28 +41,6 @@ class DataFile {
     catList.add(
         ModelMyCard("Master Card", "mastercard.svg", "xxxx xxxx xxxx 2024"));
     catList.add(ModelMyCard("Visa", "visa.svg", "xxxx xxxx xxxx 1430"));
-
-    return catList;
-  }
-
-  static List<ModelChat> getChattingList() {
-    List<ModelChat> catList = [];
-
-    catList.add(ModelChat(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-        "2:55 PM",
-        false,
-        false));
-    catList.add(ModelChat(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut",
-        "3:02 PM",
-        true,
-        true));
-    catList.add(ModelChat(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-        "4:58 PM",
-        false,
-        false));
 
     return catList;
   }
@@ -126,39 +102,18 @@ class DataFile {
   static List<ModelIntro> introList = [
     ModelIntro(
         1,
-        "Fresh Grocery\nFor You",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        "Welcome to SmartPark",
+        "Find Your Perfect Spot",
         "intro1.png"),
     ModelIntro(
         2,
-        "Choose From Our\nBest Menu",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        "Effortlessly Navigate Parking with SmartPark",
+        "Effortlessly Navigate Parking with SmartPark",
         "intro2.png"),
     ModelIntro(
         2,
-        "Quick Delivery At\nYour Doorstep",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        "Say Goodbye to Circling the Block with SmartPark",
+        "Say Goodbye to Circling the Block with SmartPark",
         "intro3.png")
   ];
-
-  static List<ModelIntro> getAllOfferList() {
-    List<ModelIntro> getOfferList = [
-      ModelIntro(
-          1,
-          "Fresh Grocery\nFor You",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
-          "intro1.png"),
-      ModelIntro(
-          2,
-          "Choose From Our\nBest Menu",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
-          "intro2.png"),
-      ModelIntro(
-          2,
-          "Quick Delivery At\nYour Doorstep",
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
-          "intro3.png")
-    ];
-    return getOfferList;
-  }
 }

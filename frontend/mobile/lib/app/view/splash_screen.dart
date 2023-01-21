@@ -39,17 +39,6 @@ class _SplashScreen extends State<SplashScreen> {
   void initState() {
     super.initState();
     checkLogin();
-
-    // PrefData.isLogIn().then((value) {
-    //   Timer(
-    //     const Duration(seconds: 1),
-    //     () {
-    //       (value)
-    //           ? Constant.sendToNext(context, Routes.homeScreenRoute)
-    //           : Constant.sendToNext(context, Routes.introRoute);
-    //     },
-    //   );
-    // });
   }
 
   void backClick() {

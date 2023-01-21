@@ -30,10 +30,6 @@ getFontColor(BuildContext context) {
   return getCurrentTheme(context).textTheme.titleMedium!.color;
 }
 
-getFontBlackColor(BuildContext context) {
-  return getCurrentTheme(context).textTheme.titleLarge!.color;
-}
-
 getFontGreyColor(BuildContext context) {
   return getCurrentTheme(context).textTheme.caption!.color;
 }

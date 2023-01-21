@@ -61,8 +61,8 @@ public class ReservationService {
                     .build();
             repository.save(reservation1);
             Optional<User> user_class = repository_user.findById(reservation.getUser_id());
-            try (PdfReader reader = new PdfReader("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\template.pdf");
-                 PdfWriter writer = new PdfWriter("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf");
+            try (PdfReader reader = new PdfReader("/opt/pdf/template.pdf");
+                 PdfWriter writer = new PdfWriter("/opt/pdf/Invoice.pdf");
                  PdfDocument document = new PdfDocument(reader, writer)) {
 
                 PdfPage page = document.getPage(1);
@@ -142,7 +142,7 @@ public class ReservationService {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
                 MimeBodyPart attachmentPart = new MimeBodyPart();
-                attachmentPart.attachFile(new File("C:\\Users\\Lenovo\\Desktop\\INDP3\\P2\\Projet Kaaniche\\smart_parking_using_cot\\api\\src\\main\\webapp\\WEB-INF\\Invoice.pdf"));
+                attachmentPart.attachFile(new File("/opt/pdf/Invoice.pdf"));
                 attachmentPart.setFileName("Invoice.pdf");
                 BodyPart messageBodyPart = new MimeBodyPart();
                 String htmlText = "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
