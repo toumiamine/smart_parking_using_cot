@@ -12,7 +12,6 @@
     <a href="#Context">Context</a> |
     <a href="#Installation-Guide">Installation Guide</a> |
     <a href="#Technologies">Technologies</a> |
-    <a href="#Deployment-Server">Deployment Server</a> |
     <a href="#Certification-and-Grading">Certification and Grading</a> |
    <a href="#Screenshots">Screenshots</a> |
     <a href="#Contribution">Contribution</a>
@@ -48,7 +47,7 @@ privacy of the data, sensors and mobile application.
 • Scalability: The network needs to be scalable, which means that the possibility to
 add new sensors and new smart things to the IoT network should be easy.
 
-## Installation Guide
+
 
 ## Technologies
 - Backend:
