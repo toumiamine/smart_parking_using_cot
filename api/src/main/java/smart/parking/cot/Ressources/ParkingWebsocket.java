@@ -7,6 +7,7 @@ import jakarta.nosql.mapping.DatabaseType;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import smart.parking.cot.Connectedobject.ConnectedObject;
 import smart.parking.cot.Connectedobject.ConnectedObjectEnconder;
@@ -53,19 +54,24 @@ public class ParkingWebsocket {
             mqttConnectOptions.setPassword("broker".toCharArray());
             mqttConnectOptions.setSocketFactory(SSLSocketFactory.getDefault()); // using the default socket factory
             client.connect(mqttConnectOptions);
-
-
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
     }
-
-    public static final List<ConnectedObject> connectedObjects = Collections.synchronizedList(new LinkedList<ConnectedObject>());
     private static Hashtable<String, Session> sessions = new Hashtable<>();
 
     @OnMessage
     public void handleMessage(ConnectedObject connectedObject, Session session) throws MqttException {
         sendMessage(connectedObject);
+        if (connectedObject.getType().equals("Servo") & connectedObject.getId().equals("exit")  & connectedObject.getValue().equals("openDoor") ) {
+            try {
+                String  s = "openDoor";
+                client.publish("ExitDoor", new MqttMessage(s.getBytes()));
+            }
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        }
 
     }
    public static void broadcastMessage(ConnectedObject connectedObject) {
@@ -101,7 +107,6 @@ public class ParkingWebsocket {
 
     @OnOpen
     public void open(Session session) {
-       // MqttConnection Cnx = new MqttConnection();
         mqttlistener.start();
         sessions.put( session.getId(), session );
     }
