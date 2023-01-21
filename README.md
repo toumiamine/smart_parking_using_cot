@@ -15,7 +15,6 @@
     <a href="#Deployment-Server">Deployment Server</a> |
     <a href="#Certification-and-Grading">Certification and Grading</a> |
    <a href="#Screenshots">Screenshots</a> |
-    <a href="#Further-Readings">Further Readings</a> |
     <a href="#Contribution">Contribution</a>
   </h4>
 </div>
@@ -85,6 +84,27 @@ Google maps api
 
 ## Certification and Grading
 
+![certif](./Assets_readme/A.png)
+
+![certif](./Assets_readme/dashbord.png)
+
 
 ## Demo 
 you can test the application by downloading the .apk file from the releases. Also, you can test the application directly from your browser at https://admin.smart-parking.me/#/
+
+If you got Cors error try this :
+
+Click on window -> type run and hit enter -> in the command window copy:
+chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
+This will open a new "Chrome" window where you can work easily.
+
+## Screenshots
+Dashboard 
+![certif](./Assets_readme/dash_snap.png)
+Mobile Application
+![mobile](./Assets_readme/dash_sap.png)
+
+Mockup
+![mockup](./Assets_readme/mock.jpg)
+
+
